@@ -401,6 +401,8 @@ Override: если пользователь явно запросил такую
 - `templates/identification-frame.md` - шаблон для Тип B (person imitation)
 - `templates/one-shot-task.md` - шаблон для Тип C (one-shot task)
 - `templates/extraction-prompt.md` - шаблон для Тип D (extraction/transformation)
+- `templates/agentic-task.md` - шаблон для Тип E (agentic task)
 - `checklists/self-check.md` - чеклист самопроверки промпта
+- `checklists/input-triage.md` - таксономия поломок входного промпта для сценария улучшения
 
 Подгружать файлы через view tool по необходимости, не все сразу.
