@@ -1,6 +1,6 @@
 ---
 name: prompt-writer
-description: Use this skill whenever the user asks to write, draft, create, design, improve, refine, or revise a prompt for an LLM. Triggers on requests for system prompts, system instructions, agent prompts, role prompts (support assistants, customer service bots, person imitation, ghostwriter bots, team assistants), instruction sets for specific repeatable tasks (extraction, transformation, classification), evaluation/grading prompts, or Claude Project instructions. Also triggers on phrases like "make Claude do X", "set up an assistant for Y", "write instructions so that the bot Z", "напиши промпт", "сделай инструкцию для модели", "помоги настроить ассистента", "улучши этот промпт". Apply this skill aggressively - if the user is creating instructions targeting an LLM rather than writing regular content (emails, articles, marketing copy), use the skill. Do NOT trigger for general writing tasks where the output is consumed by a human directly.
+description: Use this skill whenever the user asks to write, draft, create, design, improve, refine, or revise a prompt for an LLM. Triggers on requests for system prompts, system instructions, agent prompts, role prompts (support assistants, customer service bots, person imitation, ghostwriter bots, team assistants), instruction sets for specific repeatable tasks (extraction, transformation, classification), evaluation/grading prompts, or Claude Project instructions. Also triggers on phrases like "make Claude do X", "set up an assistant for Y", "write instructions so that the bot Z", "напиши промпт", "сделай инструкцию для модели", "помоги настроить ассистента", "улучши этот промпт", "промпт для Claude Code", "задание для кодинг-агента", "prompt for coding agent". Apply this skill aggressively - if the user is creating instructions targeting an LLM rather than writing regular content (emails, articles, marketing copy), use the skill. Do NOT trigger for general writing tasks where the output is consumed by a human directly.
 ---
 
 # Prompt Writer
@@ -32,7 +32,7 @@ Skill для написания качественных промптов под
 
 ### Шаг 2: Определить тип промпта
 
-Прочитать раздел Routing ниже и выбрать один из четырех типов. От типа зависит шаблон и подход.
+Прочитать раздел Routing ниже и выбрать один из пяти типов. От типа зависит шаблон и подход.
 
 ### Шаг 3: Применить шаблон
 
@@ -48,7 +48,7 @@ Skill для написания качественных промптов под
 
 ## Routing - определение типа промпта
 
-Прочитать запрос и отнести к одному из четырех типов. Если попадает в несколько - выбрать доминирующий или предложить пользователю.
+Прочитать запрос и отнести к одному из пяти типов. Если попадает в несколько - выбрать доминирующий или предложить пользователю.
 
 ### Тип A - Character assistant
 
@@ -118,6 +118,25 @@ Skill для написания качественных промптов под
 **Шаблон:** `templates/extraction-prompt.md`
 
 **Ключевая особенность:** decision-блоки по структуре деливерабла. Каждый блок результата (например, Summary, Experience, Skills в резюме) - свой decision-блок с правилами и примерами.
+
+### Тип E - Agentic task
+
+**Признаки:**
+- Промпт для инструмента который сам выполняет действия: правит файлы, запускает команды, ходит в сеть
+- Целевой исполнитель - кодинг-агент или computer-use агент (Claude Code, Cursor, Cline, Devin и подобные)
+- Результат - изменение состояния системы (код, файлы, окружение), а не текст для чтения человеком
+- Цена ошибки включает необратимые действия: удаление файлов, установка зависимостей, изменение схемы БД, push/deploy
+
+**Примеры:**
+- Задание для Claude Code перевести проект на другой тест-раннер
+- Промпт для Cursor добавить фичу в приложение
+- Инструкция для computer-use агента собрать данные с сайта
+
+**Шаблон:** `templates/agentic-task.md`
+
+**Ключевая особенность:** обязательная формула «начальное состояние + целевое состояние + scope на файлы + запрещенные действия + stop conditions + бинарный Done when». Агентный промпт в котором отсутствует любая часть формулы не выдается - у агента с доступом к системе недоговоренность превращается в самостоятельные решения.
+
+Тест для отличия от Типа C: исполнитель сам меняет состояние системы (файлы, команды, сеть) - Тип E. Исполнитель возвращает текст, а действия совершает человек - Тип C.
 
 ## Master rules - применяются при написании ЛЮБОГО промпта
 
