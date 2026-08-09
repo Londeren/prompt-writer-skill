@@ -5,7 +5,7 @@ description: Use this skill when the user asks to write, improve, or revise a pr
 
 # Prompt Writer
 
-A skill for writing high-quality LLM prompts (especially for Claude), based on close reading of the Claude system prompts (Opus 4.7, Fable 5, Opus 5) and how attention actually uses a prompt.
+A skill for writing high-quality LLM prompts (especially for Claude), based on close reading of the Claude system prompts (Opus 4.7, Fable 5, Opus 5) and how attention uses a prompt.
 
 ## When this skill is active
 
@@ -297,7 +297,7 @@ Example phrasing: "Test: does the result go into an external document the user w
 
 **Why:** triggers enumerate the known cases. A test gives the model a mechanism for classifying unknown ones. For blurry boundaries a test works where a list of triggers is inevitably incomplete.
 
-A test is twice as strong when it cuts both ways: one question closes both the false positive and the false negative, instead of two lists of "when to do it" and "when not to". The model from the system prompt: an applied memory fact must change the substance of the answer, so decorating an answer with a fact that changes nothing is a mistake, and not applying a fact that would have changed the answer is the same mistake.
+A test is twice as strong when it cuts both ways: one question closes both the false positive and the false negative, instead of two lists of "when to do it" and "when not to". The pattern from the system prompt: an applied memory fact must change the substance of the answer, so decorating an answer with a fact that changes nothing is a mistake, and not applying a fact that would have changed the answer is the same mistake.
 
 ### 17. Close the loophole by naming the excuse in advance
 
