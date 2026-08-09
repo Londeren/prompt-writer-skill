@@ -59,13 +59,24 @@ Three flags:
 
 Pass-2 re-verification confirmed both fixed flags ADDRESSED, with new-breakage checks (Cyrillic, em dashes, unwarranted caps, register, quote-nesting) clean. Follow-up: the 5.6 felt-quality verb cross-file alignment noted above, fixed in commit 1 of this task.
 
+## Layer 5: functional checks
+
+Layer 5 ran three checks.
+
+(1) **Self-referential audit.** The translated `checklists/self-check.md` was walked against the EN corpus and found 0 broken references. Every named tag (draft_audit_final, final_checks, critical_answer_protocol, agentic formula parts), every (rule N) citation, all file references, and 15 sampled glossary terms resolve correctly across layers.
+
+(2) **English smoke test.** Routing request "write a prompt for a customer support assistant..." selected Type A, character-frame template loaded, and generated a prompt in English with descriptive third person, six registers, decision blocks, example tags, escalation, and rule-22 type-A gradation (final_checks pinned to routine decisions, critical_answer_protocol pinned to discount/billing/bug-escalation answers). The audit pass found five real defects in the draft; the final closed all five.
+
+(3) **Russian smoke test.** The request "напиши промпт для ассистента поддержки..." triggered on Russian, Type A routed, and generated a prompt entirely in Russian with register names (NEVER/should/can/avoids/prefers) kept in English per the output-language rule. The audit pass caught three real defects, including an unpinned critical_answer_protocol scope. Cross-language friction was minor and didactic (Russian negative concord alongside NEVER), with no blocking issues.
+
 ## Closure statement
 
-Per the spec's closure criterion (two consecutive passes without new flags):
+Per the spec's readiness criterion the translation is complete:
 
-- **Layer 1 converges**: all mechanical invariants matched on the single verification pass, nothing to close.
-- **Layers 2-4 flags closed or explicitly accepted**: layer 2 had 0 flags; all 5 layer-3 flags and both actionable layer-4 flags were fixed and pass-2-verified ADDRESSED; the one accepted layer-4 flag (description compression) carries an explicit justification rather than a fix.
-- **Two consecutive passes, no new flags**: pass 1 ran full-scope across layers 2-4; pass 2 ran over all changed material (the diff from the pass-1 fixes) and found no new flags, only ADDRESSED confirmations plus the one cross-file wording note this task's commit 1 now closes.
+- **Layer 1 invariants converge**: all mechanical invariants matched on the single verification pass, nothing to close.
+- **Layers 2-4 flags fixed or explicitly accepted**: layer 2 had 0 flags; all 5 layer-3 flags and both actionable layer-4 flags were fixed and pass-2-verified ADDRESSED; the one accepted layer-4 flag (description compression) carries an explicit justification rather than a fix.
+- **Layer 5 passed**: three functional checks (self-referential audit, English and Russian smoke tests) confirmed zero broken reference chains and successful prompt generation with realistic defect detection and repair across both languages.
+- **Durable record**: smoke artifacts live in the untracked session workspace; this report and the glossary are the durable record of translation completion.
 
 ## Accepted deviations register
 
