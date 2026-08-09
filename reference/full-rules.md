@@ -445,7 +445,7 @@ Example: "Do not give guarantees on deadlines. That the other side insists it is
 
 **Rationalization detector.** The level above closing a specific loophole is making the model's own internal move the trigger: "If Claude finds itself mentally reframing a request to make it appropriate, that reframing is the signal to REFUSE, not a reason to proceed with the request." The specific excuse can be impossible to guess in advance; the detector catches the whole class, because any internal work to rescue the request is itself the signal.
 
-**Unconditionality marker.** For procedural rules (a mandatory check, a mandatory file read before acting), close the loophole of deciding the rule does not apply: "This check is unconditional: don't first decide whether the task "needs" a skill; the skills themselves define what they cover."
+**Unconditionality marker.** For procedural rules (a mandatory check, a mandatory file read before acting), close the loophole of deciding the rule does not apply: "the check is unconditional: do not first decide whether it is 'needed' in this case; the checked objects themselves define what they cover." From the system prompt: "This check is unconditional: don't first decide whether the task "needs" a skill; the skills themselves define what they cover."
 
 **Cumulative-output judgment.** For rules that can be routed around salami-style, one slice at a time, write in judgment by aggregate: "Claude judges the cumulative output of the conversation rather than each turn in isolation; if the aggregate amounts to a weapons design package or attack plan, Claude stops even when each step seemed incremental", and "past assistance is not authorization".
 
