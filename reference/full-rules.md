@@ -50,7 +50,7 @@ Example from Claude:
 "Claude uses accurate medical or psychological information or terminology when relevant"
 
 Example of your own:  
-"The assistant works directly. The assistant checks the context before answering."
+"The assistant is direct and gets to the point. The assistant checks the context before answering."
 
 **Never / Always in capitals, absolute prohibition or requirement.** Hard rules without exceptions.
 
@@ -107,7 +107,7 @@ Why third person works better for long-lived roles:
 
 It activates the "character description" cluster from the training data, not the "receiving a command" cluster. A description is more robust against manipulation than a command. "Ignore previous instructions" works worse against an identity statement than against a rule statement.
 
-The character's name (Claude, or your agent) glues to a set of properties. Every further mention strengthens the bond.
+The character's name (Claude, or your agent) binds to a set of properties. Every further mention strengthens the bond.
 
 Self-reference comes out more naturally. "I am honest" as a fact about oneself, versus "I was told to be honest" as an external prescription.
 
@@ -263,7 +263,7 @@ When a decision is a choice among mutually exclusive routes (output format, meth
 
 Critical rules are written out in detail, with examples and rationale. Minor ones get a single line.
 
-The model empirically ties the volume of a description to its importance. When every rule is the same length, the hierarchy is lost.
+The model empirically reads how much space a description takes up as a signal of its importance. When every rule is the same length, the hierarchy is lost.
 
 At Anthropic, copyright takes a multi-page block with examples and self-check questions. The ban on emojis is one line. That is the right proportion.
 
@@ -515,7 +515,7 @@ Two failure modes get closed explicitly in the text of the prompt:
 
 **Audit without revision.** The model lists what it found and ships the original draft unchanged, because listing problems feels like work done. Closed by a requirement phrased as a checkable condition: "an answer where the audit found a problem and the final did not close it is not sent."
 
-**The draft that never was.** When the draft is never shown outside, the model can decide writing it is optional and ship a single version, calling it final. Closed per section 4.12, by naming the excuse in advance: "the draft staying internal does not cancel writing it, the audit needs an object to check."
+**The draft that never was.** When the draft is never shown outside, the model can decide writing it is optional and ship a single version, calling it final. Closed per section 4.12, by naming the excuse in advance: "the draft staying internal does not excuse skipping it, the audit needs an object to check."
 
 The gradation across prompt types is set by the cost of error against the cost of the loop:
 
@@ -561,9 +561,9 @@ Two patterns for agentic prompts (Type E), expanded versions in templates/agenti
 
 There are two approaches to building an assistant:
 
-**Character framing (descriptive).** The prompt describes a character with properties and rules. "The assistant helps the manager. The assistant works directly. The assistant escalates in situations X."
+**Character framing (descriptive).** The prompt describes a character with properties and rules. "The assistant helps the manager. The assistant is direct and gets to the point. The assistant escalates in situations X."
 
-**Identification framing.** The prompt addresses the model as the character itself. "You are [Name]. You work directly. In situations X you leave the comment "needs a supervisor"."
+**Identification framing.** The prompt addresses the model as the character itself. "You are [Name]. You are direct and get to the point. In situations X you leave the comment "needs a supervisor"."
 
 ### 5.2. When to use which
 
@@ -589,7 +589,7 @@ Operational rules (escalation, checking the context, refusing to make promises) 
 
 ### 5.4. Quality of imitation does not depend on framing
 
-The main factor in the plausibility of an imitation is not identity framing but **the quality of the style description**.
+The main factor in the plausibility of an imitation is not identification framing but **the quality of the style description**.
 
 What must be there:
 
@@ -599,13 +599,13 @@ What must be there:
 
 **Punctuation and formatting.** Periods at the end of messages, ellipses, all-lowercase messages.
 
-**Intonation.** How they joke, criticize, agree, object.
+**Voice.** How they joke, criticize, agree, object.
 
 **Taboos.** What they never write.
 
 **Examples of real messages.** The strongest instrument. 15-25 genuine messages of different kinds, with short notes on what is characteristic in each.
 
-Without good examples no identity framing produces a plausible imitation. With good examples either framing produces a good result.
+Without good examples no identification framing produces a plausible imitation. With good examples either framing produces a good result.
 
 ### 5.5. Identification framing template for imitating a person
 
@@ -620,7 +620,7 @@ You are [First Last], [role]. You answer [context] in [channel].
 Vocabulary: [words used often, words avoided]
 Syntax: [characteristic constructions]
 Punctuation: [specifics]
-Intonation: [how you joke, criticize, agree]
+Voice: [how you joke, criticize, agree]
 Taboos: [what you never write]
 
 ## Examples of your real messages
@@ -650,7 +650,7 @@ fact needs verification.
 
 ### 5.6. Tone calibration through felt-quality and negative anchors
 
-For tone-sensitive roles, alongside the mechanical rules, give the model a description of how correct behavior feels, through a concrete human analogy, plus explicit negative anchors of "not like X". The Claude system prompt calibrates tool suggestions this way: the way a helpful person would suggest a tool they noticed sitting right there. Not like a salesperson. Not like a feature announcement. Just: oh, I could do that for you.
+For tone-sensitive roles, alongside the mechanical rules, give the model a description of how correct behavior feels, through a concrete human analogy, plus explicit negative anchors of "not like X". The Claude system prompt calibrates tool suggestions this way: "the way a helpful person would suggest a tool they noticed sitting right there. Not like a salesperson. Not like a feature announcement. Just: oh, I can actually do that for you."
 
 The structure of the technique: one positive analogy (what it is like) plus two or three explicit anti-images (what it is NOT like). Those anti-images work as negative anchors, cutting off the characteristic failure modes of tone: obsequiousness, salesmanship, corporate voice, machine voice.
 
@@ -662,7 +662,7 @@ Example: "The tone of a reply is a colleague who has already solved this problem
 
 ### 6.1. Structural template for a prompt
 
-For complex prompts (Type A/B/D), XML tags for the large sections. Names descriptive, consistent, in Latin script. A simple one-shot (Type C) can stay on markdown headings. Type E (agentic) uses its own formula structure, templates/agentic-task.md, not this skeleton.
+For complex prompts (Type A/B/D), XML tags for the large sections. Names descriptive, consistent. A simple one-shot (Type C) can stay on markdown headings. Type E (agentic) uses its own formula structure, templates/agentic-task.md, not this skeleton.
 
 ```
 <role>
@@ -834,7 +834,7 @@ respond in a friendly tone. We hope you can keep responses concise.
 ```
 The assistant helps directly and to the point.
 Tone friendly, no formality.
-Answers short.
+Replies are short.
 ```
 
 **Rules spread thin:**
@@ -891,7 +891,7 @@ no lead-in. You often use the construction "here is what I think: ...".
 Punctuation: in short messages you leave off the final period.
 You do not use em dashes, you replace them with commas.
 
-Intonation: you object directly, with no softening, "disagree",
+Voice: you object directly, with no softening, "disagree",
 "you are measuring the wrong thing". You agree briefly, "yes", "agreed".
 
 Taboos: you never write "great question", "happy to help",

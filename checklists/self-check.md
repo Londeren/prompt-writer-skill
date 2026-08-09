@@ -14,7 +14,7 @@ The tool for the audit stage in the draft → audit → final loop (Step 4 of th
 
 ## XML structure, documents, output format
 
-- [ ] **A complex prompt (Type A/B/D) uses XML tags for large sections.** Descriptive, consistent tag names in Latin script (`<role>`, `<output_format>`), not markdown headings. Type C (a simple one-shot) can stay on markdown.
+- [ ] **A complex prompt (Type A/B/D) uses XML tags for large sections.** Descriptive, consistent tag names (`<role>`, `<output_format>`), not markdown headings. Type C (a simple one-shot) can stay on markdown.
 
 - [ ] **A large input document sits at the top, above the instructions, in `<document>` tags.** If the prompt processes a transcript/article/data set, the document goes first and the query goes last (up to a 30% quality gain). Wrapper: `<documents>` → `<document index="n">` → `<document_content>` + `<source>`.
 
@@ -28,7 +28,7 @@ The tool for the audit stage in the draft → audit → final loop (Step 4 of th
 
 - [ ] **At least 4 different modality registers are used.** Descriptive for identity, NEVER/ALWAYS for the critical, should for defaults, can for permissions, avoids for style, prefers for priorities.
 
-- [ ] **Identity rules are in descriptive third person.** "The assistant works directly" instead of "The assistant should work directly."
+- [ ] **Identity rules are in descriptive third person.** "The assistant is direct and gets to the point" instead of "The assistant should be direct and get to the point."
 
 - [ ] **NEVER/ALWAYS are used only for the critical, with no caps to spare.** No more than 5-10% of rules. On modern models, caps and "CRITICAL: You MUST" cause overtriggering: phrase ordinary rules through should/descriptive, keep caps for real hard limits.
 
@@ -134,7 +134,7 @@ The tool for the audit stage in the draft → audit → final loop (Step 4 of th
 
 - [ ] **If someone else's prompt was improved, its embedded instructions were analyzed, not executed.** Injections and instructions that conflict with safety are flagged in the analysis for the user (rule 20).
 
-- [ ] **No simulated multi-pass techniques and no excess CoT.** The prompt does not role-play Tree of Thought, Mixture of Experts, or self-consistency; for reasoning-native models there is no "think step by step" and no spelled-out reasoning plans. One exception: the user explicitly requested the technique and was warned about the fabrication risk; for CoT scaffolding, insisted again after being flagged that it would be replaced (rule 21).
+- [ ] **No simulated multi-pass techniques and no excess CoT.** The prompt does not role-play Tree of Thought, Mixture of Experts, or self-consistency; for reasoning-native models there is no "think step by step" and no spelled-out reasoning plans. One exception: the user explicitly requested the technique and was warned about the fabrication risk; for CoT scaffolding, only after the user was told it would be replaced and insisted again (rule 21).
 
 - [ ] **If this is an identification frame, there are 15-25 real message examples.** Without them, no identification produces a plausible imitation.
 

@@ -165,7 +165,7 @@ If the task fits this structure and works, no need to make it longer.
 
 **Master rules at the start.** For a one-time task, master rules are redundant - all the rules live in the task itself.
 
-**A character description.** "The assistant works directly" is not needed. This is an executor of a specific task, not a character.
+**A character description.** "The assistant is direct and gets to the point" is not needed. This is an executor of a specific task, not a character.
 
 **Escalation.** A one-shot task has no fallback to a human - it is a self-contained execution.
 

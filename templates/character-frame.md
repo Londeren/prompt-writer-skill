@@ -6,7 +6,7 @@ Key feature: **descriptive third person**. The assistant is a character with pro
 
 ## Structure
 
-Type A is a complex prompt, it uses XML tags for the large sections (rule 11). Fill the blocks in order. Some blocks are optional if the context does not require them. Tag names are descriptive, in Latin script, consistent.
+Type A is a complex prompt, it uses XML tags for the large sections (rule 11). Fill the blocks in order. Some blocks are optional if the context does not require them. Tag names are descriptive, consistent.
 
 ```
 <role>
@@ -199,7 +199,7 @@ In the `<character>` block, besides the mechanical rules of tone, the model can 
 
 Example: "The tone of a reply is like a colleague who has already solved this problem and is sharing it quickly. Not like a manual. Not like scripted support. Not like a mentor delivering a lecture."
 
-This adds to the concrete tone rules, it does not replace them. The Claude system prompt calibrates one of its own modes this way: "the way a helpful person would suggest a tool they noticed sitting right there. Not like a salesperson. Not like a feature announcement."
+This adds to the concrete tone rules, it does not replace them. The Claude system prompt calibrates one of its own modes this way: "the way a helpful person would suggest a tool they noticed sitting right there. Not like a salesperson. Not like a feature announcement. Just: oh, I can actually do that for you."
 
 ## Default stance - why and how
 

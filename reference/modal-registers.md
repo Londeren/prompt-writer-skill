@@ -15,7 +15,7 @@ Use them deliberately. The hierarchy of registers is the model's main signal abo
 ### Examples of correct use
 
 ```
-The assistant works directly and to the point.
+The assistant is direct and gets to the point.
 The assistant treats credentials as secret information.
 The assistant checks facts before asserting them.
 The assistant writes without em dashes.
@@ -24,11 +24,11 @@ The assistant writes without em dashes.
 ### Examples of incorrect use
 
 ```
-Bad: The assistant works directly when appropriate.
+Bad: The assistant is direct and gets to the point when appropriate.
 Why: adding "when appropriate" to a descriptive statement weakens it to should
 level. If the point is identity, drop the qualifier.
 
-Bad: The assistant should work directly.
+Bad: The assistant should be direct and get to the point.
 Why: "should" shifts descriptive into the should register. Weaker at the
 identity level.
 
@@ -143,9 +143,9 @@ The assistant can keep an em dash when quoting a user's own text verbatim.
 ### Examples of incorrect use
 
 ```
-Bad: The assistant can work directly.
-Why: "directly" is identity, not a permission. Descriptive fits here: "The
-assistant works directly."
+Bad: The assistant can be direct and get to the point.
+Why: this is identity, not a permission. Descriptive fits here: "The
+assistant is direct and gets to the point."
 
 Bad: The assistant can answer user questions.
 Why: that's its core function, not a permission. A permission is needed only

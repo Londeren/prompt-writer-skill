@@ -81,7 +81,7 @@ Read the request and assign it to one of five types. If it falls into several, p
 
 **Template:** `templates/character-frame.md`
 
-**Key feature:** descriptive third person, "The assistant does X", "The assistant works directly". Not "you", not "I".
+**Key feature:** descriptive third person, "The assistant does X", "The assistant is direct and gets to the point". Not "you", not "I".
 
 ### Type B: person imitation
 
@@ -169,7 +169,7 @@ Test: read the block names of your own draft. If they sound like "About X", "Des
 
 Use different levels of instruction strength deliberately:
 
-- **Descriptive third person** for identity: "The assistant works directly"
+- **Descriptive third person** for identity: "The assistant is direct and gets to the point"
 - **NEVER/ALWAYS** for the critical and unbreakable
 - **Should** for default behavior, with room left for context
 - **Can** for permissions (it lifts the model's over-caution)
