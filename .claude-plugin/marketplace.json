@@ -1,0 +1,20 @@
+{
+  "name": "londeren-plugins",
+  "owner": {
+    "name": "Sergey Lebedev",
+    "url": "https://github.com/Londeren"
+  },
+  "description": "Plugins by Londeren. Currently ships prompt-writer, a methodology skill for writing LLM prompts.",
+  "plugins": [
+    {
+      "name": "prompt-writer",
+      "source": "./",
+      "category": "productivity",
+      "tags": [
+        "prompt-engineering",
+        "system-prompt",
+        "writing"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "prompt-writer",
+  "displayName": "Prompt Writer",
+  "version": "0.1.0",
+  "description": "Methodology for writing LLM prompts, derived from analysis of Claude system prompts (Opus 4.7, Fable 5, Opus 5) and attention mechanics. Routes a request into one of five prompt types and applies the matching template, then audits the draft against a self-check list.",
+  "author": {
+    "name": "Sergey Lebedev",
+    "url": "https://github.com/Londeren"
+  },
+  "homepage": "https://github.com/Londeren/prompt-writer-skill",
+  "repository": "https://github.com/Londeren/prompt-writer-skill",
+  "license": "MIT",
+  "keywords": [
+    "prompt-engineering",
+    "system-prompt",
+    "prompt-writing",
+    "llm",
+    "agent-prompt",
+    "russian"
+  ]
+}
