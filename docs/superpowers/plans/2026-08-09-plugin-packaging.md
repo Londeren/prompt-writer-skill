@@ -350,7 +350,8 @@ claude --plugin-dir ./plugins/prompt-writer \
 - [ ] **Step 10: Коммит**
 
 ```bash
-git add -A
+git add -- plugins .claude-plugin/marketplace.json SKILL.md reference templates checklists
+git status --porcelain   # ожидается пусто: переезд затрагивает только эти пути
 git commit -m "chore(plugin): move the skill into plugins/prompt-writer
 
 The repository is now a marketplace with one plugin inside it. Only
