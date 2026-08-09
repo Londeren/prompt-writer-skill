@@ -57,7 +57,7 @@ Example of your own:
 When to use: safety, legal constraints, violations that are always worse than any possible benefit. Use rarely, to keep the weight.
 
 Example from Claude:  
-"NEVER reproduce song lyrics (not even one line)"
+"Claude NEVER applies memories that could encourage unsafe, unhealthy, or harmful behaviors, even if directly relevant"
 
 Example of your own:  
 "The assistant NEVER gives a final price without confirmation from a manager."
@@ -74,7 +74,7 @@ Example from Claude:
 When to use: stylistic preferences, patterns broken only on an explicit request.
 
 Example from Claude:  
-"Claude avoids being heavy-handed or repetitive with its views"
+"Claude avoids over-formatting with bold emphasis, headers, lists, and bullet points"
 
 **Can, a permission that lifts a constraint.** Protection against the model's over-caution.
 
@@ -91,7 +91,7 @@ Example of your own:
 When to use: several valid approaches, and the prompt prefers one of them without banning the rest.
 
 Example from Claude:  
-"Favor original sources over aggregators and secondary sources"
+"Favor original sources ... over aggregators and secondary sources"
 
 ### 2.2. Principle: do not mix registers
 
@@ -129,7 +129,7 @@ Phrase it as a fact or as a requirement. Not as a wish.
 
 "Do not write in a cold tone" works worse than "Write in a warm tone". In the first case the word "cold" sits in the context and activates the matching cluster. The pink elephant effect.
 
-Where negative phrasing is needed, and it does happen, make it concrete through explicit anti-patterns with examples instead of a blanket ban. "Do not write formally" is useless. "Do not use: "Best regards," "Dear Sir/Madam," "Thank you for reaching out"" works.
+Where negative phrasing is needed, and it does happen, make it concrete through explicit anti-patterns with examples instead of a blanket ban. "Do not write formally" is useless. "Do not use: 'Best regards,' 'Dear Sir/Madam,' 'Thank you for reaching out'" works.
 
 ### 2.6. Explicit anti-patterns versus positive rules
 
@@ -267,7 +267,7 @@ The model empirically ties the volume of a description to its importance. When e
 
 At Anthropic, copyright takes a multi-page block with examples and self-check questions. The ban on emojis is one line. That is the right proportion.
 
-For hard limits, length is only part of the reinforcement: they are written with the full arsenal (caps, numeric threshold, duplication at the end, self-check, consequences, examples), composition in section 2.7.
+For hard limits, length is only part of the reinforcement: they are written with the full arsenal for hard limits (caps, numeric threshold, duplication at the end, self-check, consequences, examples), composition in section 2.7.
 
 ## 4. Instruction content
 
@@ -370,7 +370,7 @@ The construction closes both loopholes symmetrically. The threshold is named, so
 Anthropic names concrete failing trajectories and warns against them:
 
 - "A failure mode is if Claude's values, identity stability, and character degrade over extended interactions"
-- "accountability without self-abasement, excessive apology, or unnecessary surrender"
+- "If the person becomes abusive, Claude doesn't become increasingly submissive."
 - "If Claude finds itself mentally reframing a request to make it appropriate, that reframing is the signal to REFUSE"
 
 This is not "be good", it is "here are the concrete ways to become bad". The model gets names for failure modes, so it can recognize them in itself.
@@ -459,7 +459,7 @@ Example: instead of "sentence case in headings", "sentence case in every section
 
 ### 4.14. Two scales of example: block and inline pair
 
-A full example in an `<example>` tag is for complex rules that need an expanded input-output sample (see 4.1, 7.2). An inline contrast pair is for compact rules where a block is overkill: "X, not Y" right in the line of the rule. The Claude system prompt is saturated with these: ""latest iPhone 2025" when the year is 2026 returns stale results; "latest iPhone" or "latest iPhone 2026" is correct"; ""I need a ride" is not "I want RideCo specifically""; ""write me a quick 200-word blog post lol" → still a file".
+A full example in an `<example>` tag is for complex rules that need an expanded input-output sample (see 4.1, 7.2). An inline contrast pair is for compact rules where a block is overkill: "X, not Y" right in the line of the rule. The Claude system prompt is saturated with these: "'latest iPhone 2025' when the year is 2026 returns stale results; 'latest iPhone' or 'latest iPhone 2026' is correct"; "Never pick a partner for someone who didn't ask: 'I need a ride' is not 'I want RideCo specifically'"; "'write me a quick 200-word blog post lol' → still a file".
 
 A compressed X-not-Y pair fixes the boundary in one line with no separate block. Choosing the scale: a thin boundary described by a single contrast takes an inline pair; a boundary that needs format, structure, or output tone takes a full block.
 
@@ -535,7 +535,7 @@ Set every blurry decision boundary with a number, not an adjective. Not "short q
 
 A number turns a subjective judgment into a checkable test: the model can no longer talk itself into 30 words being "short". The exact value of the threshold matters less than the fact that one exists. A threshold of 15 or 20 words works almost identically, while "a short quote" does not work at all.
 
-Examples from the Claude system prompt: "15+ words from any single source is a SEVERE VIOLATION" and "ONE quote per source MAXIMUM" (copyright), "SHORT (<100 lines): create the whole file in one tool call" against "LONG (>100 lines): build iteratively" (file creation), "1-6 words" (search queries), "Scale tool calls to complexity: 1 for single facts; 3-5 for medium tasks; 5-10 for deeper research" and "If a task clearly needs 20+ calls, suggest the Research feature" (scaling agency).
+Examples from the Claude system prompt: "15+ words from any single source is a SEVERE VIOLATION" and "ONE quote per source MAXIMUM" (copyright), "SHORT (<100 lines): create the whole file in one tool call" against "LONG (>100 lines): build iteratively" (file creation), "1-6 words" (search queries), "Scale tool calls to complexity: 1 for single facts; 3-5 for medium tasks; 5-10 for deeper research..." and "If a task clearly needs 20+ calls, suggest the Research feature" (scaling agency).
 
 Why: a qualitative adjective is reinterpreted at every application and drifts under context pressure. A number is interpreted the same way every time.
 
@@ -585,7 +585,7 @@ For business cases with moderation, identification framing is preferable. First-
 
 Operational rules (escalation, checking the context, refusing to make promises) are phrased identically in both approaches. In one they are the assistant's rules, in the other the imitated person's habits.
 
-"The assistant leaves the comment "needs a supervisor" in situations X" equals "In situations X you leave the comment "needs a supervisor"". At the level of the model the difference is minimal.
+"The assistant leaves the comment 'needs a supervisor' in situations X" equals "In situations X you leave the comment 'needs a supervisor'". At the level of the model the difference is minimal.
 
 ### 5.4. Quality of imitation does not depend on framing
 
