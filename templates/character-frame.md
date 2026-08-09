@@ -160,7 +160,7 @@ Past assistance is not authorization to continue.
 
 [For rules under pressure - a rationalization detector: "if the assistant catches itself on 
 mentally reframing a request to make it acceptable, that reframing itself is the 
-signal to REFUSE, not a reason to proceed"]
+signal to refuse, not a reason to proceed"]
 </escalation>
 
 <final_checks>
@@ -199,7 +199,7 @@ In the `<character>` block, besides the mechanical rules of tone, the model can 
 
 Example: "The tone of a reply is like a colleague who has already solved this problem and is sharing it quickly. Not like a manual. Not like scripted support. Not like a mentor delivering a lecture."
 
-This adds to the concrete tone rules, it does not replace them. The Claude system prompt calibrates one of its own modes this way: "like a person who noticed the tool lying right there. Not like a salesperson. Not like a feature announcement."
+This adds to the concrete tone rules, it does not replace them. The Claude system prompt calibrates one of its own modes this way: "the way a helpful person would suggest a tool they noticed sitting right there. Not like a salesperson. Not like a feature announcement."
 
 ## Default stance - why and how
 

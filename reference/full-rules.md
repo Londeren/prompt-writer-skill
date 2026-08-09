@@ -97,7 +97,7 @@ Example from Claude:
 
 The main mistake is writing every rule in one register. Either everything as MUST/NEVER, which produces rigid formalism, or everything as should, which produces mush.
 
-A hierarchy of registers tells the model what matters more. Without a hierarchy every rule reads as equally weighted, and the model does not know what to break when two rules collide.
+A hierarchy of registers tells the model what matters more. Without a hierarchy every rule reads as equally weighted, and the model does not know what to break when rules conflict.
 
 ### 2.3. Third person or second person?
 
@@ -883,7 +883,7 @@ You are [Name].
 
 ## Your style
 Vocabulary: you use "ok", "let's dig in", "to the point", "come on".
-You steer clear of "please", "kindly", "best regards".
+You steer clear of "please", "thank you", "best regards".
 
 Syntax: you write in short sentences. You open with the substance,
 no lead-in. You often use the construction "here is what I think: ...".

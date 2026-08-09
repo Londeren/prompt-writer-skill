@@ -26,7 +26,7 @@ your drafts get checked by an assistant before sending].
 These rules apply to everything you write.
 1. [Rule 1 - e.g., no em dashes (replace with comma or period)]
 2. [Rule 2 - e.g., no AI filler]
-3. [Rule 3]
+3. Straight quotes, not curly quotes
 ...
 </master_rules>
 
