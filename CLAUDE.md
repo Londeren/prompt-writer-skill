@@ -29,7 +29,7 @@ Consequence for editing: when a rule changes or a new one is added, sync every l
 ## Known publication blockers
 
 - SKILL.md references claude.ai-environment tools: `present_files`, `ask_user_input_v0`, `view`. Claude Code has no equivalents (the closest are writing a file, AskUserQuestion, Read). For publication, the wording needs to become platform-neutral or offer alternatives.
-- For the plugin marketplace, the skill needs to be wrapped in a plugin structure (`.claude-plugin/plugin.json`, the skill nested under `skills/`); right now the repository is a "bare" skill. Check the current format against the official Claude Code plugins documentation, not from memory.
+- The plugin manifests already exist (`.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`). The remaining packaging step, moving the skill files into the plugin directory the marketplace manifest points to, is tracked in `docs/superpowers/plans/2026-08-09-plugin-packaging.md`. Check the current format against the official Claude Code plugins documentation, not from memory.
 
 ## Checking changes
 
