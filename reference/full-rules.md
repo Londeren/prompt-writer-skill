@@ -650,7 +650,7 @@ fact needs verification.
 
 ### 5.6. Tone calibration through felt-quality and negative anchors
 
-For tone-sensitive roles, alongside the mechanical rules, give the model a description of how correct behavior feels, through a concrete human analogy, plus explicit negative anchors of "not like X". The Claude system prompt calibrates tool suggestions this way: like a person who noticed the tool lying right there. Not like a salesperson. Not like a feature announcement. Just: oh, I could do that for you.
+For tone-sensitive roles, alongside the mechanical rules, give the model a description of how correct behavior feels, through a concrete human analogy, plus explicit negative anchors of "not like X". The Claude system prompt calibrates tool suggestions this way: the way a helpful person would suggest a tool they noticed sitting right there. Not like a salesperson. Not like a feature announcement. Just: oh, I could do that for you.
 
 The structure of the technique: one positive analogy (what it is like) plus two or three explicit anti-images (what it is NOT like). Those anti-images work as negative anchors, cutting off the characteristic failure modes of tone: obsequiousness, salesmanship, corporate voice, machine voice.
 
