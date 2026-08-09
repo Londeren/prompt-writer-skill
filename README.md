@@ -4,7 +4,7 @@
 >
 > **Quick start (EN):** for Claude Code — `git clone` this repo into `~/.claude/skills/prompt-writer`. For claude.ai — zip a `prompt-writer/` folder containing `SKILL.md` and upload it at [Customize → Skills](https://claude.ai/customize/skills) (requires "Code execution and file creation" enabled in Settings → Capabilities; available on all plans, including Free). The skill auto-triggers on prompt-writing requests in any language; vague requests get 2-3 clarifying questions first.
 
-Skill для Claude, который превращает «напиши промпт для …» в инженерно выстроенный промпт. Методология основана на разборе системного промпта Claude Opus 4.7 и того, как модель на самом деле использует промпт — не линейным чтением, а attention-механикой на каждом токене вывода.
+Skill для Claude, который превращает «напиши промпт для …» в инженерно выстроенный промпт. Методология основана на разборе системных промптов Claude (Opus 4.7, Fable 5, Opus 5) и того, как модель на самом деле использует промпт — не линейным чтением, а attention-механикой на каждом токене вывода.
 
 ## Что делает
 
@@ -12,7 +12,7 @@ Skill для Claude, который превращает «напиши пром
 
 1. Классифицирует задачу в один из пяти типов промпта.
 2. Ведет по шаблону этого типа — со структурой, проверенной на реальных системных промптах.
-3. Применяет 22 master-правила (регистры модальности, decision-type структура, примеры, XML-теги, размещение данных).
+3. Применяет 24 master-правила (регистры модальности, decision-type структура, примеры, XML-теги, размещение данных).
 4. Прогоняет результат через цикл черновик → аудит → финал: чеклист, диагностические вопросы, переписывание, закрывающее найденное.
 
 ## Пять типов промптов
