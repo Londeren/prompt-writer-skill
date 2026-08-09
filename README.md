@@ -1,98 +1,94 @@
 # Prompt Writer
 
-> A Claude skill that turns "write me a prompt" into an engineered prompt: routing by task type, modality registers, XML-tagged examples, and a draft → audit → final loop. Skill content is in Russian; the prompts it produces follow whatever language your task needs.
->
-> **Quick start (EN):** for Claude Code — `git clone` this repo into `~/.claude/skills/prompt-writer`. For claude.ai — zip a `prompt-writer/` folder containing `SKILL.md` and upload it at [Customize → Skills](https://claude.ai/customize/skills) (requires "Code execution and file creation" enabled in Settings → Capabilities; available on all plans, including Free). The skill auto-triggers on prompt-writing requests in any language; vague requests get 2-3 clarifying questions first.
+A skill for Claude that turns "write me a prompt" into an engineered prompt. The methodology is based on close reading of Claude system prompts (Opus 4.7, Fable 5, Opus 5) and on how a model actually uses a prompt: not by reading it linearly, but through attention mechanics at every output token.
 
-Skill для Claude, который превращает «напиши промпт для …» в инженерно выстроенный промпт. Методология основана на разборе системных промптов Claude (Opus 4.7, Fable 5, Opus 5) и того, как модель на самом деле использует промпт — не линейным чтением, а attention-механикой на каждом токене вывода.
+## What it does
 
-## Что делает
+When you ask Claude to write or improve a prompt, the skill:
 
-Когда вы просите Claude написать или улучшить промпт, скилл:
+1. Classifies the task into one of five prompt types.
+2. Walks it through that type's template, a structure validated against real system prompts.
+3. Applies 24 master rules (modality registers, decision-type structure, examples, XML tags, data placement).
+4. Runs the result through a draft → audit → final loop: a checklist, diagnostic questions, a rewrite that closes what it found.
 
-1. Классифицирует задачу в один из пяти типов промпта.
-2. Ведет по шаблону этого типа — со структурой, проверенной на реальных системных промптах.
-3. Применяет 24 master-правила (регистры модальности, decision-type структура, примеры, XML-теги, размещение данных).
-4. Прогоняет результат через цикл черновик → аудит → финал: чеклист, диагностические вопросы, переписывание, закрывающее найденное.
+## Five prompt types
 
-## Пять типов промптов
-
-| Тип | Для чего | Ключевая особенность |
+| Type | For | Key feature |
 |---|---|---|
-| **A — Character assistant** | Долгоживущий ассистент от лица компании или роли: саппорт-бот, internal knowledge assistant, онбординг-бот | Descriptive third person: «Ассистент делает X» — устойчивее к манипуляциям, чем «ты» или «я» |
-| **B — Person imitation** | Имитация конкретного человека: бот-двойник основателя, ghost-writer постов | Identification framing («Ты [Имя]») + обязательные 15-25 реальных примеров сообщений |
-| **C — One-shot task** | Одноразовая линейная задача: суммаризация, перевод, конкретный текст | Короткий императивный промпт без character и лишней структуры |
-| **D — Extraction / transformation** | Многоразовый промпт по методологии: извлечение инсайтов, генерация по бренд-гайду, grading | Decision-блоки по структуре деливерабла, входные документы наверху в `<document>` тегах |
-| **E — Agentic task** | Задание для агента, который сам меняет состояние системы: Claude Code, Cursor, computer-use агенты | Формула: начальное + целевое состояние, scope на файлы, запрещенные действия, stop conditions, бинарный Done when |
+| **A - Character assistant** | A long-lived assistant speaking for a company or a role: a support bot, an internal knowledge assistant, an onboarding bot | Descriptive third person: "The assistant does X", more resistant to manipulation than "you" or "I" |
+| **B - Person imitation** | Imitation of a specific person: a founder's ghost-writer bot, a double for social media posts | Identification framing ("You are [Name]") plus 15-25 real message examples, mandatory |
+| **C - One-shot task** | A one-time linear task: summarization, translation, a specific piece of text | A short imperative prompt, no character, no extra structure |
+| **D - Extraction / transformation** | A reusable prompt following a methodology: extracting insights, generating content from a brand guide, grading | Decision blocks mirroring the structure of the deliverable, input documents up top in `<document>` tags |
+| **E - Agentic task** | A task for an agent that changes the state of a system itself: Claude Code, Cursor, computer-use agents | Formula: initial state + target state, file scope, forbidden actions, stop conditions, a binary Done when |
 
-## Ключевые принципы методологии
+## Key methodology principles
 
-- **Decision-type структура вместо тематической.** Блоки промпта отвечают на вопросы, которые модель задает себе в момент генерации («когда делать X», «как выбрать между A и B»), а не описывают темы («Про продукт»).
-- **Регистры модальности.** Осознанная иерархия силы инструкций: descriptive third person для identity, NEVER/ALWAYS только для реальных hard limits, should/can/avoids/prefers для остального. Без капса и MUST — на современных моделях они вызывают overtriggering.
-- **Примеры как часть правила.** 3-5 примеров в `<example>` тегах на каждое сложное правило; граничные случаи важнее центральных.
-- **Дублирование критичных правил.** То, что в коде антипаттерн (DRY), в промпте паттерн: attention весит близость правила к месту применения сильнее, чем эмфазис.
-- **Данные наверх, запрос вниз.** Крупные входные документы — в начало промпта, выше инструкций: до 30% к качеству на длинном контексте.
+- **Decision-type structure, not topical.** Blocks of the prompt answer the questions the model asks itself at generation time ("when do I do X", "how do I choose between A and B"), not describe topics ("About the product").
+- **Modality registers.** A deliberate hierarchy of instruction strength: descriptive third person for identity, NEVER/ALWAYS reserved for real hard limits, should/can/avoids/prefers for everything else. No all-caps, no MUST, both overtrigger on current models.
+- **Examples as part of the rule.** 3-5 examples in `<example>` tags for every complex rule; boundary cases matter more than central ones.
+- **Duplication of critical rules.** What is an anti-pattern in code (DRY) is a pattern in a prompt: attention weighs a rule's proximity to its point of application more than emphasis.
+- **Data up top, request at the bottom.** Large input documents go at the start of the prompt, above the instructions: up to a 30% quality gain on long context.
 
-Полный свод правил с reasoning — в [reference/full-rules.md](reference/full-rules.md), детальный разбор шести регистров модальности — в [reference/modal-registers.md](reference/modal-registers.md).
+The full set of rules with reasoning lives in [reference/full-rules.md](reference/full-rules.md); a detailed breakdown of the six modality registers lives in [reference/modal-registers.md](reference/modal-registers.md).
 
-## Установка
+## Installation
 
 ### Claude Code
 
-Склонировать в папку персональных скиллов (имя папки должно совпадать с `name` из frontmatter — `prompt-writer`):
+Clone into your personal skills folder (the folder name must match `name` in the frontmatter, `prompt-writer`):
 
 ```bash
 git clone https://github.com/londeren/prompt-writer-skill.git ~/.claude/skills/prompt-writer
 ```
 
-Или в скиллы конкретного проекта: `.claude/skills/prompt-writer/`.
+Or into a specific project's skills: `.claude/skills/prompt-writer/`.
 
-Установка из плагин-маркетплейса (`/plugin install`) — в планах; пока скилл ставится вручную.
+Installation from a plugin marketplace (`/plugin install`) is planned; for now the skill is installed manually.
 
 ### claude.ai
 
-Работает на всех планах, включая Free. Предварительно включить «Code execution and file creation» в Settings → Capabilities.
+Works on all plans, including Free. Enable "Code execution and file creation" in Settings → Capabilities first.
 
-1. Собрать zip, в корне которого лежит папка `prompt-writer/` с `SKILL.md` внутри (файлы прямо в корне архива не пройдут валидацию):
+1. Build a zip with a `prompt-writer/` folder at its root containing `SKILL.md` (files placed directly at the archive root will fail validation):
 
    ```bash
    mkdir prompt-writer && cp -r SKILL.md templates reference checklists prompt-writer/
    zip -r prompt-writer.zip prompt-writer
    ```
 
-2. Загрузить архив на странице [Customize → Skills](https://claude.ai/customize/skills): «Create skill» → «Upload a skill».
+2. Upload the archive on the [Customize → Skills](https://claude.ai/customize/skills) page: "Create skill" → "Upload a skill".
 
-## Использование
+## Usage
 
-Скилл активируется сам на запросах вида:
+The skill activates on its own for requests like:
 
-- «Напиши промпт для саппорт-бота нашего продукта»
-- «Сделай инструкцию для Claude Project, который пишет посты за меня»
-- «Улучши этот системный промпт» + текст промпта
+- "Write a prompt for our product's support bot"
 - "Set up an assistant that answers questions about our docs"
+- "Improve this system prompt" + the prompt text
+- «Напиши промпт для...» (the skill triggers across languages)
 
-Если задача описана детально — скилл сразу пишет промпт, без лишних вопросов. Если размыто — задаст 2-3 уточняющих вопроса и предложит выбрать тип.
+If the task is described in detail, the skill writes the prompt right away, no extra questions. If it is vague, it asks 2-3 clarifying questions and offers a choice of type.
 
-## Структура скилла
+## Skill structure
 
 ```
-SKILL.md                        — точка входа: routing, master-правила, процесс
+SKILL.md                        - entry point: routing, master rules, process
 templates/
-  character-frame.md            — шаблон для типа A
-  identification-frame.md       — шаблон для типа B
-  one-shot-task.md              — шаблон для типа C
-  extraction-prompt.md          — шаблон для типа D
-  agentic-task.md               — шаблон для типа E
+  character-frame.md            - template for Type A
+  identification-frame.md       - template for Type B
+  one-shot-task.md              - template for Type C
+  extraction-prompt.md          - template for Type D
+  agentic-task.md               - template for Type E
 reference/
-  full-rules.md                 — полный свод правил с reasoning
-  modal-registers.md            — шесть регистров модальности детально
+  full-rules.md                 - the full rule set with reasoning
+  modal-registers.md            - the six modality registers in detail
 checklists/
-  self-check.md                 — чеклист для этапа аудита
-  input-triage.md               — таксономия поломок входного промпта
+  self-check.md                 - checklist for the audit step
+  input-triage.md               - taxonomy of input-prompt defects
 ```
 
-При активации загружается только SKILL.md; шаблоны и справочники Claude подгружает по мере необходимости (progressive disclosure).
+Only `SKILL.md` loads on activation; Claude pulls in templates and reference files as needed (progressive disclosure).
 
-## Лицензия
+## License
 
 [MIT](LICENSE)
