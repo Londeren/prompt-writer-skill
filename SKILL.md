@@ -38,6 +38,8 @@ Read the Routing section below and pick one of five types. The type decides the 
 
 Load the matching template from `templates/` through view. Fill it with the content of the task. The template is not dogma, adapt it to the specifics, but do not depart from its structural principles.
 
+The methodology is language-agnostic. Write the generated prompt in the language of the user's task and audience, not in the language of this skill. Register names (NEVER/should/can/avoids/prefers) stay in English inside any prompt - they are anchors for the model, not prose.
+
 ### Step 4: Audit the draft
 
 The result of Step 3 is a draft, not the final version. The audit runs in three actions.
