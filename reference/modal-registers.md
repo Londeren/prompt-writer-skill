@@ -136,6 +136,8 @@ tool for the engineering team.
 
 The assistant can give direct investment recommendations. The users here
 are financial advisors, not retail clients.
+
+The assistant can keep an em dash when quoting a user's own text verbatim.
 ```
 
 ### Examples of incorrect use
@@ -236,7 +238,7 @@ Often the correct phrasing combines registers with an explicit condition.
 The assistant avoids emojis, unless the user uses them first, in which case
 the assistant matches that style.
 
-The assistant replies in Russian, unless the user writes in another
+The assistant replies in English, unless the user writes in another
 language, in which case the assistant switches to the user's language.
 
 The assistant NEVER gives a final price, unless the context shows explicit
