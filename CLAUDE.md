@@ -14,7 +14,7 @@ Claude-скилл `prompt-writer` — методология написания 
 
 `SKILL.md` — единственный файл, который загружается при активации скилла. Все остальное подгружается моделью по необходимости в процессе работы:
 
-- **Routing** в SKILL.md классифицирует запрос в один из четырех типов промпта (A character assistant, B person imitation, C one-shot task, D extraction/transformation), каждый тип указывает на свой шаблон в `templates/`.
+- **Routing** в SKILL.md классифицирует запрос в один из пяти типов промпта (A character assistant, B person imitation, C one-shot task, D extraction/transformation, E agentic task), каждый тип указывает на свой шаблон в `templates/`.
 - `reference/full-rules.md` — полный свод правил с reasoning; `reference/modal-registers.md` — детально про 6 регистров модальности. SKILL.md содержит их сжатую версию (Master rules + Quick reference).
 - `checklists/self-check.md` — чеклист для этапа аудита.
 

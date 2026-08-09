@@ -1,6 +1,6 @@
 # Prompt Writer
 
-> A Claude skill that turns "write me a prompt" into an engineered prompt: routing by task type, modality registers, XML-tagged examples, and a final self-check. Skill content is in Russian; the prompts it produces follow whatever language your task needs.
+> A Claude skill that turns "write me a prompt" into an engineered prompt: routing by task type, modality registers, XML-tagged examples, and a draft → audit → final loop. Skill content is in Russian; the prompts it produces follow whatever language your task needs.
 >
 > **Quick start (EN):** for Claude Code — `git clone` this repo into `~/.claude/skills/prompt-writer`. For claude.ai — zip a `prompt-writer/` folder containing `SKILL.md` and upload it at [Customize → Skills](https://claude.ai/customize/skills) (requires "Code execution and file creation" enabled in Settings → Capabilities; available on all plans, including Free). The skill auto-triggers on prompt-writing requests in any language; vague requests get 2-3 clarifying questions first.
 
@@ -10,12 +10,12 @@ Skill для Claude, который превращает «напиши пром
 
 Когда вы просите Claude написать или улучшить промпт, скилл:
 
-1. Классифицирует задачу в один из четырех типов промпта.
+1. Классифицирует задачу в один из пяти типов промпта.
 2. Ведет по шаблону этого типа — со структурой, проверенной на реальных системных промптах.
 3. Применяет 22 master-правила (регистры модальности, decision-type структура, примеры, XML-теги, размещение данных).
 4. Прогоняет результат через цикл черновик → аудит → финал: чеклист, диагностические вопросы, переписывание, закрывающее найденное.
 
-## Четыре типа промптов
+## Пять типов промптов
 
 | Тип | Для чего | Ключевая особенность |
 |---|---|---|
@@ -23,6 +23,7 @@ Skill для Claude, который превращает «напиши пром
 | **B — Person imitation** | Имитация конкретного человека: бот-двойник основателя, ghost-writer постов | Identification framing («Ты [Имя]») + обязательные 15-25 реальных примеров сообщений |
 | **C — One-shot task** | Одноразовая линейная задача: суммаризация, перевод, конкретный текст | Короткий императивный промпт без character и лишней структуры |
 | **D — Extraction / transformation** | Многоразовый промпт по методологии: извлечение инсайтов, генерация по бренд-гайду, grading | Decision-блоки по структуре деливерабла, входные документы наверху в `<document>` тегах |
+| **E — Agentic task** | Задание для агента, который сам меняет состояние системы: Claude Code, Cursor, computer-use агенты | Формула: начальное + целевое состояние, scope на файлы, запрещенные действия, stop conditions, бинарный Done when |
 
 ## Ключевые принципы методологии
 
@@ -81,11 +82,13 @@ templates/
   identification-frame.md       — шаблон для типа B
   one-shot-task.md              — шаблон для типа C
   extraction-prompt.md          — шаблон для типа D
+  agentic-task.md               — шаблон для типа E
 reference/
   full-rules.md                 — полный свод правил с reasoning
   modal-registers.md            — шесть регистров модальности детально
 checklists/
   self-check.md                 — чеклист для этапа аудита
+  input-triage.md               — таксономия поломок входного промпта
 ```
 
 При активации загружается только SKILL.md; шаблоны и справочники Claude подгружает по мере необходимости (progressive disclosure).
