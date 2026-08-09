@@ -63,8 +63,9 @@ Works on all plans, including Free. Enable "Code execution and file creation" in
 The skill activates on its own for requests like:
 
 - "Write a prompt for our product's support bot"
-- "Set up an assistant that answers questions about our docs"
+- "Set up a Claude Project that writes posts in my voice"
 - "Improve this system prompt" + the prompt text
+- "Set up an assistant that answers questions about our docs"
 - «Напиши промпт для...» (the skill triggers across languages)
 
 If the task is described in detail, the skill writes the prompt right away, no extra questions. If it is vague, it asks 2-3 clarifying questions and offers a choice of type.
