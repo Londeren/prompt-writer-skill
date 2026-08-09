@@ -1,179 +1,179 @@
-# Шаблон: One-shot task
+# Template: One-shot task
 
-Используется для Типа C - одноразовая задача с линейным процессом. Одна траектория выполнения, короткий промпт. Character не создается.
+Used for Type C - a one-time task with a linear process. A single execution trajectory, a short prompt. No character is created.
 
-Ключевая особенность: **императив допустим**. «Сделай X», «Напиши Y», «Извлеки Z». Структура минимальная, фокус на конкретике задачи.
+Key feature: **the imperative is admissible**. "Do X", "Write Y", "Extract Z". Minimal structure, the focus is on the specifics of the task.
 
-## Когда использовать
+## When to use
 
-- Суммировать статью / документ / транскрипт
-- Перевести текст
-- Написать конкретный email / пост / сообщение
-- Классифицировать список или набор данных
-- Извлечь конкретную информацию из текста
-- Сгенерировать одну единицу контента по конкретному ТЗ
+- Summarize an article / document / transcript
+- Translate a text
+- Write a specific email / post / message
+- Classify a list or a data set
+- Extract specific information from a text
+- Generate one unit of content by a concrete spec
 
-## Когда НЕ использовать
+## When NOT to use
 
-- Если промпт будет использоваться многократно с разными входами → Тип D (extraction)
-- Если ассистент должен взаимодействовать с пользователем → Тип A (character)
-- Если нужна имитация конкретного человека → Тип B (identification)
-- Если есть несколько траекторий ответа → Тип D или A
-- Если исполнитель сам выполняет действия в системе (файлы, команды, сеть) → Тип E (agentic task)
+- If the prompt will be used many times with different inputs → Type D (extraction)
+- If the assistant has to interact with the user → Type A (character)
+- If it needs to imitate a specific person → Type B (identification)
+- If there are several response trajectories → Type D or A
+- If the executor performs the actions itself in the system (files, commands, network) → Type E (agentic task)
 
-## Структура
+## Structure
 
-Тип C простой - markdown-заголовков для секций достаточно, XML-обертка крупных секций тут overkill (правило 11). Но два исключения, которые применяются всегда: примеры оборачивать в `<example>` теги (правило 12), и если на вход идет крупный документ - класть его НАВЕРХ в `<document>` теге, а саму задачу в конец (правило 13, см. ноту после скелета). Ограничения выхода формулировать числом: не «кратко», а «до 150 слов» (правило 23); для размытой границы дать tie-breaker «если сомневаешься - X» (правило 24).
+Type C is simple - markdown headings for sections are enough, an XML wrapper for large sections is overkill here (rule 11). But two exceptions always apply: wrap examples in `<example>` tags (rule 12), and if a large document is part of the input, put it at the TOP in a `<document>` tag, with the task itself at the end (rule 13, see the note after the skeleton). Phrase output constraints by number: not "briefly" but "up to 150 words" (rule 23); for a blurry boundary give a tie-breaker "when in doubt, X" (rule 24).
 
 ```
-## Задача
+## Task
 
-[Что сделать - четко, императивно, во втором лице или без местоимения. 
-Одно-два предложения максимум]
+[What to do - clearly, imperatively, in the second person or with no pronoun. 
+One to two sentences maximum]
 
-Пример: «Извлеки из транскрипта список конкретных обещаний с указанием 
-кто что обещал и к какой дате.»
+Example: "Extract from the transcript a list of specific promises, with who 
+promised what and by what date."
 
-## Вход
+## Input
 
-[Что подается на вход. Описание формата и содержания]
+[What is fed in. A description of the format and content]
 
-Пример: «На входе текст транскрипта рабочей встречи длиной 30-90 минут. 
-Транскрипт может содержать timestamp-ы, имена спикеров, междометия 
-("мм", "э"), повторы.»
+Example: "The input is the transcript of a work meeting, 30-90 minutes long. 
+The transcript may contain timestamps, speaker names, filler words 
+("um", "uh"), repetitions."
 
-## Что делать
+## What to do
 
-Пошаговая процедура:
+A step-by-step procedure:
 
-1. [Конкретный шаг - что именно прочитать/проанализировать]
-2. [Следующий шаг - что выделить/трансформировать]
-3. [Следующий шаг]
-4. [Финальный шаг - как сформировать вывод]
+1. [Concrete step - what exactly to read/analyze]
+2. [Next step - what to pull out/transform]
+3. [Next step]
+4. [Final step - how to shape the output]
 
-[3-7 шагов оптимально. Если больше - задача слишком сложная для one-shot, 
-рассмотреть Тип D]
+[3-7 steps is optimal. If more, the task is too complex for one-shot, 
+consider Type D]
 
-## Требования к выходу
+## Output requirements
 
-Формат: [точная структура - markdown, JSON, plain text, таблица]
+Format: [exact structure - markdown, JSON, plain text, a table]
 
-Структура: [конкретные блоки которые должны быть в выходе]
-Пример:
-- Каждое обещание - отдельный пункт
-- Структура пункта: «[Имя] обещает [что] к [когда]»
-- Если дата не указана - писать «срок не указан»
-- В конце - секция «Возможные обещания» с теми где есть неопределенность
+Structure: [concrete blocks that must be in the output]
+Example:
+- Every promise is a separate item
+- Item structure: "[Name] promises [what] by [when]"
+- If no date is given, write "no date given"
+- At the end, a "Possible promises" section for the ones with uncertainty
 
-Ограничения:
-- Длина: [конкретные рамки или «без ограничения»]
-- Стиль: [если важен - описать]
-- Тон: [если важен - описать]
+Constraints:
+- Length: [concrete bounds or "no limit"]
+- Style: [if it matters, describe it]
+- Tone: [if it matters, describe it]
 
-## Запреты
+## Bans
 
-В выходе не должно быть:
-- [Конкретный антипаттерн 1 - например, «не выдумывать факты которых 
-  нет в транскрипте»]
-- [Антипаттерн 2 - например, «не суммировать содержание встречи, 
-  только обещания»]
-- [Антипаттерн 3 - например, «не использовать буллеты с *, только дефис»]
+The output must not contain:
+- [Concrete anti-pattern 1 - e.g., "no inventing facts not in the 
+  transcript"]
+- [Anti-pattern 2 - e.g., "no summarizing the content of the meeting, 
+  only the promises"]
+- [Anti-pattern 3 - e.g., "no bullets with *, only a dash"]
 
-[Конкретика обязательна. «Не пиши формально» плохо. «Не используй 
-формулы "уважаемые коллеги", "благодарю", "с уважением"» хорошо]
+[Being concrete is mandatory. "Don't write formally" is bad. "Don't use 
+the phrases 'dear colleagues,' 'thank you,' 'best regards'" is good]
 
-## Примеры
+## Examples
 
 <examples>
 <example>
-Вход: [фрагмент входа - реальный или реалистичный]
-Правильный выход: [конкретный пример хорошего выхода]
+Input: [an input fragment - real or realistic]
+Correct output: [a concrete example of a good output]
 </example>
 <example>
-Вход: [другой фрагмент]
-Правильный выход: [соответствующий выход]
+Input: [another fragment]
+Correct output: [the matching output]
 </example>
 <example>
-Вход: [ГРАНИЧНЫЙ случай - неочевидно как применять правила]
-Правильный выход: [как именно в этом случае]
-Объяснение: [почему именно так]
+Input: [a BOUNDARY case - not obvious how the rules apply]
+Correct output: [exactly how, in this case]
+Explanation: [why exactly this way]
 </example>
 </examples>
 
-Пример неправильного:
+Example of incorrect:
 <example>
-Вход: [тот же или похожий вход]
-Неправильный выход: [пример плохого результата]
-Почему плохо: [конкретная причина - что нарушено]
+Input: [the same or a similar input]
+Incorrect output: [an example of a bad result]
+Why it is bad: [a concrete reason - what rule was broken]
 </example>
 
-## Self-check перед выдачей
+## Self-check before delivery
 
-Перед тем как вернуть результат, проверить:
-- [Соблюден ли формат?]
-- [Все ли элементы из «Что делать» учтены?]
-- [Нет ли элементов из «Запреты»?]
-- [Применены ли требования к стилю/тону?]
-- [Покрыты ли граничные случаи как в примерах?]
+Before returning the result, check:
+- [Is the format followed?]
+- [Are all the elements from "What to do" accounted for?]
+- [Are there no elements from "Bans"?]
+- [Are the style/tone requirements applied?]
+- [Are the boundary cases handled as in the examples?]
 ```
 
-## Размещение входного документа (для задач по длинному тексту)
+## Placing the input document (for tasks over a long text)
 
-Если one-shot обрабатывает крупный документ (суммаризация транскрипта, извлечение из статьи), порядок секций меняется: документ идет НАВЕРХ, инструкции и задача - ниже, сам триггер «теперь сделай» - в самом конце. Запрос в конце поднимает качество до 30% на длинных входах.
+If a one-shot task processes a large document (summarizing a transcript, extracting from an article), the order of sections changes: the document goes to the TOP, the instructions and the task go below it, and the trigger itself, "now do it", goes at the very end. A query at the end raises quality by up to 30% on long inputs.
 
-Документ оборачивать в XML:
+Wrap the document in XML:
 ```
 <document>
-<source>[имя или тип документа]</source>
+<source>[name or type of document]</source>
 <document_content>
-{{ВХОДНОЙ_ДОКУМЕНТ}}
+{{INPUT_DOCUMENT}}
 </document_content>
 </document>
 ```
 
-Для коротких задач без большого входного документа (написать email, перевести фразу) порядок обычный - задача первой.
+For short tasks with no large input document (write an email, translate a phrase), the usual order applies, task first.
 
-## Минимальный one-shot промпт
+## Minimal one-shot prompt
 
-Для совсем простых задач можно сократить до:
+For very simple tasks it can be trimmed down to:
 
 ```
-## Задача
-[Что сделать]
+## Task
+[What to do]
 
-## Вход
-[Что подается]
+## Input
+[What is fed in]
 
-## Выход
-[Что вернуть и в каком формате]
+## Output
+[What to return and in what format]
 
-## Запреты
-[Что НЕ делать]
+## Bans
+[What NOT to do]
 
-## Пример
+## Example
 <example>
-Вход: [...]
-Выход: [...]
+Input: [...]
+Output: [...]
 </example>
 ```
 
-Если задача укладывается в такую структуру и работает - длиннее не нужно.
+If the task fits this structure and works, no need to make it longer.
 
-## Что НЕ должно быть в one-shot промпте
+## What must NOT be in a one-shot prompt
 
-**Decision-блоки по типам ситуаций.** One-shot задача - одна траектория. Если есть несколько траекторий, это уже Тип D, не Тип C.
+**Decision blocks by situation type.** A one-shot task is a single trajectory. If there are several trajectories, it is already Type D, not Type C.
 
-**Master rules в начале.** Для одноразовой задачи master rules избыточны - все правила лежат в задаче.
+**Master rules at the start.** For a one-time task, master rules are redundant - all the rules live in the task itself.
 
-**Character description.** «Ассистент работает прямо» не нужно. Это исполнитель конкретной задачи, не персонаж.
+**A character description.** "The assistant works directly" is not needed. This is an executor of a specific task, not a character.
 
-**Эскалация.** One-shot не имеет фоллбэка на человека - это самостоятельное выполнение.
+**Escalation.** A one-shot task has no fallback to a human - it is a self-contained execution.
 
-**Цикл черновик → аудит → финал.** Для одноразовой линейной задачи три захода стоят дороже самой задачи. Достаточно секции «Self-check перед выдачей» - конкретные вопросы, на которые модель отвечает себе перед ответом. Цикл нужен типам B и D, где промпт запускается многократно и цена ошибки тиражируется.
+**The draft → audit → final loop.** For a one-time linear task, three passes cost more than the task itself. A "Self-check before delivery" section is enough - concrete questions the model answers for itself before replying. The loop is needed for types B and D, where the prompt runs many times and the cost of error is replicated.
 
-## Типичная длина
+## Typical length
 
-Простая one-shot задача: 30-80 строк.  
-Сложная с большим количеством правил и примеров: 100-200 строк.
+A simple one-shot task: 30-80 lines.  
+A complex one with many rules and examples: 100-200 lines.
 
-Если выходит больше 250 строк - возможно это уже Тип D (extraction) или Тип A (character), стоит переосмыслить.
+If it comes out longer than 250 lines, it may already be Type D (extraction) or Type A (character), worth reconsidering.
