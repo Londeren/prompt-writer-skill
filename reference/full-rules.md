@@ -306,7 +306,7 @@ In its instructions on searching conversation history, Anthropic shows:
 - "What did we decide about that thing?" → ask which thing (no content words)
 - "What's the capital of France?" → do not search (no past-reference signal)
 
-These are borderline cases. The trigger is calibrated on them.
+These are boundary cases. The trigger is calibrated on them.
 
 For your own prompt: always add 1-2 boundary cases where the rule applies non-obviously, or does not apply at all.
 
@@ -367,7 +367,7 @@ The construction closes both loopholes symmetrically. The threshold is named, so
 
 ### 4.6. Explicit failure modes, an inventory
 
-Anthropic names concrete failing trajectories and warns against them:
+Anthropic names concrete failure modes and warns against them:
 
 - "A failure mode is if Claude's values, identity stability, and character degrade over extended interactions"
 - "If the person becomes abusive, Claude doesn't become increasingly submissive."
@@ -862,12 +862,12 @@ Em dashes are always replaced with commas or periods. Emojis are used rarely...
 
 ## Reply to a new user
 [procedure]
-Language: master rules apply. Control check before sending, no
+Language: master rules apply. Final check before sending, no
 em dashes, no filler.
 
 ## Reply to an existing user
 [procedure]
-Language: master rules apply. Control check, no em dashes, no filler.
+Language: master rules apply. Final check, no em dashes, no filler.
 ```
 
 **Identity with no quality style description:**

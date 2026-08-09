@@ -170,7 +170,7 @@ rule 19 - replace it with "assume the APM is already authenticated").
 
 **Version-specific facts about models and tools.** "Use mode X of version Y" goes stale. The prompt describes the task, not the tool's settings.
 
-**Vague wishes instead of criteria.** "Carefully", "with quality", "the way it's usually done" - the agent cannot check these. Translate everything that matters into scope, bans, and Done when.
+**Vague wishes instead of criteria.** "Carefully", "cleanly", "the way it's usually done" - the agent cannot check these. Translate everything that matters into scope, bans, and Done when.
 
 ## Typical length
 

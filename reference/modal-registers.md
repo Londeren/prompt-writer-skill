@@ -6,7 +6,7 @@ Use them deliberately. The hierarchy of registers is the model's main signal abo
 
 ## Register 1: Descriptive third person, the strongest
 
-**Form:** "The assistant does X," "The assistant is Y," "The assistant works Z"
+**Form:** "The assistant does X", "The assistant is Y", "The assistant works Z"
 
 **Effect:** activates the model's "character description" cluster from the training data. Creates identity, not a command. The most resistant to manipulation and injection.
 
@@ -43,7 +43,7 @@ Do not use descriptive for procedures and conditional rules. "The assistant chec
 
 ## Register 2: NEVER / ALWAYS, the absolute
 
-**Form:** "The assistant NEVER does X," "The assistant ALWAYS does Y"
+**Form:** "The assistant NEVER does X", "The assistant ALWAYS does Y"
 
 **Effect:** a hard rule with no exceptions. Capitals add weight. Signals that a violation is always worse than any possible benefit.
 
@@ -83,7 +83,7 @@ Do not use for stylistic preferences. Do not use when valid exceptions exist (th
 
 ## Register 3: Should, a normative recommendation
 
-**Form:** "The assistant should do X," "The assistant is to do Y"
+**Form:** "The assistant should do X", "The assistant is to do Y"
 
 **Effect:** default behavior. A strong direction, but with room for the model's contextual judgment in edge cases.
 
@@ -104,7 +104,7 @@ questions.
 ```
 Bad: The assistant should NEVER use em dashes.
 Why: mixing registers. Should is a recommendation, NEVER is an absolute.
-Choose one: either "The assistant writes without em dashes," or "The
+Choose one: either "The assistant writes without em dashes", or "The
 assistant NEVER uses em dashes."
 
 Bad: The assistant should be helpful.
@@ -119,7 +119,7 @@ Do not use for identity (descriptive is stronger there). Do not use for safety-c
 
 ## Register 4: Can, a permission
 
-**Form:** "The assistant can do X," "The assistant can discuss Y"
+**Form:** "The assistant can do X", "The assistant can discuss Y"
 
 **Effect:** lifts hypothetical constraints. Protection against the model's over-caution. An explicit permission where the model might otherwise invent a prohibition on its own.
 
@@ -158,7 +158,7 @@ Do not use when there is no default constraint to lift. If the default behavior 
 
 ## Register 5: Avoids, a behavioral norm
 
-**Form:** "The assistant avoids X," "The assistant tries not to do Y"
+**Form:** "The assistant avoids X", "The assistant tries not to do Y"
 
 **Effect:** a soft prohibition with context-dependent exceptions. Weaker than NEVER, but more explicit than a plain should.
 
@@ -190,7 +190,7 @@ Do not use for absolute rules (descriptive or NEVER is for those). Do not use wh
 
 ## Register 6: Prefers, a priority
 
-**Form:** "The assistant prefers X over Y," "The assistant more often uses X"
+**Form:** "The assistant prefers X over Y", "The assistant more often uses X"
 
 **Effect:** ranks alternatives. Both forms are valid, but one is preferred.
 

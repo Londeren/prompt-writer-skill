@@ -1,6 +1,6 @@
 # Prompt Writer
 
-A skill for Claude that turns "write me a prompt" into an engineered prompt. The methodology is based on close reading of Claude system prompts (Opus 4.7, Fable 5, Opus 5) and on how a model actually uses a prompt: not by reading it linearly, but through attention mechanics at every output token.
+A skill for Claude that turns "write me a prompt" into an engineered prompt. The methodology is based on close reading of the Claude system prompts (Opus 4.7, Fable 5, Opus 5) and on how a model actually uses a prompt: not by reading it linearly, but through attention mechanics at every output token.
 
 ## What it does
 
@@ -66,7 +66,7 @@ The skill activates on its own for requests like:
 - "Set up a Claude Project that writes posts in my voice"
 - "Improve this system prompt" + the prompt text
 - "Set up an assistant that answers questions about our docs"
-- «Напиши промпт для...» (the skill triggers across languages)
+- "Напиши промпт для..." (the skill triggers across languages)
 
 If the task is described in detail, the skill writes the prompt right away, no extra questions. If it is vague, it asks 2-3 clarifying questions and offers a choice of type.
 

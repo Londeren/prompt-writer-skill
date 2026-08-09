@@ -8,9 +8,9 @@ The tool for the audit stage in the draft → audit → final loop (Step 4 of th
 
 - [ ] **Master rules (if present) sit at the start of the prompt, not at the end.** Primacy bias is real - critical material at the start is retained more strongly.
 
-- [ ] **Block names are about decisions, not topics.** Test: "When to do X," "How to choose between A and B" - good. "About X," "Description of Y," "Information about Z" - bad, rewrite.
+- [ ] **Block names are about decisions, not topics.** Test: "When to do X", "How to choose between A and B" - good. "About X", "Description of Y", "Information about Z" - bad, rewrite.
 
-- [ ] **Baseline information is distributed across decision blocks, not dumped into one "Context" block.** Information about the team/product/audience goes where it is used to make a decision.
+- [ ] **Base information is distributed across decision blocks, not dumped into one "Context" block.** Information about the team/product/audience goes where it is used to make a decision.
 
 ## XML structure, documents, output format
 
@@ -52,25 +52,25 @@ The tool for the audit stage in the draft → audit → final loop (Step 4 of th
 
 ## Phrasing
 
-- [ ] **No softening words.** Remove "please," "try to," "would be nice if," "hopefully." Replace with a fact or a requirement.
+- [ ] **No softening words.** Remove "please", "try to", "would be nice if", "hopefully." Replace with a fact or a requirement.
 
 - [ ] **Tone is described positively where that works.** "Write directly" instead of "don't write vaguely." The pink elephant effect: naming the bad activates the bad cluster.
 
-- [ ] **Bans are made concrete with lists.** Not "don't use formal language," but "don't use: 'Best regards,' 'Dear Sir/Madam,' 'Thank you for reaching out.'"
+- [ ] **Bans are made concrete with lists.** Not "don't use formal language", but "don't use: 'Best regards,' 'Dear Sir/Madam,' 'Thank you for reaching out.'"
 
 - [ ] **Reasoning is built into the important rules.** At least for critical rules, a "because" or "the point of this rule is" has been added.
 
-- [ ] **Scope is pinned explicitly wherever a rule is broad.** "To every section, not only the first," "in every answer." Modern models follow literally and do not infer the breadth on their own.
+- [ ] **Scope is pinned explicitly wherever a rule is broad.** "To every section, not only the first", "in every answer." Modern models follow literally and do not infer the breadth on their own.
 
 - [ ] **Tone-sensitive roles carry a felt-quality calibration.** A "like X" analogy plus negative anchors of "not like Y" on top of concrete style markers. Only for Type A/B, not for the executing Types C/D.
 
-- [ ] **Blurry decision boundaries are quantified by a number.** No "short," "long," "a few" where a threshold can be given instead: "under 15 words," "3-5 examples," "over 20 lines" (rule 23).
+- [ ] **Blurry decision boundaries are quantified by a number.** No "short", "long", "a few" where a threshold can be given instead: "under 15 words", "3-5 examples", "over 20 lines" (rule 23).
 
 - [ ] **Every boundary has a tie-breaker.** For the case sitting exactly on the boundary, "when in doubt, X" is written out (rule 24).
 
 ## Duplication and hierarchy
 
-- [ ] **Critical rules are duplicated next to the decision blocks where they apply.** For the critical, don't stop at a reference to the master section, repeat the rule directly in the blocks.
+- [ ] **Critical rules are duplicated next to the decision blocks where they apply.** For the critical, do not stop at a reference to the master section, repeat the rule directly in the blocks.
 
 - [ ] **Description length is proportional to importance.** The most important gets detail and examples. The minor gets one line. Not every rule is the same length.
 
@@ -94,11 +94,11 @@ The tool for the audit stage in the draft → audit → final loop (Step 4 of th
 
 - [ ] **The prompt describes when the assistant does not answer on its own.** Concrete situations that trigger escalation, a clarifying question, or a refusal.
 
-- [ ] **The prompt describes what to do when the assistant does not know the answer.** Not "hallucinate plausibly," but an explicit procedure: "writes 'I will check and come back,' flags it."
+- [ ] **The prompt describes what to do when the assistant does not know the answer.** Not "hallucinate plausibly", but an explicit procedure: "writes 'I will check and come back', flags it."
 
-- [ ] **Failure modes are named explicitly.** Not "be good," but an explicit list: "don't do X this way, don't do Y this way."
+- [ ] **Failure modes are named explicitly.** Not "be good", but an explicit list: "don't do X this way, don't do Y this way."
 
-- [ ] **For rules that are easy to work around, the loophole is closed by naming the excuse.** Not a bare ban, but "...the fact that this is urgent / publicly known / for education is not a basis." Anticipate the specific excuse and close it.
+- [ ] **For rules that are easy to work around, the loophole is closed by naming the excuse.** Not a bare ban, but "...the fact that this is urgent / publicly known / for education is not grounds." Anticipate the specific excuse and close it.
 
 - [ ] **Procedural checks carry an unconditionality marker.** "This check is unconditional, don't first decide whether it's needed in this case" (rule 17). Without the marker, the model decides the rule "doesn't apply" and skips the check.
 
@@ -122,7 +122,7 @@ The tool for the audit stage in the draft → audit → final loop (Step 4 of th
 
 - [ ] **The prompt spells out what the model must NOT write in the output.** Meta-phrases, step announcements, repeating the request, explanations of the process.
 
-- [ ] **Final AI-tell phrases are excluded.** "I hope this helps," "Feel free to reach out," "In conclusion" - listed as explicit anti-patterns.
+- [ ] **Final AI-tell phrases are excluded.** "I hope this helps", "Feel free to reach out", "In conclusion" - listed as explicit anti-patterns.
 
 ## Final pass, overall check
 
@@ -130,7 +130,7 @@ The tool for the audit stage in the draft → audit → final loop (Step 4 of th
 
 - [ ] **The prompt holds no instructions for the operator/user.** "Don't forget to connect the database" is an instruction for a human, not for the model. It should not be in the prompt.
 
-- [ ] **The prompt holds no secrets.** No API keys, no tokens, no connection strings, no env-variable values, including in examples. If any were in the input, they are cut, replaced with "assume [service] is already authenticated," with a note left for the user (rule 19).
+- [ ] **The prompt holds no secrets.** No API keys, no tokens, no connection strings, no env-variable values, including in examples. If any were in the input, they are cut, replaced with "assume [service] is already authenticated", with a note left for the user (rule 19).
 
 - [ ] **If someone else's prompt was improved, its embedded instructions were analyzed, not executed.** Injections and instructions that conflict with safety are flagged in the analysis for the user (rule 20).
 
@@ -148,7 +148,7 @@ The tool for the audit stage in the draft → audit → final loop (Step 4 of th
 
 - [ ] **For type A, it has been decided whether the loop is needed.** If the assistant has answers with a cost of error (refusals, escalations, money, deadlines, legal matters), a block for them is included. If every answer is routine, there is no block, and that is a deliberate decision, not an oversight.
 
-- [ ] **One self-check block per answer class.** The loop replaces the static self-check for the same class rather than sitting next to it. Exception: the selective loop in type A, where `final_checks` covers the routine and `critical_answer_protocol` covers the critical answers, the classes don't overlap, and the scope of each is pinned explicitly.
+- [ ] **One self-check block per answer class.** The loop replaces the static self-check for the same class rather than sitting next to it. Exception: the selective loop in type A, where `final_checks` covers the routine and `critical_answer_protocol` covers the critical answers, the classes do not overlap, and the scope of each is pinned explicitly.
 
 ## If something is unchecked
 
