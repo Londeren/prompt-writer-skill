@@ -1,288 +1,292 @@
-# Регистры модальности - детальный reference
+# Modality registers, a detailed reference
 
-Шесть основных регистров силы инструкций. Каждый со своим эффектом, зоной применения, и примерами правильного и неправильного использования.
+Six core registers of instruction strength. Each has its own effect, its own zone of application, and examples of correct and incorrect use.
 
-Использовать осознанно. Иерархия регистров - главный сигнал модели о приоритетах правил. Монохромный промпт (все правила одним регистром) теряет иерархию.
+Use them deliberately. The hierarchy of registers is the model's main signal about rule priority. A monochrome prompt, every rule in one register, loses that hierarchy.
 
-## Регистр 1: Descriptive third person - самое сильное
+## Register 1: Descriptive third person, the strongest
 
-**Форма:** «Ассистент делает X», «Ассистент это Y», «Ассистент работает Z»
+**Form:** "The assistant does X," "The assistant is Y," "The assistant works Z"
 
-**Эффект:** активирует у модели кластер «описание персонажа» из обучающих данных. Создает identity, не команду. Самое устойчивое к манипуляциям и инъекциям.
+**Effect:** activates the model's "character description" cluster from the training data. Creates identity, not a command. The most resistant to manipulation and injection.
 
-**Зона применения:** core character traits, базовые свойства которые работают всегда независимо от контекста. Уровень идентичности.
+**Zone of application:** core character traits, base properties that hold always regardless of context. Identity level.
 
-### Примеры правильного использования
-
-```
-Ассистент работает прямо и по делу.
-Ассистент относится к учетным данным как к секретной информации.
-Ассистент проверяет факты перед утверждением.
-Ассистент общается на русском языке без буквы Ё.
-```
-
-### Примеры неправильного использования
+### Examples of correct use
 
 ```
-Плохо: Ассистент работает прямо когда это уместно.
-Почему: добавление «когда уместно» к descriptive statement ослабляет его 
-до уровня should. Если идея в том что это identity - убрать оговорку.
-
-Плохо: Ассистент должен работать прямо.
-Почему: «должен» переводит descriptive в should-регистр. Слабее на уровне 
-identity.
-
-Плохо: Будь прямым и работай по делу.
-Почему: императив во втором лице активирует другой паттерн (получение команды), 
-не identity. Менее устойчиво.
+The assistant works directly and to the point.
+The assistant treats credentials as secret information.
+The assistant checks facts before asserting them.
+The assistant writes without em dashes.
 ```
 
-### Когда не использовать
-
-Не использовать descriptive для процедур и условных правил. «Ассистент сначала проверяет контекст, потом отвечает» - это процедура, должна быть в should-регистре или императиве с явным условием.
-
-## Регистр 2: NEVER / ALWAYS - абсолютный
-
-**Форма:** «Ассистент НИКОГДА не делает X», «Ассистент ВСЕГДА делает Y»
-
-**Эффект:** hard rule без исключений. Заглавные буквы усиливают вес. Сигнал что нарушение всегда хуже любого possible benefit.
-
-**Важно для современных моделей (Claude 4.5+ и семейство Claude 5):** капс и «CRITICAL: You MUST» на современных моделях вызывают overtriggering - модель перевыполняет и становится слишком ригидной. Официальный гайд Anthropic рекомендует заменять «CRITICAL: You MUST» на обычное «Use this when». Поэтому капс ALWAYS/NEVER оставлять только реальным hard limits (безопасность, правовое, репутационно-критичное), и даже там можно обычным регистром. Сила правила идет от позиции рядом с применением и от примеров, не от капслока. Историческая причина капса - старые модели недотриггеривали, новые наоборот перетриггеривают. Для нерушимых 5-10% правил капс идет не сам по себе, а в составе полного арсенала усиления (числовой порог, дублирование в конце, self-check, последствия, примеры) - состав в full-rules.md, раздел 2.7.
-
-**Зона применения:** безопасность, правовые ограничения, репутационно критичные действия. Использовать редко чтобы сохранить вес. Если половина правил через NEVER - модель перестает различать что важнее.
-
-### Примеры правильного использования
+### Examples of incorrect use
 
 ```
-Ассистент НИКОГДА не передает персональные данные клиентов третьим сторонам.
-Ассистент ВСЕГДА проверяет валидность ссылки перед отправкой пользователю.
-Ассистент НИКОГДА не выдает финальную цену без подтверждения от руководителя.
+Bad: The assistant works directly when appropriate.
+Why: adding "when appropriate" to a descriptive statement weakens it to should
+level. If the point is identity, drop the qualifier.
+
+Bad: The assistant should work directly.
+Why: "should" shifts descriptive into the should register. Weaker at the
+identity level.
+
+Bad: Be direct and get to the point.
+Why: a second-person imperative activates a different pattern (receiving a
+command), not identity. Less resistant to override.
 ```
 
-### Примеры неправильного использования
+### When not to use
+
+Do not use descriptive for procedures and conditional rules. "The assistant checks the context first, then answers" is a procedure: it belongs in the should register or an imperative with an explicit condition.
+
+## Register 2: NEVER / ALWAYS, the absolute
+
+**Form:** "The assistant NEVER does X," "The assistant ALWAYS does Y"
+
+**Effect:** a hard rule with no exceptions. Capitals add weight. Signals that a violation is always worse than any possible benefit.
+
+**Important for modern models (Claude 4.5+ and the Claude 5 family):** caps and "CRITICAL: You MUST" cause overtriggering on modern models: the model overshoots and becomes too rigid. The official Anthropic guide recommends replacing "CRITICAL: You MUST" with a plain "Use this when". So keep caps ALWAYS/NEVER for real hard limits only (safety, legal, reputation-critical), and even there plain register often works. A rule's force comes from its position next to the point of application and from its examples, not from caps lock. The historical reason for caps: old models undertriggered, new ones overtrigger instead. For the unbreakable 5-10% of rules, caps do not stand alone: they come as part of the full arsenal for hard limits (a numeric threshold, duplication at the end, a self-check, consequences, examples). Full composition in full-rules.md, section 2.7.
+
+**Zone of application:** safety, legal constraints, reputation-critical actions. Use rarely, to keep the weight. If half the rules run through NEVER, the model stops telling what matters more.
+
+### Examples of correct use
 
 ```
-Плохо: Ассистент НИКОГДА не использует букву Ё.
-Почему: это стилистическое правило, не safety-критичное. Здесь подходит 
-descriptive или avoids: «Ассистент пишет без буквы Ё».
-
-Плохо: Ассистент НИКОГДА не пишет длинные ответы.
-Почему: «длинные» субъективно, и иногда длинные ответы уместны. NEVER 
-закрывает override который должен быть открыт.
-
-Плохо: Ассистент НИКОГДА не делает X. Ассистент НИКОГДА не делает Y. 
-       Ассистент НИКОГДА не делает Z. Ассистент НИКОГДА не делает W.
-Почему: четыре NEVER подряд обесценивают все четыре. Модель не различает 
-что важнее. Выбрать одно-два самых критичных, остальное перевести 
-в should/avoids.
+The assistant NEVER shares customer personal data with third parties.
+The assistant ALWAYS verifies a link is valid before sending it to the user.
+The assistant NEVER gives a final price without confirmation from a manager.
 ```
 
-### Когда не использовать
-
-Не использовать для стилистических преференций. Не использовать когда есть валидные исключения (override должен быть открыт). Не использовать массово - теряет вес.
-
-## Регистр 3: Should - нормативная рекомендация
-
-**Форма:** «Ассистент should/должен делать X», «Ассистент следует делать Y»
-
-**Эффект:** поведение по умолчанию. Сильное направление, но с пространством для контекстного суждения модели в edge cases.
-
-**Зона применения:** правильное в 90% случаев. Когда есть редкие случаи где нарушение оправдано конкретным контекстом.
-
-### Примеры правильного использования
+### Examples of incorrect use
 
 ```
-Ассистент должен искать в интернете при вопросах о текущих событиях.
-Ассистент должен проверять статус заказа перед ответом на вопрос о доставке.
-Ассистент должен предлагать клиенту демо-звонок после трех уточняющих вопросов.
+Bad: The assistant NEVER uses em dashes.
+Why: this is a stylistic rule, not safety-critical. Descriptive or avoids
+fits better here: "The assistant writes without em dashes."
+
+Bad: The assistant NEVER writes long replies.
+Why: "long" is subjective, and long replies are sometimes appropriate. NEVER
+closes an override that should stay open.
+
+Bad: The assistant NEVER does X. The assistant NEVER does Y.
+     The assistant NEVER does Z. The assistant NEVER does W.
+Why: four NEVERs in a row devalue all four. The model cannot tell which
+matters more. Pick the one or two most critical, move the rest to
+should/avoids.
 ```
 
-### Примеры неправильного использования
+### When not to use
+
+Do not use for stylistic preferences. Do not use when valid exceptions exist (the override should stay open). Do not use broadly: it loses weight.
+
+## Register 3: Should, a normative recommendation
+
+**Form:** "The assistant should do X," "The assistant is to do Y"
+
+**Effect:** default behavior. A strong direction, but with room for the model's contextual judgment in edge cases.
+
+**Zone of application:** correct in 90% of cases. Cases where a rare exception is justified by specific context.
+
+### Examples of correct use
 
 ```
-Плохо: Ассистент должен НИКОГДА не использовать букву Ё.
-Почему: смешивание регистров. Должен - это рекомендация, NEVER - абсолют. 
-Выбрать один: либо «Ассистент пишет без Ё», либо «Ассистент НИКОГДА не 
-использует Ё».
-
-Плохо: Ассистент должен быть полезным.
-Почему: «полезный» абстрактно, нет операционного смысла. Конкретизировать 
-что значит полезный в контексте: «Ассистент должен предлагать конкретные 
-следующие шаги в конце каждого ответа».
+The assistant should search the web for questions about current events.
+The assistant should check the order status before answering a shipping
+question.
+The assistant should offer the customer a demo call after three clarifying
+questions.
 ```
 
-### Когда не использовать
-
-Не использовать для identity (там descriptive сильнее). Не использовать для критичного безопасного (там NEVER). Не использовать для разрешений (там can).
-
-## Регистр 4: Can - разрешение
-
-**Форма:** «Ассистент может делать X», «Ассистент может обсуждать Y»
-
-**Эффект:** снимает гипотетические ограничения. Защита от переосторожности модели. Явное разрешение там где модель может сама додумать запрет.
-
-**Зона применения:** когда есть риск что модель будет отказывать там где не нужно. Чувствительные темы которые в этом контексте обсуждать уместно.
-
-### Примеры правильного использования
+### Examples of incorrect use
 
 ```
-Ассистент может обсуждать сложные медицинские случаи откровенно - собеседники 
-это сертифицированные врачи.
+Bad: The assistant should NEVER use em dashes.
+Why: mixing registers. Should is a recommendation, NEVER is an absolute.
+Choose one: either "The assistant writes without em dashes," or "The
+assistant NEVER uses em dashes."
 
-Ассистент может использовать сильную лексику в комментариях к коду - это 
-внутренний инструмент команды разработки.
-
-Ассистент может давать прямые рекомендации по инвестициям - пользователи 
-это финансовые консультанты, не розничные клиенты.
+Bad: The assistant should be helpful.
+Why: "helpful" is abstract, no operational meaning. Make concrete what
+helpful means in context: "The assistant should offer specific next steps at
+the end of every reply."
 ```
 
-### Примеры неправильного использования
+### When not to use
+
+Do not use for identity (descriptive is stronger there). Do not use for safety-critical rules (NEVER is for those). Do not use for permissions (can is for those).
+
+## Register 4: Can, a permission
+
+**Form:** "The assistant can do X," "The assistant can discuss Y"
+
+**Effect:** lifts hypothetical constraints. Protection against the model's over-caution. An explicit permission where the model might otherwise invent a prohibition on its own.
+
+**Zone of application:** where there's a risk the model will refuse when it shouldn't. Sensitive topics that are appropriate to discuss in this context.
+
+### Examples of correct use
 
 ```
-Плохо: Ассистент может работать прямо.
-Почему: «прямо» это identity, не разрешение. Здесь descriptive: 
-«Ассистент работает прямо».
+The assistant can discuss complex clinical cases frankly. The audience here
+is licensed physicians.
 
-Плохо: Ассистент может отвечать на вопросы пользователей.
-Почему: это его основная функция, не permission. Permission нужен только 
-там где есть default-ограничение которое снимается.
+The assistant can use strong language in code comments. This is an internal
+tool for the engineering team.
+
+The assistant can give direct investment recommendations. The users here
+are financial advisors, not retail clients.
 ```
 
-### Когда не использовать
-
-Не использовать когда нет default-ограничения которое нужно снять. Если default-поведение и так подходит - descriptive или should уместнее.
-
-## Регистр 5: Avoids - поведенческая норма
-
-**Форма:** «Ассистент избегает X», «Ассистент стремится не делать Y»
-
-**Эффект:** мягкий запрет с исключениями по контексту. Слабее NEVER, но более явный чем simple should.
-
-**Зона применения:** стилистические преференции, паттерны нарушаемые только по явному запросу пользователя.
-
-### Примеры правильного использования
+### Examples of incorrect use
 
 ```
-Ассистент избегает использования эмодзи (если только пользователь сам их не использует).
-Ассистент избегает длинных вступлений и переходит сразу к сути.
-Ассистент избегает технического жаргона в общении с не-техническими собеседниками.
+Bad: The assistant can work directly.
+Why: "directly" is identity, not a permission. Descriptive fits here: "The
+assistant works directly."
+
+Bad: The assistant can answer user questions.
+Why: that's its core function, not a permission. A permission is needed only
+where a default constraint is being lifted.
 ```
 
-### Примеры неправильного использования
+### When not to use
+
+Do not use when there is no default constraint to lift. If the default behavior already fits, descriptive or should is more appropriate.
+
+## Register 5: Avoids, a behavioral norm
+
+**Form:** "The assistant avoids X," "The assistant tries not to do Y"
+
+**Effect:** a soft prohibition with context-dependent exceptions. Weaker than NEVER, but more explicit than a plain should.
+
+**Zone of application:** stylistic preferences, patterns broken only on an explicit user request.
+
+### Examples of correct use
 
 ```
-Плохо: Ассистент избегает передачи персональных данных.
-Почему: это safety-критичное, должен быть NEVER. Avoids слишком мягко.
-
-Плохо: Ассистент избегает использовать букву Ё.
-Почему: для абсолютного стилистического правила лучше descriptive: 
-«Ассистент пишет без буквы Ё». Avoids оставляет пространство для нарушения, 
-которое здесь не нужно.
+The assistant avoids emojis (unless the user uses them first).
+The assistant avoids long preambles and gets straight to the point.
+The assistant avoids technical jargon with non-technical audiences.
 ```
 
-### Когда не использовать
-
-Не использовать для абсолютных правил (там descriptive или NEVER). Не использовать когда override должен быть открыт явно - для этого default+override структура с конкретным условием.
-
-## Регистр 6: Prefers - приоритет
-
-**Форма:** «Ассистент предпочитает X вместо Y», «Ассистент чаще использует X»
-
-**Эффект:** ранжирование альтернатив. Обе формы допустимы, но одна предпочтительная.
-
-**Зона применения:** есть несколько валидных подходов, нужно указать предпочтительный без запрета остальных.
-
-### Примеры правильного использования
+### Examples of incorrect use
 
 ```
-Ассистент предпочитает короткие ответы развернутым, если контекст не требует деталей.
-Ассистент предпочитает оригинальные источники агрегаторам.
-Ассистент предпочитает прямой вопрос пользователю догадкам о его намерениях.
+Bad: The assistant avoids sharing personal data.
+Why: this is safety-critical: it should be NEVER. Avoids is too soft.
+
+Bad: The assistant avoids em dashes.
+Why: for an absolute stylistic rule, descriptive works better: "The
+assistant writes without em dashes." Avoids leaves room for a violation
+that isn't needed here.
 ```
 
-### Примеры неправильного использования
+### When not to use
+
+Do not use for absolute rules (descriptive or NEVER is for those). Do not use when the override needs to stay explicitly open: that calls for a default + override structure with a specific condition.
+
+## Register 6: Prefers, a priority
+
+**Form:** "The assistant prefers X over Y," "The assistant more often uses X"
+
+**Effect:** ranks alternatives. Both forms are valid, but one is preferred.
+
+**Zone of application:** several valid approaches exist, and the prompt needs to point to the preferred one without banning the rest.
+
+### Examples of correct use
 
 ```
-Плохо: Ассистент предпочитает не использовать букву Ё.
-Почему: это либо правило (descriptive/avoids), либо нет. Prefers создает 
-ложное впечатление что иногда Ё допустима.
-
-Плохо: Ассистент предпочитает быть полезным.
-Почему: альтернатива не определена. Prefers нужен когда есть две конкретные 
-альтернативы - A или B.
+The assistant prefers short replies over long ones, unless the context
+needs detail.
+The assistant prefers original sources over aggregators.
+The assistant prefers asking the user directly over guessing their intent.
 ```
 
-### Когда не использовать
-
-Не использовать когда альтернатива не определена. Не использовать когда одна из опций фактически запрещена - там descriptive/avoids/NEVER.
-
-## Default + override структура
-
-Часто правильная формулировка - комбинация регистров с явным условием.
-
-### Структура
+### Examples of incorrect use
 
 ```
-[Default-поведение в одном регистре], если только [условие], в этом случае [override].
+Bad: The assistant prefers not to use em dashes.
+Why: this is either a rule (descriptive/avoids) or it isn't. Prefers
+creates a false impression that em dashes are sometimes acceptable.
+
+Bad: The assistant prefers to be helpful.
+Why: the alternative is undefined. Prefers is for when there are two
+concrete alternatives, A or B.
 ```
 
-### Примеры
+### When not to use
+
+Do not use when the alternative is undefined. Do not use when one of the options is effectively forbidden (descriptive/avoids/NEVER is for those).
+
+## Default + override structure
+
+Often the correct phrasing combines registers with an explicit condition.
+
+### Structure
 
 ```
-Ассистент избегает эмодзи, если только пользователь сам их не использует - 
-в этом случае ассистент использует эмодзи в том же стиле.
-
-Ассистент отвечает на русском, если только пользователь не пишет на другом 
-языке - в этом случае ассистент переключается на язык пользователя.
-
-Ассистент НИКОГДА не выдает финальную цену, если только в контексте нет 
-явного подтверждения от руководителя - в этом случае ассистент может 
-сообщить цену.
+[Default behavior in one register], unless [condition], in which case
+[override].
 ```
 
-### Зачем это нужно
+### Examples
 
-Жесткое правило без override создает frustrating edge cases. Override без правила создает drift. Default + явное условие override дает предсказуемость + адаптивность.
+```
+The assistant avoids emojis, unless the user uses them first, in which case
+the assistant matches that style.
 
-## Иерархия регистров по силе
+The assistant replies in Russian, unless the user writes in another
+language, in which case the assistant switches to the user's language.
 
-От самого сильного к самому слабому:
+The assistant NEVER gives a final price, unless the context shows explicit
+confirmation from a manager, in which case the assistant can share the
+price.
+```
 
-1. **Descriptive third person** - identity, нерушимо потому что описание сути
-2. **NEVER / ALWAYS** - hard rule, нерушимо потому что явный абсолют
-3. **Avoids** - устойчивая норма с возможностью контекстного исключения
-4. **Should** - рекомендация с пространством для суждения
-5. **Prefers** - приоритет между альтернативами
-6. **Can** - разрешение, снимает ограничение (не запрещает противоположное)
+### Why this matters
 
-## Распределение регистров в типичном промпте
+A hard rule with no override creates frustrating edge cases. An override with no rule creates drift. Default plus an explicit override condition gives predictability plus adaptability.
 
-В хорошем промпте средней сложности (300-600 строк) распределение примерно такое:
+## Hierarchy of registers by strength
 
-- Descriptive - 20-30% правил (identity, core traits)
-- NEVER/ALWAYS - 5-10% (только safety-критичное)
-- Should - 30-40% (большинство процедур и default-поведения)
-- Avoids - 10-15% (стилистика)
-- Can - 5-10% (явные разрешения)
-- Prefers - 5-10% (приоритеты между опциями)
+From strongest to weakest:
 
-Если в твоем черновике все правила в одном регистре - есть проблема. Если регистр выбирается случайно - есть проблема. Каждый регистр должен быть осознанным выбором.
+1. **Descriptive third person** - identity, unbreakable because it describes the essence
+2. **NEVER / ALWAYS** - hard rule, unbreakable because it's an explicit absolute
+3. **Avoids** - a stable norm with room for a contextual exception
+4. **Should** - a recommendation with room for judgment
+5. **Prefers** - a priority between alternatives
+6. **Can** - a permission that lifts a constraint (does not ban the opposite)
 
-## Тест: правильно ли выбран регистр
+## Register distribution in a typical prompt
 
-Для каждого важного правила спросить себя:
+In a good prompt of medium complexity (300-600 lines), the distribution runs roughly like this:
 
-1. **Это про то кто такой ассистент, или про что он делает?**  
-   Если про identity → descriptive. Если про действие → should/императив.
+- Descriptive - 20-30% of rules (identity, core traits)
+- NEVER/ALWAYS - 5-10% (safety-critical only)
+- Should - 30-40% (most procedures and default behavior)
+- Avoids - 10-15% (style)
+- Can - 5-10% (explicit permissions)
+- Prefers - 5-10% (priorities between options)
 
-2. **Есть ли валидные исключения?**  
-   Если нет → NEVER/ALWAYS. Если редкие → avoids. Если контекстные → should.
+If every rule in your draft sits in one register, that's a problem. If the register gets picked at random, that's a problem too. Every register should be a deliberate choice.
 
-3. **Нужно ли явно разрешить что-то что модель сама может запретить?**  
-   Если да → can.
+## Test: is the register chosen correctly
 
-4. **Есть ли несколько валидных опций с одной предпочтительной?**  
-   Если да → prefers.
+For every important rule, ask:
 
-5. **Это default с условным override?**  
-   Если да → default + override структура.
+1. **Is this about who the assistant is, or about what it does?**  
+   About identity → descriptive. About an action → should/imperative.
+
+2. **Are there valid exceptions?**  
+   None → NEVER/ALWAYS. Rare → avoids. Contextual → should.
+
+3. **Does something need explicit permission that the model might otherwise ban on its own?**  
+   Yes → can.
+
+4. **Are there several valid options with one preferred?**  
+   Yes → prefers.
+
+5. **Is this a default with a conditional override?**  
+   Yes → the default + override structure.
