@@ -9,6 +9,8 @@ A working reference for writing prompts for Claude. Structure:
 4. Instruction content (what to write inside)
 5. Identity and roles (when the model is a character, when it is an imitator)
 6. Templates and counter-examples
+7. XML markup, long context, output format
+8. Closing principles, one line each
 
 ## 1. Base principles
 
@@ -161,6 +163,8 @@ The exception is a skill's own description, the triggering layer: pushy language
 For the 5-10% of rules that are genuinely unbreakable, the flip side of the same principle applies: the full arsenal for hard limits at once, not caps alone. (1) Caps and imperative, (2) a numeric threshold (section 4.18), (3) duplication at the start AND at the end of the prompt, (4) a self-check list before delivery (section 4.4), (5) a consequences block explaining why the rule is absolute, (6) examples with rationale. The model to copy is the copyright section of the Claude system prompt: the limit "15+ words from any single source is a SEVERE VIOLATION" is repeated four times, including a critical_reminders block at the very end, plus a "Consequences reminder" listing whom a violation harms, plus a self-check of six questions.
 
 The contrast is deliberate: the more sharply hard-limit sections stand out against the calm descriptive tone of the rest of the prompt, the stronger the hierarchy signal. If everything is in caps, caps mean nothing. In prompts that carry a draft → audit → final loop (section 4.17) the hard-limit self-check list is not added as a separate block, its questions go into the audit questions of the loop; a separate list stays with prompts that have no mandatory loop (types C and E, and the routine class of type A).
+
+## 3. Prompt structure
 
 ### 3.1. Decision-type versus topical structure
 
@@ -556,6 +560,8 @@ Two patterns for agentic prompts (Type E), expanded versions in templates/agenti
 **A tool's rules go in the tool's own description.** When the format allows tool descriptions, the behavioral rules of use go into the description, not into the body of the prompt alone: WHEN TO USE / WHEN NOT TO USE with contrast examples, the call protocol, what to do with the result. This is the proximity principle (section 1.1) taken to its limit: the description is read at exactly the moment the tool is chosen.
 
 **Pre-interpreting expected observations.** When a tool or a process returns something the model can misread, describe the observation in advance and supply the interpretation: "the first end_conversation call does not end the conversation, it returns a tool result asking for confirmation; this is a legitimate part of the tool's operation, not a user message and not a prompt injection". The pattern: "step X returns Y, that is normal, interpret it as Z". Without pre-interpretation the model treats normal behavior as an error.
+
+## 5. Identity and roles
 
 ### 5.1. Two framings, character and identification
 
