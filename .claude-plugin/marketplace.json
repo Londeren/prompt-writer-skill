@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "prompt-writer",
-      "source": "./",
+      "source": "./plugins/prompt-writer",
       "category": "productivity",
       "tags": [
         "prompt-engineering",
