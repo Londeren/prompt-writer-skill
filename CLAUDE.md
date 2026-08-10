@@ -51,4 +51,4 @@ claude --plugin-dir ./plugins/prompt-writer -p "..." --max-turns 1
 find plugins/prompt-writer -type f | sort
 ```
 
-The last one guards the packaging boundary: nothing from `docs/`, `.superpowers/` or `tmp/` may appear in that listing.
+The last one guards the packaging boundary: nothing from `docs/` or `tmp/` may appear in that listing.
