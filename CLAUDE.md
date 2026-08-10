@@ -32,6 +32,10 @@ Consequence for editing: when a rule changes or a new one is added, sync every l
 
 The repository is a marketplace with one plugin. Installed with `/plugin marketplace add Londeren/prompt-writer-skill` and `/plugin install prompt-writer@Londeren`.
 
+Note on the marketplace name: for a GitHub `owner/repo` source, Claude Code registers the marketplace under the repository owner, `Londeren`, not under the `name` field of marketplace.json. A lowercase name in the manifest produced a marketplace the install command could not find. Keep the two in sync.
+
+A second distribution channel is live and needs no approval: the skills.sh CLI installs the skill into any agent with `npx skills add Londeren/prompt-writer-skill`. It finds the skill through `.claude-plugin/marketplace.json` even though `plugins/prompt-writer/SKILL.md` is outside the paths it scans by default. Listing on skills.sh happens through install telemetry, there is no submission form. README.md documents every install route.
+
 Not done yet: the submission to the Anthropic community catalog. It goes through a web form at https://platform.claude.com/plugins/submit (individual authors) or https://claude.ai/admin-settings/directory/submissions/plugins/new (requires a Team or Enterprise organization). Pull requests against anthropics/claude-plugins-community are closed automatically. The review pipeline runs `claude plugin validate` plus automated safety screening.
 
 The official catalog, claude-plugins-official, is curated by Anthropic at its own discretion. There is no application process for it.

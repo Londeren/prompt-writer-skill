@@ -4,10 +4,20 @@ Claude Code plugin. A skill that turns "write me a prompt" into an engineered pr
 
 ## Install
 
+Claude Code, as a plugin:
+
 ```
 /plugin marketplace add Londeren/prompt-writer-skill
 /plugin install prompt-writer@Londeren
 ```
+
+Any other agent (Cursor, Copilot, Codex, Gemini, Cline and more), through the skills.sh CLI:
+
+```bash
+npx skills add Londeren/prompt-writer-skill
+```
+
+Manual copies, team-wide project settings and the claude.ai zip upload are covered in the [repository README](https://github.com/Londeren/prompt-writer-skill#installation).
 
 ## Use
 
