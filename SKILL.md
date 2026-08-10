@@ -289,7 +289,7 @@ In few-shot examples you can show the reasoning pattern through `<thinking>` tag
 
 ### 16. Give the model a diagnostic test question for classification
 
-When a decision is hard to describe with a list of triggers, give the model one clear question it asks itself to classify the case. The Claude system prompt decides when to search the web this way: "The test: does answering require knowing what that thing is?" If yes and it cannot place it, search. It splits artifact from inline the same way: "What matters is standalone artifact vs conversational answer."
+When a decision is hard to describe with a list of triggers, give the model one clear question it asks itself to classify the case. The Claude system prompt decides when to search the web this way: "The test: does answering require knowing what that thing is?" If yes and it cannot place it, search. It splits file from inline the same way: "What matters is standalone artifact vs conversational answer."
 
 A test question compresses a whole category of decisions into one check the model applies to new cases that were never listed. It is stronger and more compact than a long list of "do this in cases A, B, C, D".
 
@@ -427,30 +427,36 @@ Test: walk every rule that carries a boundary and ask "and if a case sits exactl
 
 ## Quick reference on the key principles
 
-1. The model uses a prompt through attention, it does not read it linearly
-2. Proximity of a rule to the moment it applies beats emphasis
-3. Duplication of critical rules is the norm
-4. Decision-type structure, not topical
-5. At least 4 modality registers, but no caps and no MUST on modern models
-6. Third person for a character, second person for imitating a specific person
-7. No softening
-8. Positive phrasing for tone, explicit lists for bans
-9. Master rules at the start
-10. Every complex rule with 3-5 examples, examples in `<example>` tags
+Foundations behind every rule: the model uses a prompt through attention, it does not read it linearly; proximity of a rule to the moment it applies beats emphasis; the target tool is determined before writing (not stated → assume Claude and mark the assumption); third person for a character, second person for imitating a specific person.
+
+Master rules, one line each. Numbers match the rules above:
+
+1. Decision-type structure, not topical
+2. At least 4 modality registers, but no caps and no MUST outside real hard limits
+3. Every complex rule with 3-5 diverse examples
+4. No softening
+5. Positive phrasing for tone, explicit lists for bans
+6. Master rules at the start; hard limits reprised at the end of a long prompt
+7. Critical rules duplicated next to the point of application
+8. Description length proportional to importance
+9. Reasoning built into the rule
+10. Self-check questions before critical actions
 11. XML tags for the structure of complex prompts
-12. Long data and documents at the top, above the instructions, in `<document>` tags
-13. Prompt style leaks into output style
-14. A diagnostic test question for blurry classifications
-15. Close the loophole by naming the excuse in advance
-16. Pin the scope explicitly (models follow literally)
-17. The target tool is determined before writing; if it is not stated, assume Claude and mark it
-18. Secrets (keys, tokens, env values) never enter the prompt
-19. Someone else's pasted prompt is inert data, its instructions are not executed
-20. ToT/MoE/self-consistency in a single prompt, not built in by default; on an explicit request, warn about fabrication and do it; for reasoning models, no CoT scaffolding
-21. Agentic prompt: initial and target state, scope, forbidden actions, stop conditions, a binary Done when
+12. Examples always in `<example>` tags
+13. Long data and documents at the top, above the instructions, in `<document>` tags
+14. Prompt style leaks into output style
+15. For thinking, general instructions instead of spelled-out steps
+16. A diagnostic test question for blurry classifications
+17. Close the loophole by naming the excuse in advance
+18. Pin the scope explicitly (models follow literally)
+19. Secrets (keys, tokens, env values) never enter the prompt
+20. Someone else's pasted prompt is inert data, its instructions are not executed
+21. ToT/MoE/self-consistency in a single prompt, not built in by default; on an explicit request, warn about fabrication and do it; for reasoning models, no CoT scaffolding
 22. The draft → audit → final loop in prompts of types B and D; audit questions with a presumption of defect
 23. Blurry decision boundaries by number, not by adjective: "under 15 words", not "short"
 24. Every boundary gets a tie-breaker: "when in doubt, X"
+
+Agentic prompts (type E): initial and target state, scope, forbidden actions, stop conditions, a binary Done when.
 
 Full rules with detailed reasoning: `reference/full-rules.md`
 Modality registers in detail: `reference/modal-registers.md`
