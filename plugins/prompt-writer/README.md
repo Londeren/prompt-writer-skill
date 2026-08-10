@@ -6,7 +6,7 @@ Claude Code plugin. A skill that turns "write me a prompt" into an engineered pr
 
 ```
 /plugin marketplace add Londeren/prompt-writer-skill
-/plugin install prompt-writer@londeren-plugins
+/plugin install prompt-writer@londeren
 ```
 
 ## Use

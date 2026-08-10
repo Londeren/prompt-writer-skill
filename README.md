@@ -37,7 +37,7 @@ The full set of rules with reasoning lives in [reference/full-rules.md](plugins/
 
 ```
 /plugin marketplace add Londeren/prompt-writer-skill
-/plugin install prompt-writer@londeren-plugins
+/plugin install prompt-writer@londeren
 ```
 
 If the install summary says `Run /reload-plugins to activate.`, run that command. The skill becomes available as `prompt-writer:prompt-writer` and triggers on its own.
