@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 The Claude skill `prompt-writer` is a methodology for writing prompts for LLMs, based on close reading of the Claude system prompts (Opus 4.7, Fable 5, Opus 5) and on attention mechanics. The repository consists only of markdown: no build, no tests, no dependencies. All content is in English, except the frontmatter `description` in SKILL.md, which mixes English and Russian on purpose: English triggers the skill for English requests, and the Russian trigger phrases are there for cross-language triggering.
 
+The repository is also a plugin marketplace: `.claude-plugin/marketplace.json` at the root points at `plugins/prompt-writer/`, which is the plugin itself and the only part that ships to users. Every skill path in this file, `SKILL.md`, `reference/`, `templates/`, `checklists/`, is relative to that directory.
+
 **Project goal:** publish the skill on the Claude Plugins Store / marketplace. Work on the repository should move it toward a publishable state.
 
 Convention: the canonical running example of a hard style rule throughout the skill is the em dash ban ("never uses em dashes"). Meta-documents follow the same style: no em dashes in prose.
@@ -26,11 +28,27 @@ The same rules exist at six levels of detail: Master rules and Quick reference i
 
 Consequence for editing: when a rule changes or a new one is added, sync every layer, the rule itself in reference, its digest and number in Master rules / Quick reference in SKILL.md, the matching checklist item, the affected templates, and the summary layers, README.md and full-rules §6.1/§6.2. Numbering of the Master rules in SKILL.md runs continuously and is cross-referenced elsewhere ("details in rule 12"); check those references when inserting a rule in the middle.
 
-## Known publication blockers
+## Publication status
 
-- SKILL.md references claude.ai-environment tools: `present_files`, `ask_user_input_v0`, `view`. Claude Code has no equivalents (the closest are writing a file, AskUserQuestion, Read). For publication, the wording needs to become platform-neutral or offer alternatives.
-- The plugin manifests already exist (`.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`). The remaining packaging step, moving the skill files into the plugin directory the marketplace manifest points to, is tracked in `docs/superpowers/plans/2026-08-09-plugin-packaging.md`. Check the current format against the official Claude Code plugins documentation, not from memory.
+The repository is a marketplace with one plugin. Installed with `/plugin marketplace add Londeren/prompt-writer-skill` and `/plugin install prompt-writer@londeren-plugins`.
+
+Not done yet: the submission to the Anthropic community catalog. It goes through a web form at https://platform.claude.com/plugins/submit (individual authors) or https://claude.ai/admin-settings/directory/submissions/plugins/new (requires a Team or Enterprise organization). Pull requests against anthropics/claude-plugins-community are closed automatically. The review pipeline runs `claude plugin validate` plus automated safety screening.
+
+The official catalog, claude-plugins-official, is curated by Anthropic at its own discretion. There is no application process for it.
+
+When editing the skill text, keep it platform neutral: present_files, ask_user_input_v0 and the view tool exist only in claude.ai. The one place that names a tool on purpose is the type question in SKILL.md, which names both AskUserQuestion and ask_user_input_v0. The ask_user_input_v0 mention in templates/agentic-task.md is an example of tool-description writing, not a call, and must survive any search and replace.
 
 ## Checking changes
 
 There are no automated tests. The smoke test is to activate the skill on a real request ("write a prompt for...") and confirm that routing picks the right type, the template loads, and the result passes self-check. For a systematic quality run there is the user's `autoresearch` skill (iterative optimization of the skill against evals).
+
+Manifests and packaging are checked with commands, not by eye:
+
+```bash
+claude plugin validate .
+claude plugin validate ./plugins/prompt-writer --strict
+claude --plugin-dir ./plugins/prompt-writer -p "..." --max-turns 1
+find plugins/prompt-writer -type f | sort
+```
+
+The last one guards the packaging boundary: nothing from `docs/`, `.superpowers/` or `tmp/` may appear in that listing.

@@ -29,21 +29,27 @@ When you ask Claude to write or improve a prompt, the skill:
 - **Duplication of critical rules.** What is an anti-pattern in code (DRY) is a pattern in a prompt: attention weighs a rule's proximity to its point of application more than emphasis.
 - **Data up top, request at the bottom.** Large input documents go at the start of the prompt, above the instructions: up to a 30% quality gain on long context.
 
-The full set of rules with reasoning lives in [reference/full-rules.md](reference/full-rules.md); a detailed breakdown of the six modality registers lives in [reference/modal-registers.md](reference/modal-registers.md).
+The full set of rules with reasoning lives in [reference/full-rules.md](plugins/prompt-writer/reference/full-rules.md); a detailed breakdown of the six modality registers lives in [reference/modal-registers.md](plugins/prompt-writer/reference/modal-registers.md).
 
 ## Installation
 
-### Claude Code
+### Claude Code, from the marketplace
 
-Clone into your personal skills folder (the folder name must match `name` in the frontmatter, `prompt-writer`):
-
-```bash
-git clone https://github.com/londeren/prompt-writer-skill.git ~/.claude/skills/prompt-writer
+```
+/plugin marketplace add Londeren/prompt-writer-skill
+/plugin install prompt-writer@londeren-plugins
 ```
 
-Or into a specific project's skills: `.claude/skills/prompt-writer/`.
+If the install summary says `Run /reload-plugins to activate.`, run that command. The skill becomes available as `prompt-writer:prompt-writer` and triggers on its own.
 
-Installation from a plugin marketplace (`/plugin install`) is planned; for now the skill is installed manually.
+### Claude Code, manual
+
+Copy the plugin directory into your personal skills folder. It carries its own `plugin.json`, so Claude Code loads it as a skills-directory plugin with no marketplace involved:
+
+```bash
+git clone https://github.com/Londeren/prompt-writer-skill.git /tmp/prompt-writer-skill
+cp -r /tmp/prompt-writer-skill/plugins/prompt-writer ~/.claude/skills/prompt-writer
+```
 
 ### claude.ai
 
@@ -52,7 +58,9 @@ Works on all plans, including Free. Enable "Code execution and file creation" in
 1. Build a zip with a `prompt-writer/` folder at its root containing `SKILL.md` (files placed directly at the archive root will fail validation):
 
    ```bash
-   mkdir prompt-writer && cp -r SKILL.md templates reference checklists prompt-writer/
+   mkdir prompt-writer
+   cp -r plugins/prompt-writer/SKILL.md plugins/prompt-writer/templates \
+         plugins/prompt-writer/reference plugins/prompt-writer/checklists prompt-writer/
    zip -r prompt-writer.zip prompt-writer
    ```
 
@@ -70,22 +78,27 @@ The skill activates on its own for requests like:
 
 If the task is described in detail, the skill writes the prompt right away, no extra questions. If it is vague, it asks 2-3 clarifying questions and offers a choice of type.
 
-## Skill structure
+## Repository structure
 
 ```
-SKILL.md                        - entry point: routing, master rules, process
-templates/
-  character-frame.md            - template for Type A
-  identification-frame.md       - template for Type B
-  one-shot-task.md              - template for Type C
-  extraction-prompt.md          - template for Type D
-  agentic-task.md               - template for Type E
-reference/
-  full-rules.md                 - the full rule set with reasoning
-  modal-registers.md            - the six modality registers in detail
-checklists/
-  self-check.md                 - checklist for the audit step
-  input-triage.md               - taxonomy of input-prompt defects
+.claude-plugin/
+  marketplace.json              - marketplace manifest, points at plugins/prompt-writer
+plugins/prompt-writer/          - the plugin, this is what ships to users
+  .claude-plugin/plugin.json    - plugin manifest
+  SKILL.md                      - entry point: routing, master rules, process
+  templates/
+    character-frame.md          - template for Type A
+    identification-frame.md     - template for Type B
+    one-shot-task.md            - template for Type C
+    extraction-prompt.md        - template for Type D
+    agentic-task.md             - template for Type E
+  reference/
+    full-rules.md               - the full rule set with reasoning
+    modal-registers.md          - the six modality registers in detail
+  checklists/
+    self-check.md               - checklist for the audit step
+    input-triage.md             - taxonomy of input-prompt defects
+docs/, CLAUDE.md                - development notes, not part of the plugin
 ```
 
 Only `SKILL.md` loads on activation; Claude pulls in templates and reference files as needed (progressive disclosure).
