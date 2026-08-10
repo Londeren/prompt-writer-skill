@@ -2,6 +2,8 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+**Статус на 2026-08-10:** выполнено, кроме Task 4 Step 6 и Step 7 — подачи в community-каталог Anthropic и записи ее результата. Это ручной шаг Сергея через веб-форму, агент его не выполняет. Все остальное влито: плагин лежит в `plugins/prompt-writer/`, версия 1.0.0, тег `v1.0.0` запушен, оба манифеста проходят валидацию, предподачный чеклист Step 5 перепроверен.
+
 **Goal:** Привести репозиторий к состоянию, в котором prompt-writer устанавливается как плагин Claude Code (`/plugin install`), не тащит в установку пользователя внутреннюю кухню разработки и не ссылается на несуществующие инструменты, и готов к подаче в community-каталог Anthropic.
 
 **Architecture:** Репозиторий становится маркетплейсом с одним плагином внутри. `.claude-plugin/marketplace.json` остается в корне и указывает относительным путем на `plugins/prompt-writer/` — это и есть директория плагина, только она копируется в кеш пользователя при установке. Все, что относится к разработке скилла (`CLAUDE.md`, `docs/`, `.superpowers/`, `tmp/`), остается в корне и не едет. Параллельно из текста скилла убираются вызовы инструментов, которых нет в Claude Code.
@@ -49,7 +51,7 @@
 **Interfaces:**
 - Produces: `SKILL.md`, в котором нет вызовов `present_files`, `ask_user_input_v0`, `view tool`. Task 3 ссылается на этот факт при переписывании раздела блокеров в CLAUDE.md.
 
-- [ ] **Step 1: Проверить, что перевод влит**
+- [x] **Step 1: Проверить, что перевод влит**
 
 ```bash
 git log --oneline -15
@@ -59,7 +61,7 @@ head -8 README.md
 
 Ожидается: в истории есть коммиты Task 9 плана перевода, `SKILL.md` и `README.md` на английском. Если нет — остановиться и сообщить, план выполняется позже.
 
-- [ ] **Step 2: Зафиксировать базовые метрики**
+- [x] **Step 2: Зафиксировать базовые метрики**
 
 ```bash
 grep -n 'present_files' SKILL.md            # ожидается 3 вхождения
@@ -70,7 +72,7 @@ grep -c 'ask_user_input_v0' templates/agentic-task.md   # ожидается 1 -
 
 Записать фактические числа. Если они отличаются от ожидаемых, перевод мог переформулировать эти места. Тогда прочитать каждое вхождение целиком и адаптировать замены ниже по смыслу, сохранив намерение.
 
-- [ ] **Step 3: Заменить вхождение в шаге «Применить шаблон»**
+- [x] **Step 3: Заменить вхождение в шаге «Применить шаблон»**
 
 Найти строку про загрузку шаблона в разделе Шага 3.
 
@@ -90,7 +92,7 @@ Read the matching template from `templates/`. Fill it with the task content.
 
 Смысл правки: имя инструмента убирается, действие остается. Модель сама выберет `Read` или его аналог в своей среде.
 
-- [ ] **Step 4: Заменить вхождение в шаге «Выдать результат»**
+- [x] **Step 4: Заменить вхождение в шаге «Выдать результат»**
 
 Это главное место: финальная выдача всего процесса.
 
@@ -110,7 +112,7 @@ The finished prompt is saved as a separate .md file, and the reply gives the pat
 
 Остаток абзаца (про короткое описание решений и сводку аудита) не меняется.
 
-- [ ] **Step 5: Заменить пункт 7 в сценарии «новый промпт с нуля»**
+- [x] **Step 5: Заменить пункт 7 в сценарии «новый промпт с нуля»**
 
 Было (RU-оригинал): `7. Презентовать через present_files, в чате - решения и сводка аудита`
 
@@ -126,7 +128,7 @@ The finished prompt is saved as a separate .md file, and the reply gives the pat
 7. Выдать результат как описано в Шаге 5: промпт файлом, в чате - ключевые решения и сводка аудита
 ```
 
-- [ ] **Step 6: Заменить пункт 8 в сценарии «улучшить существующий промпт»**
+- [x] **Step 6: Заменить пункт 8 в сценарии «улучшить существующий промпт»**
 
 Было (RU-оригинал): `8. Презентовать через present_files`
 
@@ -142,7 +144,7 @@ The finished prompt is saved as a separate .md file, and the reply gives the pat
 8. Выдать результат как описано в Шаге 5
 ```
 
-- [ ] **Step 7: Заменить вхождение в сценарии «пользователь не уверен какой тип нужен»**
+- [x] **Step 7: Заменить вхождение в сценарии «пользователь не уверен какой тип нужен»**
 
 Здесь имена инструментов не убираются, а называются оба — именно этого требует правило 7 самого скилла (правило рядом с моментом применения) и это единственный способ заставить модель использовать структурированный пикер там, где он есть.
 
@@ -160,7 +162,7 @@ Do not guess. Ask a question with 2-4 type options, one line per type. Use the s
 Не догадываться - задать вопрос с 2-4 вариантами типа, каждый тип одной строкой. Если в среде есть инструмент структурированного выбора (AskUserQuestion в Claude Code, ask_user_input_v0 в claude.ai), использовать его; иначе спросить текстом, варианты нумерованным списком.
 ```
 
-- [ ] **Step 8: Заменить вхождение в конце раздела «Файлы скилла»**
+- [x] **Step 8: Заменить вхождение в конце раздела «Файлы скилла»**
 
 Было (RU-оригинал): `Подгружать файлы через view tool по необходимости, не все сразу.`
 
@@ -176,7 +178,7 @@ Load these files on demand, not all at once.
 Подгружать файлы по необходимости, не все сразу.
 ```
 
-- [ ] **Step 9: Проверить результат грепом**
+- [x] **Step 9: Проверить результат грепом**
 
 ```bash
 grep -c 'present_files' SKILL.md                        # ожидается 0
@@ -188,7 +190,7 @@ grep -c 'AskUserQuestion' SKILL.md                      # ожидается 1
 
 Все пять ожиданий должны совпасть. Если `templates/agentic-task.md` показал не 1 — правка утекла туда, откатить.
 
-- [ ] **Step 10: Функциональный смоук-тест выдачи**
+- [x] **Step 10: Функциональный смоук-тест выдачи**
 
 ```bash
 cd "$(mktemp -d)" && claude --plugin-dir ~/work/GrowGlobal/prompt-writer-skill \
@@ -199,7 +201,7 @@ ls -la
 
 Ожидается: скилл активировался, в текущей директории появился .md файл с промптом, в ответе есть путь к нему и сводка аудита. Модель не пыталась звать несуществующий инструмент.
 
-- [ ] **Step 11: Коммит**
+- [x] **Step 11: Коммит**
 
 ```bash
 git add SKILL.md
@@ -227,7 +229,7 @@ is an example of tool-description writing and stays unchanged."
 - Consumes: `SKILL.md` из Task 1.
 - Produces: раскладку, на которую опирается Task 3 (пути в витринах) и Task 4 (установка из маркетплейса). Имя маркетплейса `londeren-plugins`, имя плагина `prompt-writer`, установочная строка `prompt-writer@londeren-plugins`.
 
-- [ ] **Step 1: Убедиться, что в дереве нет ничего, кроме ожидаемого**
+- [x] **Step 1: Убедиться, что в дереве нет ничего, кроме ожидаемого**
 
 ```bash
 git status --porcelain
@@ -235,7 +237,7 @@ git status --porcelain
 
 Ожидается ровно две строки — неотслеживаемые `.claude-plugin/plugin.json` и `.claude-plugin/marketplace.json` из подготовительной сессии (см. раздел «Состояние на момент написания плана»), либо пусто, если их успели закоммитить раньше. Любые другие незакоммиченные изменения — источник потерь при `git mv`, разобраться с ними до начала.
 
-- [ ] **Step 2: Создать директорию плагина и перенести ассеты**
+- [x] **Step 2: Создать директорию плагина и перенести ассеты**
 
 ```bash
 mkdir -p plugins/prompt-writer
@@ -244,7 +246,7 @@ mkdir -p plugins/prompt-writer/.claude-plugin
 git mv .claude-plugin/plugin.json plugins/prompt-writer/.claude-plugin/plugin.json
 ```
 
-- [ ] **Step 3: Проверить, что внутренние относительные ссылки не сломались**
+- [x] **Step 3: Проверить, что внутренние относительные ссылки не сломались**
 
 Ассеты переехали одним блоком, поэтому пути вида `reference/full-rules.md` внутри скилла остаются валидными. Проверить это, а не поверить:
 
@@ -258,7 +260,7 @@ cd -
 
 Ожидается: ни одной строки `MISSING`.
 
-- [ ] **Step 4: Обновить source в манифесте маркетплейса**
+- [x] **Step 4: Обновить source в манифесте маркетплейса**
 
 В `.claude-plugin/marketplace.json` заменить `"source": "./"` на путь к подкаталогу. Файл целиком после правки:
 
@@ -285,7 +287,7 @@ cd -
 }
 ```
 
-- [ ] **Step 5: Положить лицензию рядом с плагином**
+- [x] **Step 5: Положить лицензию рядом с плагином**
 
 Плагин уезжает к пользователю отдельно от корня репозитория, поэтому своя копия лицензии ему нужна.
 
@@ -293,7 +295,7 @@ cd -
 cp LICENSE plugins/prompt-writer/LICENSE
 ```
 
-- [ ] **Step 6: Создать README плагина**
+- [x] **Step 6: Создать README плагина**
 
 Короткий, не копия корневого. Файл `plugins/prompt-writer/README.md` целиком (EN):
 
@@ -320,7 +322,7 @@ The skill triggers on its own when you ask for a prompt, a system prompt, an age
 Full documentation, methodology background and the development notes: https://github.com/Londeren/prompt-writer-skill
 ````
 
-- [ ] **Step 7: Валидировать оба манифеста**
+- [x] **Step 7: Валидировать оба манифеста**
 
 ```bash
 claude plugin validate .                                  # маркетплейс
@@ -329,7 +331,7 @@ claude plugin validate ./plugins/prompt-writer --strict   # плагин
 
 Ожидается: оба `✔ Validation passed`. Ключевая разница с текущим состоянием — у плагина больше не должно быть warning `CLAUDE.md at the plugin root is not loaded as project context`, потому что `CLAUDE.md` остался в корне репозитория и в директорию плагина не входит. Если warning остался, значит что-то лишнее переехало внутрь.
 
-- [ ] **Step 8: Проверить, что в плагин не уехал мусор**
+- [x] **Step 8: Проверить, что в плагин не уехал мусор**
 
 ```bash
 find plugins/prompt-writer -type f | sort
@@ -337,7 +339,7 @@ find plugins/prompt-writer -type f | sort
 
 Ожидается ровно: `.claude-plugin/plugin.json`, `LICENSE`, `README.md`, `SKILL.md`, два файла в `checklists/`, два в `reference/`, пять в `templates/`. Ничего из `docs/`, `.superpowers/`, `tmp/`, никакого `CLAUDE.md`, никакого `.DS_Store`.
 
-- [ ] **Step 9: Смоук-тест загрузки**
+- [x] **Step 9: Смоук-тест загрузки**
 
 ```bash
 claude --plugin-dir ./plugins/prompt-writer \
@@ -347,7 +349,7 @@ claude --plugin-dir ./plugins/prompt-writer \
 
 Ожидается: в выводе есть `prompt-writer:prompt-writer`. Это подтверждает, что `SKILL.md` в корне плагина подхватывается как single-skill плагин и что `name` из frontmatter работает как имя вызова.
 
-- [ ] **Step 10: Коммит**
+- [x] **Step 10: Коммит**
 
 ```bash
 git add -- plugins .claude-plugin/marketplace.json SKILL.md reference templates checklists
@@ -370,7 +372,7 @@ so CLAUDE.md, docs/ and .superpowers/ no longer ship to users."
 **Interfaces:**
 - Consumes: раскладку из Task 2 и факт устранения блокера из Task 1.
 
-- [ ] **Step 1: README - переписать раздел установки**
+- [x] **Step 1: README - переписать раздел установки**
 
 Текущий раздел говорит `git clone ... ~/.claude/skills/prompt-writer` и содержит строку «Установка из плагин-маркетплейса — в планах». После Task 2 первое ломается (склонируется корень репозитория, а не скилл), второе становится неправдой.
 
@@ -415,7 +417,7 @@ Works on every plan including Free. Turn on "Code execution and file creation" i
 
 RU-фолбэк (нужен, только если перевод по какой-то причине не влит): перевести блок выше дословно, сохранив структуру трех подразделов; все команды, имена (`londeren-plugins`, `prompt-writer@londeren-plugins`) и ссылки оставить символ в символ.
 
-- [ ] **Step 2: README - обновить quick start в шапке**
+- [x] **Step 2: README - обновить quick start в шапке**
 
 В блокквоте шапки строка про Claude Code сейчас говорит `git clone this repo into ~/.claude/skills/prompt-writer`. Заменить на:
 
@@ -425,7 +427,7 @@ RU-фолбэк (нужен, только если перевод по како�
 
 Остальную часть блокквота (про язык скилла и автотриггер) сохранить как есть после перевода.
 
-- [ ] **Step 3: README - обновить дерево файлов**
+- [x] **Step 3: README - обновить дерево файлов**
 
 Раздел «Структура скилла» / «Layout». Новое дерево целиком:
 
@@ -452,7 +454,7 @@ docs/, CLAUDE.md                — development notes, not part of the plugin
 
 Строку под деревом про progressive disclosure сохранить.
 
-- [ ] **Step 4: README - починить ссылки на reference**
+- [x] **Step 4: README - починить ссылки на reference**
 
 В разделе про принципы методологии есть markdown-ссылки `[reference/full-rules.md](reference/full-rules.md)` и `[reference/modal-registers.md](reference/modal-registers.md)`. После переезда они ведут в никуда.
 
@@ -462,7 +464,7 @@ grep -n '](reference/\|](templates/\|](checklists/\|](SKILL.md' README.md
 
 Каждую найденную ссылку переписать с префиксом `plugins/prompt-writer/`, например `[reference/full-rules.md](plugins/prompt-writer/reference/full-rules.md)`.
 
-- [ ] **Step 5: CLAUDE.md - обновить описание репозитория**
+- [x] **Step 5: CLAUDE.md - обновить описание репозитория**
 
 Первый абзац раздела «Что это» говорит, что репозиторий состоит только из markdown. Теперь есть два JSON-манифеста. Добавить в конец абзаца:
 
@@ -470,7 +472,7 @@ grep -n '](reference/\|](templates/\|](checklists/\|](SKILL.md' README.md
 The repository is also a plugin marketplace: `.claude-plugin/marketplace.json` at the root points at `plugins/prompt-writer/`, which is the plugin itself and the only part that ships to users.
 ```
 
-- [ ] **Step 6: CLAUDE.md - одной строкой закрыть все пути архитектуры**
+- [x] **Step 6: CLAUDE.md - одной строкой закрыть все пути архитектуры**
 
 В разделе про progressive disclosure и в разделе про дублирование правил около восьми упоминаний путей вида `reference/full-rules.md`, `checklists/self-check.md`, `templates/`. Вместо правки каждого добавить строку в начало раздела архитектуры:
 
@@ -480,7 +482,7 @@ All skill paths in this file are relative to `plugins/prompt-writer/`.
 
 Проверить, что после этого ни одно упоминание не вводит в заблуждение; если какое-то упоминание стоит вне этих двух разделов, дописать префикс явно.
 
-- [ ] **Step 7: CLAUDE.md - переписать раздел «Известные блокеры публикации»**
+- [x] **Step 7: CLAUDE.md - переписать раздел «Известные блокеры публикации»**
 
 Оба блокера закрыты. Заменить раздел целиком на:
 
@@ -509,7 +511,7 @@ templates/agentic-task.md is an example of tool-description writing, not a
 call, and must survive any search and replace.
 ```
 
-- [ ] **Step 8: CLAUDE.md - дополнить раздел «Проверка изменений»**
+- [x] **Step 8: CLAUDE.md - дополнить раздел «Проверка изменений»**
 
 Добавить в конец раздела:
 
@@ -527,7 +529,7 @@ The last one guards the packaging boundary: nothing from `docs/`,
 `.superpowers/` or `tmp/` may appear in that listing.
 ````
 
-- [ ] **Step 9: Проверить, что устаревших путей не осталось**
+- [x] **Step 9: Проверить, что устаревших путей не осталось**
 
 ```bash
 grep -nE '(^|[^/a-z])(SKILL\.md|reference/|templates/|checklists/)' README.md CLAUDE.md
@@ -543,7 +545,7 @@ git diff --name-only HEAD
 
 Ожидается только `README.md` и `CLAUDE.md`. Файлы в `docs/superpowers/plans/`, `specs/`, `decisions/`, `translation/` — исторические записи о выполненной работе, их пути обновлять НЕ надо.
 
-- [ ] **Step 10: Коммит**
+- [x] **Step 10: Коммит**
 
 ```bash
 git add README.md CLAUDE.md
@@ -565,7 +567,7 @@ the actual publication status."
 - Consumes: все предыдущие задачи.
 - Produces: тег и опубликованный маркетплейс, из которого установка проверена end-to-end.
 
-- [ ] **Step 1: Починить keywords в plugin.json**
+- [x] **Step 1: Починить keywords в plugin.json**
 
 Сейчас в `keywords` есть `"russian"`. После перевода это неправда и будет вредить поиску. Файл целиком после правки:
 
@@ -595,7 +597,7 @@ the actual publication status."
 
 Версия поднята с `0.1.0` до `1.0.0`: поле `version` управляет доставкой обновлений пользователям, и первая публичная установка должна иметь осмысленную отправную точку. Если Сергей предпочитает стартовать с `0.1.0` — поменять здесь и в теге ниже согласованно.
 
-- [ ] **Step 2: Валидация после правки**
+- [x] **Step 2: Валидация после правки**
 
 ```bash
 claude plugin validate ./plugins/prompt-writer --strict
@@ -604,7 +606,7 @@ claude plugin validate .
 
 Ожидается: оба `✔ Validation passed`.
 
-- [ ] **Step 3: Коммит, тег, пуш**
+- [x] **Step 3: Коммит, тег, пуш**
 
 Версия в манифесте и тег должны совпадать: расхождение версий — типовая причина отказа при подаче.
 
@@ -615,7 +617,7 @@ git tag v1.0.0
 git push origin main --tags
 ```
 
-- [ ] **Step 4: Проверить установку с GitHub в изолированном окружении**
+- [x] **Step 4: Проверить установку с GitHub в изолированном окружении**
 
 Это единственная проверка, которая ловит ошибки в `source`, в структуре репозитория и в правах доступа. Изолируем конфиг, чтобы не трогать рабочую установку Сергея:
 
@@ -638,19 +640,19 @@ find "$CLAUDE_CONFIG_DIR" -type f -name 'SKILL.md'
 unset CLAUDE_CONFIG_DIR
 ```
 
-- [ ] **Step 5: Предподачный чеклист**
+- [x] **Step 5: Предподачный чеклист**
 
 Пройти по пунктам, каждый подтвердить фактом, а не ощущением:
 
-- [ ] `claude plugin validate ./plugins/prompt-writer --strict` проходит без warning
-- [ ] `claude plugin validate .` проходит
-- [ ] `find plugins/prompt-writer -type f` не содержит ничего из `docs/`, `.superpowers/`, `tmp/`, `CLAUDE.md`
-- [ ] `grep -rc 'present_files' plugins/prompt-writer/` возвращает 0 по всем файлам
-- [ ] `version` в `plugin.json` совпадает с git-тегом
-- [ ] `LICENSE` лежит внутри `plugins/prompt-writer/`
-- [ ] `README.md` внутри `plugins/prompt-writer/` описывает установку из маркетплейса
-- [ ] установка с GitHub в изолированном окружении прошла (Step 4)
-- [ ] `homepage` и `repository` в манифесте открываются и ведут на публичный репозиторий
+- [x] `claude plugin validate ./plugins/prompt-writer --strict` проходит без warning
+- [x] `claude plugin validate .` проходит
+- [x] `find plugins/prompt-writer -type f` не содержит ничего из `docs/`, `.superpowers/`, `tmp/`, `CLAUDE.md`
+- [x] `grep -rc 'present_files' plugins/prompt-writer/` возвращает 0 по всем файлам
+- [x] `version` в `plugin.json` совпадает с git-тегом
+- [x] `LICENSE` лежит внутри `plugins/prompt-writer/`
+- [x] `README.md` внутри `plugins/prompt-writer/` описывает установку из маркетплейса
+- [x] установка с GitHub в изолированном окружении прошла (Step 4)
+- [x] `homepage` и `repository` в манифесте открываются и ведут на публичный репозиторий
 
 - [ ] **Step 6: Подача (ручной шаг Сергея, агент его не выполняет)**
 
