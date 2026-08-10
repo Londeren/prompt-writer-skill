@@ -30,7 +30,7 @@ Consequence for editing: when a rule changes or a new one is added, sync every l
 
 ## Publication status
 
-The repository is a marketplace with one plugin. Installed with `/plugin marketplace add Londeren/prompt-writer-skill` and `/plugin install prompt-writer@londeren`.
+The repository is a marketplace with one plugin. Installed with `/plugin marketplace add Londeren/prompt-writer-skill` and `/plugin install prompt-writer@Londeren`.
 
 Not done yet: the submission to the Anthropic community catalog. It goes through a web form at https://platform.claude.com/plugins/submit (individual authors) or https://claude.ai/admin-settings/directory/submissions/plugins/new (requires a Team or Enterprise organization). Pull requests against anthropics/claude-plugins-community are closed automatically. The review pipeline runs `claude plugin validate` plus automated safety screening.
 
