@@ -36,7 +36,7 @@ Read the Routing section below and pick one of five types. The type decides the 
 
 ### Step 3: Apply the template
 
-Load the matching template from `templates/` through view. Fill it with the content of the task. The template is not dogma, adapt it to the specifics, but do not depart from its structural principles.
+Read the matching template from `templates/`. Fill it with the content of the task. The template is not dogma, adapt it to the specifics, but do not depart from its structural principles.
 
 The methodology is language-agnostic. Write the generated prompt in the language of the user's task and audience, not in the language of this skill. Register names (NEVER/should/can/avoids/prefers) stay in English inside any prompt - they are anchors for the model, not prose.
 
@@ -59,7 +59,7 @@ The questions carry a presumption of defect deliberately: they demand that the p
 
 The user gets the final version. The draft and the full audit answers stay internal, showing them unasked burdens the user with working material.
 
-The finished prompt is saved as a separate .md file and presented through present_files. In chat, a short description of the key decisions (one paragraph) plus 1-2 lines on what the audit found and fixed. If the audit came out clean, say so in one line. A detailed breakdown only if the user asks why it was done this way.
+The finished prompt is saved as a separate .md file, and the reply gives the path to it. When writing files is not available in the environment, the prompt goes into the chat as one block. In chat, a short description of the key decisions (one paragraph) plus 1-2 lines on what the audit found and fixed. If the audit came out clean, say so in one line. A detailed breakdown only if the user asks why it was done this way.
 
 ## Routing: determining the prompt type
 
@@ -483,7 +483,7 @@ Modality registers in detail: `reference/modal-registers.md`
 4. Fill it in, this is the draft
 5. Audit: the checklist plus the two diagnostic questions
 6. The final version that closes what was found
-7. Present through present_files; in chat, the decisions and the audit summary
+7. Deliver as described in Step 5: the prompt as a file, the chat gets the key decisions and the audit summary
 
 ### Scenario: improve an existing prompt
 
@@ -494,11 +494,11 @@ Modality registers in detail: `reference/modal-registers.md`
 5. Audit of the draft: `checklists/self-check.md` plus the two diagnostic questions from Step 4
 6. The final version that closes what was found
 7. Show the key changes and why in the answer
-8. Present through present_files
+8. Deliver as described in Step 5
 
 ### Scenario: the user is not sure which type is needed
 
-Do not guess, ask through ask_user_input_v0 with 2-4 type options. Describe each type in one line.
+Do not guess. Ask a question with 2-4 type options, one line per type. Use the structured-choice tool when the environment has one (AskUserQuestion in Claude Code, ask_user_input_v0 in claude.ai); otherwise ask in plain text with the options as a numbered list.
 
 ## Skill files
 
@@ -513,4 +513,4 @@ Do not guess, ask through ask_user_input_v0 with 2-4 type options. Describe each
 - `checklists/self-check.md`: the prompt self-check checklist
 - `checklists/input-triage.md`: a taxonomy of input-prompt defects for the improvement scenario
 
-Load files through the view tool as needed, not all at once.
+Load these files on demand, not all at once.
