@@ -33,13 +33,13 @@ The full set of rules with reasoning lives in [reference/full-rules.md](plugins/
 
 ## Installation
 
-Pick the row that matches your agent. Everything below installs the same skill.
+Every route below installs the same skill.
 
 | Agent | How |
 |---|---|
 | Claude Code | [plugin marketplace](#claude-code-plugin-marketplace), the recommended route |
 | Cursor, Copilot, Codex, Gemini, Cline, Amp, Antigravity and a dozen more | [`npx skills`](#any-agent-npx-skills) |
-| claude.ai in the browser | [the same marketplace, synced from the repository](#claudeai) |
+| claude.ai in the browser | [marketplace synced from the repository](#claudeai) |
 | A whole team on one repository | [project settings](#a-team-on-one-repository) |
 
 ### Claude Code: plugin marketplace
@@ -62,7 +62,7 @@ Add `--scope project` to the install to share it with everyone working on the cu
 
 ### Any agent: npx skills
 
-The [skills.sh](https://www.skills.sh) CLI installs into whatever agents it finds, no marketplace involved:
+The [skills.sh](https://www.skills.sh) CLI installs into whatever agents it finds:
 
 ```bash
 npx skills add Londeren/prompt-writer-skill
@@ -72,7 +72,7 @@ Files land in `.agents/skills/prompt-writer` for the current project, symlinked 
 
 ### Claude Code: manual copy
 
-The plugin directory carries its own `plugin.json`, so Claude Code loads it as a skills-directory plugin with nothing else to configure:
+The plugin directory carries its own `plugin.json`, so Claude Code loads it as a skills-directory plugin:
 
 ```bash
 git clone https://github.com/Londeren/prompt-writer-skill.git /tmp/prompt-writer-skill
@@ -102,8 +102,6 @@ Commit this to the repository's `.claude/settings.json`. Claude Code offers the 
 ```
 
 ### claude.ai
-
-No zip, no upload: the browser connects to the same GitHub marketplace Claude Code uses.
 
 1. Open [Settings → Customize → Plugins](https://claude.ai/new#settings/customize-plugins).
 2. Switch to the **Added** tab and press **Add Marketplace**.

@@ -68,8 +68,6 @@ Two distribution channels are live and need no approval: the GitHub plugin marke
 
 Note on the marketplace name: for a GitHub `owner/repo` source, Claude Code registers the marketplace under the repository owner, `Londeren`, not under the `name` field of marketplace.json. A lowercase name in the manifest produced a marketplace the install command could not find. Keep the two in sync.
 
-Not done yet: the submission to the Anthropic community catalog, through a web form at https://platform.claude.com/plugins/submit (individual authors) or https://claude.ai/admin-settings/directory/submissions/plugins/new (requires a Team or Enterprise organization). Pull requests against anthropics/claude-plugins-community are closed automatically; the review pipeline runs `claude plugin validate` plus automated safety screening. The official catalog, claude-plugins-official, is curated by Anthropic at its own discretion and has no application process.
-
 When editing the skill text, keep it platform neutral: present_files, ask_user_input_v0 and the view tool exist only in claude.ai. The one place that names a tool on purpose is the type question in SKILL.md, which names both AskUserQuestion and ask_user_input_v0. The ask_user_input_v0 mention in templates/agentic-task.md is an example of tool-description writing, not a call, and must survive any search and replace.
 
 ## Checking changes
