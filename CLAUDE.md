@@ -32,6 +32,8 @@ Consequence for editing: when a rule changes or a new one is added, sync every l
 
 The repository is a marketplace with one plugin. Installed with `/plugin marketplace add Londeren/prompt-writer-skill` and `/plugin install prompt-writer@Londeren`.
 
+In the claude.ai browser app the same marketplace is added without any zip: Settings → Customize → Plugins (https://claude.ai/new#settings/customize-plugins), tab **Added**, **Add Marketplace**, **Add from a Repository**, paste `https://github.com/Londeren/prompt-writer-skill`, press **Sync**. The old zip-upload instructions are gone from README.md; do not reintroduce them as the primary route.
+
 Note on the marketplace name: for a GitHub `owner/repo` source, Claude Code registers the marketplace under the repository owner, `Londeren`, not under the `name` field of marketplace.json. A lowercase name in the manifest produced a marketplace the install command could not find. Keep the two in sync.
 
 A second distribution channel is live and needs no approval: the skills.sh CLI installs the skill into any agent with `npx skills add Londeren/prompt-writer-skill`. It finds the skill through `.claude-plugin/marketplace.json` even though `plugins/prompt-writer/SKILL.md` is outside the paths it scans by default. Listing on skills.sh happens through install telemetry, there is no submission form. README.md documents every install route.

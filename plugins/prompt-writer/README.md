@@ -17,7 +17,7 @@ Any other agent (Cursor, Copilot, Codex, Gemini, Cline and more), through the sk
 npx skills add Londeren/prompt-writer-skill
 ```
 
-Manual copies, team-wide project settings and the claude.ai zip upload are covered in the [repository README](https://github.com/Londeren/prompt-writer-skill#installation).
+Manual copies, team-wide project settings and the claude.ai browser route (Settings → Customize → Plugins → Add Marketplace → Add from a Repository) are covered in the [repository README](https://github.com/Londeren/prompt-writer-skill#installation).
 
 ## Use
 

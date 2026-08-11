@@ -39,7 +39,7 @@ Pick the row that matches your agent. Everything below installs the same skill.
 |---|---|
 | Claude Code | [plugin marketplace](#claude-code-plugin-marketplace), the recommended route |
 | Cursor, Copilot, Codex, Gemini, Cline, Amp, Antigravity and a dozen more | [`npx skills`](#any-agent-npx-skills) |
-| claude.ai in the browser | [zip upload](#claudeai) |
+| claude.ai in the browser | [the same marketplace, synced from the repository](#claudeai) |
 | A whole team on one repository | [project settings](#a-team-on-one-repository) |
 
 ### Claude Code: plugin marketplace
@@ -103,18 +103,19 @@ Commit this to the repository's `.claude/settings.json`. Claude Code offers the 
 
 ### claude.ai
 
-Works on all plans, including Free. Enable "Code execution and file creation" in Settings → Capabilities first.
+No zip, no upload: the browser connects to the same GitHub marketplace Claude Code uses.
 
-1. Build a zip with a `prompt-writer/` folder at its root containing `SKILL.md` (files placed directly at the archive root will fail validation):
+1. Open [Settings → Customize → Plugins](https://claude.ai/new#settings/customize-plugins).
+2. Switch to the **Added** tab and press **Add Marketplace**.
+3. Choose **Add from a Repository** and paste the repository URL:
 
-   ```bash
-   mkdir prompt-writer
-   cp -r plugins/prompt-writer/SKILL.md plugins/prompt-writer/templates \
-         plugins/prompt-writer/reference plugins/prompt-writer/checklists prompt-writer/
-   zip -r prompt-writer.zip prompt-writer
+   ```
+   https://github.com/Londeren/prompt-writer-skill
    ```
 
-2. Upload the archive on the [Customize → Skills](https://claude.ai/customize/skills) page: "Create skill" → "Upload a skill".
+4. Press **Sync**. The marketplace appears in the list; install **prompt-writer** from it and the skill triggers on its own in any chat.
+
+Enable "Code execution and file creation" in Settings → Capabilities if it is off.
 
 ## Usage
 
