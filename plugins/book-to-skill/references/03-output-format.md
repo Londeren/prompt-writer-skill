@@ -23,9 +23,9 @@ Why these five fields:
 
 - **Rule** is checkable, a yes or no verdict can be delivered on a concrete piece of work by it.
 - **Why it works** lets the agent apply the rule in a situation the source never covered, instead of following it blindly.
-- **Bad → Good** gives a foothold, without which the rule collapses into a slogan.
+- **Bad → Good** gives a foothold, without which the rule collapses into a slogan. Where the source carries no example for a rule, put in the explicit line "No example in the source" instead of composing one: an invented example is writing on the author's behalf, and the same explicit line that covers a missing caveat covers a missing example.
 - **When not to apply** is the most expensive field. The explicit line "no caveats in the source" is mandatory where there are none. An empty field is indistinguishable from a forgotten one, and an explicit line records that the source was checked.
-- **Anchor** makes the unit self-sufficient: a verbatim quote with an address, the ground already inside, and the consumer of the skill needs neither a search over the source nor the source itself at hand. The anchor stays in the language of the source. If the skill is going to be published beyond the user's team, trim the quotes down to addresses: verbatim chunks of a book are not handed outside.
+- **Anchor** makes the unit self-sufficient: a verbatim quote with an address, the ground already inside, and the consumer of the skill needs neither a search over the source nor the source itself at hand. The anchor stays in the language of the source. If the skill is going to be published beyond the user's team, trim the quotes down to addresses: verbatim chunks of a book are not handed outside. Trimming is the last step and it runs on a finished artifact. Assembly and the self-check run on full quotes: the audit checks anchors by mechanical search over the source, and once the quotes are gone there is nothing left to search for.
 
 Numbering runs through each sheet, `NN.M`. It is there so that SKILL.md and the agent's answers can point at a specific rule rather than at "a principle from the book".
 
@@ -152,7 +152,7 @@ A description is not chosen by eye. The tuning procedure for triggering is in th
 
 - Raw chunks of the source longer than three sentences.
 - Blocks of the form "in chapter 5 the author explains", that is a reference guide, not a skill.
-- Rules with no example.
+- Rules carrying neither an example nor the explicit line about its absence in the source.
 - An empty "when not to apply" field instead of an explicit line about the absence of caveats.
 - Horizontal rules between blocks.
 

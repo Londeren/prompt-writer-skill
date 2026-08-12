@@ -103,7 +103,7 @@ Extractor D goes missing more often than the others and costs more than the othe
 
 ## How to reject a candidate
 
-Validation is run by an agent that took no part in the extraction. Whoever extracted a unit will not reject it.
+Validation is run by an agent that took no part in the extraction. Whoever extracted a unit will not reject it. No subagents in the environment, validate the catch yourself and say so in the report: the fallback mode is in sheet 02.
 
 Three filters, criteria and worked examples in `references/02-validation.md`:
 
@@ -196,7 +196,7 @@ The assembled skill is a draft. The audit answers the questions by naming concre
 2. Name a rule that is not in the source but that seemed reasonable to add. Delete what you find.
 3. Name the blocks of the form "in chapter 5 the author explains". Rewrite what you find from retelling into prescription, or delete it.
 4. Name a typical request from the routing table that opens more than two sheets. Recut what you find.
-5. Name a rule with no example, or with an empty "when not to apply" field. Fill it in, or put in the line stating that the source gives no caveats.
+5. Name a rule with no example, or with an empty "when not to apply" field. Fill it in from the source, or put in the explicit line that the source carries no example and no caveats. Composing either one yourself is writing on the author's behalf.
 6. Name a unit that cannot be applied without opening the source. Compress what you find: the finished skill replaces searching the source, and the consumer will not have the source at hand.
 7. Check the numbers: the core is 5-8 principles and stands as the first block; at least a third of the candidates was rejected; the provenance block is filled in.
 

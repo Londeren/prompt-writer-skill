@@ -2,6 +2,8 @@
 
 Read this sheet before phase 2. Validation is run by an agent that took no part in the extraction.
 
+Where there are no subagents, you validate your own catch and say so plainly in the phase report: the roles were combined, and a filter turned on your own extraction is weaker. In that mode run filter 1 over the whole catch first and mechanically, since a search over the source does not care who extracted the unit, and treat filters 2 and 3 as a check for holes rather than as a measured rejection.
+
 The job of the phase is to shrink the catch. A normal result is a third to two thirds of the candidates rejected. Less than a third rejected, the filters were applied pro forma, rerun the phase.
 
 <filter_1>
