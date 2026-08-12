@@ -1,32 +1,36 @@
 # Claude Plugins
 
-Plugins by [Londeren](https://github.com/Londeren) for Claude Code, claude.ai and any other agent that reads skills. The repository is a plugin marketplace: add it once and install whatever you need from it.
+Plugins by [Londeren](https://github.com/Londeren) for Claude Code, claude.ai and any other agent that reads skills. The repository is a plugin marketplace: add it once, then install whichever plugins you want. They are independent of each other, so take one or both.
 
 ## Plugins
 
 | Plugin | What it does | Docs |
 |---|---|---|
-| **prompt-writer** | Turns "write me a prompt" into an engineered prompt: routes the request into one of five prompt types, applies 24 master rules derived from the Claude system prompts, then audits the draft against a self-check list | [plugins/prompt-writer](plugins/prompt-writer/README.md) |
-| **book-to-skill** | Turns a Markdown source (book, manual, course, transcript) into a Claude skill: extracts the transferable method with source anchors, validates it against the source, assembles a skill that works without the source at hand, measures it with evals | [plugins/book-to-skill](plugins/book-to-skill/README.md) |
+| **prompt-writer** | Writes and rewrites prompts for LLMs. Routes the request into one of five prompt types, applies 24 master rules read out of the Claude system prompts, then audits the draft against a self-check list | [plugins/prompt-writer](plugins/prompt-writer/README.md) |
+| **book-to-skill** | Turns a book, manual or transcript in Markdown into a working skill. Extracts the method rather than a retelling, anchors every unit in a verbatim quote from the source, rejects what a competent specialist would know anyway, and measures the result against a no-skill baseline | [plugins/book-to-skill](plugins/book-to-skill/README.md) |
+
+Both are plain Markdown: no build step, no dependencies, nothing to run.
 
 ## Installation
 
-Every route below installs from this repository. Swap `prompt-writer` for any plugin from the table.
+Every route below installs from this repository. The plugin ids are `prompt-writer` and `book-to-skill`.
 
 ### Claude Code: plugin marketplace
 
 ```
 /plugin marketplace add Londeren/claude-plugins
 /plugin install prompt-writer@Londeren
+/plugin install book-to-skill@Londeren
 ```
 
-The marketplace registers under the repository owner, `Londeren`, which is why the plugin id ends in `@Londeren`. If the install summary says `Run /reload-plugins to activate.`, run that command.
+The marketplace registers under the repository owner, `Londeren`, which is why a plugin id ends in `@Londeren`. If the install summary says `Run /reload-plugins to activate.`, run that command.
 
 The same thing without the interactive panel, for scripts and dotfiles:
 
 ```bash
 claude plugin marketplace add Londeren/claude-plugins
 claude plugin install prompt-writer@Londeren
+claude plugin install book-to-skill@Londeren
 ```
 
 Add `--scope project` to the install to share it with everyone working on the current repository.
@@ -37,6 +41,7 @@ The [skills.sh](https://www.skills.sh) CLI installs into whatever agents it find
 
 ```bash
 npx skills add Londeren/claude-plugins --skill prompt-writer
+npx skills add Londeren/claude-plugins --skill book-to-skill
 ```
 
 Without `--skill` the CLI lists everything in the repository and asks which skills to install; `-l` lists them without installing. Files land in `.agents/skills/<name>` for the current project, symlinked into each agent's own skills directory. Add `-g` to install for your user instead of the project, and `--copy` if you would rather have real files than symlinks.
@@ -54,7 +59,7 @@ Use `.claude/skills/` inside a repository instead of `~/.claude/skills/` to scop
 
 ### A team on one repository
 
-Commit this to the repository's `.claude/settings.json`. Claude Code offers the marketplace and the plugin to everyone who trusts the folder:
+Commit this to the repository's `.claude/settings.json`. Claude Code offers the marketplace and the plugins to everyone who trusts the folder. Drop either line from `enabledPlugins` to offer just one:
 
 ```json
 {
@@ -67,7 +72,8 @@ Commit this to the repository's `.claude/settings.json`. Claude Code offers the 
     }
   },
   "enabledPlugins": {
-    "prompt-writer@Londeren": true
+    "prompt-writer@Londeren": true,
+    "book-to-skill@Londeren": true
   }
 }
 ```
@@ -82,7 +88,7 @@ Commit this to the repository's `.claude/settings.json`. Claude Code offers the 
    https://github.com/Londeren/claude-plugins
    ```
 
-4. Press **Sync**. The marketplace appears in the list; install the plugin from it and its skill triggers on its own in any chat.
+4. Press **Sync**. The marketplace appears in the list; install a plugin from it and its skill triggers on its own in any chat.
 
 Enable "Code execution and file creation" in Settings → Capabilities if it is off.
 
@@ -91,9 +97,10 @@ Enable "Code execution and file creation" in Settings → Capabilities if it is 
 ```
 .claude-plugin/
   marketplace.json              - marketplace manifest, one entry per plugin
-plugins/<name>/                 - a plugin, this is what ships to users
+plugins/<name>/                 - a plugin (prompt-writer, book-to-skill), ships to users
   .claude-plugin/plugin.json    - plugin manifest
   SKILL.md                      - entry point, the only file loaded on activation
+  <supporting files>            - reference sheets, templates, checklists, read on demand
   README.md                     - the plugin's own documentation
 docs/                           - specs, plans and development notes, not shipped
 CLAUDE.md                       - instructions for Claude Code working on this repository
