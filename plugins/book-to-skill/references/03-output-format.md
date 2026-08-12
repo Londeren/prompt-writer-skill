@@ -1,156 +1,159 @@
-# Как собрать артефакт
+# How to assemble the artifact
 
-Лист читается перед фазой 3. Здесь схема юнита в листе, шаблоны и правила размеров.
+Read this sheet before phase 3. It holds the shape of a unit inside a sheet, the templates, and the size rules.
 
 <unit_format>
 
-## Как записывать юнит в справочном листе
+## How to write a unit into a reference sheet
 
-Проверенный на практике формат из пяти полей. Каждый юнит выглядит так:
+A format of five fields, proven in practice. Every unit looks like this:
 
 ```markdown
-#### 1.4. Пишите о читателе, а не о себе
-- **Правило:** подлежащим и темой ключевых фраз должен быть читатель и его ситуация, а не автор, компания или продукт.
-- Почему работает: читателю интересен он сам и его проблема, текст про автора он пролистывает.
-- Плохо → Хорошо: «Мы предоставляем персонального специалиста и разрабатываем стратегию» → «Специалист разбирает с вами каждую ошибку, пока не будет результата».
-- Когда не применять: <авторская оговорка> либо строка «Без специальных оговорок в источнике».
-- Якорь: «Абстракция без примера не работает: читатель кивает и не запоминает.» (гл. 4, раздел «Абстракции»)
+#### 1.4. Write about the reader, not about yourself
+- **Rule:** the subject and the topic of the key sentences is the reader and the reader's situation, not the author, the company, or the product.
+- Why it works: the reader is interested in themselves and their problem, and scrolls past a text about the author.
+- Bad → Good: "We provide a personal specialist and develop a strategy" → "Your specialist walks you through every mistake until you get a result".
+- When not to apply: <the author's caveat> or the line "No special caveats in the source".
+- Anchor: «Подлежащим ключевой фразы должен быть читатель, а не компания.» (гл. 3, раздел «Подлежащее»)
 ```
 
-Почему именно эти пять полей:
+The anchor stays in the language of the source, whatever language the skill is written in. The one above comes from a Russian source; in English it reads "The subject of the key sentence has to be the reader, not the company."
 
-- **Правило** проверяемо, по нему можно вынести вердикт да или нет на конкретной работе.
-- **Почему работает** позволяет агенту применять правило в ситуации, которой в источнике не было, вместо слепого следования.
-- **Плохо → Хорошо** дает опору, без нее правило схлопывается в лозунг.
-- **Когда не применять** самое дорогое поле. Явная строка «без оговорок в источнике» обязательна, когда оговорок нет. Пустое поле неотличимо от забытого, а явная строка фиксирует, что источник проверен.
-- **Якорь** делает юнит самодостаточным: дословная цитата с адресом, опора уже внутри, и потребителю скилла не нужен ни поиск по источнику, ни сам источник рядом. Якорь остается на языке источника. Если скилл будет публиковаться за пределы команды пользователя, срежь цитаты до адресов: дословные куски книги наружу не отдаются.
+Why these five fields:
 
-Нумерация сквозная внутри листа, `NN.M`. Она нужна, чтобы SKILL.md и ответы агента ссылались на конкретное правило, а не на «принцип из книги».
+- **Rule** is checkable, a yes or no verdict can be delivered on a concrete piece of work by it.
+- **Why it works** lets the agent apply the rule in a situation the source never covered, instead of following it blindly.
+- **Bad → Good** gives a foothold, without which the rule collapses into a slogan.
+- **When not to apply** is the most expensive field. The explicit line "no caveats in the source" is mandatory where there are none. An empty field is indistinguishable from a forgotten one, and an explicit line records that the source was checked.
+- **Anchor** makes the unit self-sufficient: a verbatim quote with an address, the ground already inside, and the consumer of the skill needs neither a search over the source nor the source itself at hand. The anchor stays in the language of the source. If the skill is going to be published beyond the user's team, trim the quotes down to addresses: verbatim chunks of a book are not handed outside.
+
+Numbering runs through each sheet, `NN.M`. It is there so that SKILL.md and the agent's answers can point at a specific rule rather than at "a principle from the book".
 
 </unit_format>
 
 <skill_template>
 
-## Шаблон SKILL.md
+## The SKILL.md template
 
 ```markdown
 ---
-name: <короткое имя латиницей>
-description: <что делает и когда применять, с явными триггерными фразами пользователя>
+name: <short name in lowercase latin>
+description: <what it does and when to apply it, with explicit user trigger phrases>
 ---
 
-# <Название метода>
+# <The name of the method>
 
-<Один абзац: что скил делает и к какому материалу применяется. Если есть смежный
-скил, тут же развилка, когда идти в него.>
+<One paragraph: what the skill does and to what material it applies. If there is a
+neighbouring skill, the fork to it goes here.>
 
-## Ядро метода (держать в голове всегда)
+## The core of the method (hold in mind at all times)
 
-<5-8 пронумерованных принципов, каждый жирным тезисом плюс одно-два предложения
-раскрытия. Это front-load, самое ценное из всего скила.>
+<5-8 numbered principles, each a bold thesis plus one or two sentences of
+unpacking. This is the front-load, the most valuable thing in the skill.>
 
-## Порядок работы
+## The order of work
 
-### 1. Диагностика
-### 2. <Каркас или подготовка>
-### 3. <Основная работа>
-### N. <Обязательная финальная проверка>
+### 1. Diagnosis
+### 2. <Frame or preparation>
+### 3. <The main work>
+### N. <The mandatory final check>
 
-<Каждая фаза со ссылкой на нужные листы references/.>
+<Each phase with links to the reference sheets it needs.>
 
-## Маршрутизация по задаче
+## Routing by task
 
-| Задача | Листы |
+| Task | Sheets |
 |---|---|
-| <типовой запрос пользователя> | 02, 03 + ядро |
+| <a typical user request> | 02, 03 + the core |
 
-<Ниже строка: читать ТОЛЬКО нужные листы по задаче.>
+<Below it, the line: read ONLY the sheets the task needs.>
 
-## Правила выдачи
+## Output rules
 
-<Как агент отдает результат: объяснять правилом, а не вкусом; «было → стало» на
-фрагментах; маркер [уточнить: ...] вместо выдумки; тон.>
+<How the agent hands over the result: explain by a rule and not by taste; before →
+after on fragments; the marker [to clarify: ...] instead of invention; tone.>
 
-## Провенанс сборки
+## Build provenance
 
-<Источники с путями и датами экспорта, ярусы приоритета если источников
-несколько, дата сборки, статистика: добыто / отброшено / вошло. Спорный юнит
-перепроверяется по источнику, пока жив локальный экспорт; когда экспорт
-пропал, перевалидировать нечем, и это ограничение фиксируется здесь честно.>
+<Sources with paths and export dates, priority tiers where there are several
+sources, the build date, the statistics: extracted / rejected / included. A
+disputed unit is re-checked against the source while the local export is alive;
+once the export is gone there is nothing left to revalidate against, and that
+limitation is recorded here honestly.>
 
-## Прецедент
+## Precedent
 
-<Опционально: ссылка на реальное применение, где лежат материалы.>
+<Optional: a link to a real application and where its materials live.>
 ```
 
-Порядок блоков не переставляй. Ядро идет первым: началу файла достается максимум внимания, и при частичном чтении агент видит именно его.
+Do not rearrange the blocks. The core comes first: the start of the file gets the most attention, and on a partial read that is exactly what the agent sees.
 
 </skill_template>
 
 <splitting>
 
-## Как делить материал по листам
+## How to split material across sheets
 
-Дели по **задачам пользователя**, не по главам источника. Оглавление книги оптимизировано под линейное чтение, скил под точечный доступ.
+Split by **user tasks**, not by source chapters. A book's table of contents is optimized for linear reading, a skill for targeted access.
 
-Признак правильного деления: по таблице маршрутизации на типовой запрос открывается один-два листа, не пять.
+The sign of a correct split: by the routing table a typical request opens one or two sheets, not five.
 
-Отдельным листом с последним номером всегда идет `NN-checklist-i-antipatterny.md`: чеклист проверки готовой работы плюс весь улов добытчика D. Он используется в двух режимах, финальная проверка и диагностика чужого материала, и потому нужен чаще остальных.
+The last-numbered sheet is always `NN-checklist-and-antipatterns.md`: the checklist for checking finished work plus the whole catch of extractor D. It is used in two modes, as the final check and as a diagnosis of someone else's material, and is therefore needed more often than the rest.
 
 </splitting>
 
 <sizing>
 
-## Какого размера должны быть файлы
+## What size the files should be
 
-| Файл | Целевой размер | Потолок |
+| File | Target size | Ceiling |
 |---|---|---|
-| SKILL.md | 100-200 строк | 500 строк |
-| Справочный лист | 150-250 строк | 300 строк, дальше делить по темам |
-| Ядро метода | 5-8 принципов | 10, дальше это не ядро |
+| SKILL.md | 100-200 lines | 500 lines |
+| Reference sheet | 150-250 lines | 300 lines, split by topic beyond that |
+| The core of the method | 5-8 principles | 10, beyond that it is not a core |
 
-Лист длиннее 300 строк требует оглавления в начале. Но лучше поделить, чем оглавлять.
+A sheet longer than 300 lines needs a table of contents at the top. Better to split it than to give it one.
 
 </sizing>
 
 <naming>
 
-## Как называть скил и листы
+## How to name the skill and the sheets
 
-Папка и поле `name`, латиница, строчные, дефисы. Имя по методу или книге, не по действию: `yasno-ponyatno`, не `text-improver`. Метод узнаваем, действие нет.
+The folder and the `name` field: latin, lowercase, hyphens. Name it after the method or the book, not after the action: `yasno-ponyatno`, not `text-improver`. A method is recognizable, an action is not.
 
-Листы с числовым префиксом для порядка: `01-kontekst.md`, `02-tekst.md`.
+Sheets carry a numeric prefix for ordering: `01-context.md`, `02-text.md`.
 
 </naming>
 
 <description>
 
-## Как написать описание в frontmatter
+## How to write the frontmatter description
 
-Описание, единственный механизм срабатывания. Агент видит только имя и описание, тело читает уже после решения.
+The description is the only triggering mechanism. The agent sees the name and the description alone, and reads the body only after it has decided.
 
-Требования:
-- что делает и когда применять, оба в описании, не в теле;
-- явные триггерные фразы пользователя, включая те, где метод не назван по имени;
-- описание должно быть настойчивым. Дефолтное поведение, недосрабатывание, агент склонен не открывать скил там, где он полезен.
+Requirements:
+- what it does and when to apply it, both in the description and not in the body;
+- explicit user trigger phrases, the ones where the method is not named included;
+- the description has to be insistent. The default behaviour is undertriggering, an agent tends not to open a skill where it would help.
 
-Слабо: «Метод работы с текстом по книге N».
-Сильно: «Метод N для русских текстов, переписать понятно, провести аудит ясности, спроектировать структуру. Триггеры: «по N», «сделай понятнее», «перепиши без воды», «почему текст не работает», «структурируй текст».»
+Weak: "A method of working with text from the book N".
+Strong: "Method N for Russian texts: rewrite something clearly, audit its clarity, design its structure. Triggers: 'by N', 'make this clearer', 'rewrite without the fluff', 'why is this text not working', 'structure this text'."
 
-Технические границы: description до 1024 символов, третье лицо, имя скилла строчной латиницей с дефисами. Не пересказывай в description процесс скилла: агент, увидевший процесс в описании, выполнит описание вместо чтения тела. Что скилл делает, одной именной группой; дальше только триггеры.
+Technical bounds: a description up to 1024 characters, third person, the skill name in lowercase latin with hyphens. Do not retell the skill's process in the description: an agent that sees the process in the description executes the description instead of reading the body. What the skill does, as one noun phrase; after that, triggers only.
 
-Описание не подбирается на глаз. Процедура настройки под триггер в листе `04-evals.md`.
+A description is not chosen by eye. The tuning procedure for triggering is in the sheet `04-evals.md`.
 
 </description>
 
 <anti_patterns>
 
-## Чего в выходе быть не должно
+## What must not appear in the output
 
-- Сырые куски источника длиннее трех предложений.
-- Блоки «в главе 5 автор рассказывает», это справочник, а не скил.
-- Правила без примера.
-- Пустое поле «когда не применять» вместо явной строки об отсутствии оговорок.
-- Горизонтальные разделители между блоками.
+- Raw chunks of the source longer than three sentences.
+- Blocks of the form "in chapter 5 the author explains", that is a reference guide, not a skill.
+- Rules with no example.
+- An empty "when not to apply" field instead of an explicit line about the absence of caveats.
+- Horizontal rules between blocks.
 
 </anti_patterns>

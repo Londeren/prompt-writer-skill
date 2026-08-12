@@ -1,31 +1,31 @@
-# Как отбраковать кандидата
+# How to reject a candidate
 
-Лист читается перед фазой 2. Валидацию выполняет агент, не участвовавший в добыче.
+Read this sheet before phase 2. Validation is run by an agent that took no part in the extraction.
 
-Задача фазы, сократить улов. Нормальный результат, отброшено от трети до двух третей кандидатов. Отброшено меньше трети, фильтры применялись формально, перезапусти фазу.
+The job of the phase is to shrink the catch. A normal result is a third to two thirds of the candidates rejected. Less than a third rejected, the filters were applied pro forma, rerun the phase.
 
 <filter_1>
 
-## Фильтр 1. Есть ли основание, чтобы юнит существовал
+## Filter 1. Is there any ground for this unit to exist
 
-Проходит, если выполнено одно из: юнит подтвержден минимум двумя независимыми местами источника, либо автор сформулировал его прямо, одним куском.
+Passes if one of these holds: the unit is confirmed by at least two independent places in the source, or the author stated it directly, in one piece.
 
-**Якорь проверяется механическим поиском по исходнику.** Не «выглядит правдоподобно». Это единственный фильтр, ловящий галлюцинацию, остальные два ловят бесполезность.
+**The anchor is checked by mechanical search over the source.** Not by "it looks plausible". This is the only filter that catches a hallucination, the other two catch uselessness.
 
-Цитаты нет в исходнике дословно, юнит удаляется без обсуждения, и весь улов этого добытчика проверяется выборочно заново.
+The quote is not in the source verbatim, the unit is deleted with no discussion, and the whole catch of that extractor is re-checked on a sample.
 
 <examples>
 <example>
-Юнит: «начинай письмо с просьбы, а не с контекста». Якорь, абзац, где автор переставляет просьбу вперед в одном разборе.
-Вердикт: отбраковка. Одно место, правило выведено читателем, а не заявлено автором. Материал переезжает в тип C, где он честен как кейс.
+Unit: "open a letter with the request, not with the context". Anchor: a paragraph where the author moves the request forward in one breakdown.
+Verdict: rejected. One place, and the rule was derived by the reader rather than stated by the author. The material moves to type C, where it is honest as a case.
 </example>
 <example>
-Юнит: «подлежащее ключевой фразы, читатель». Якорь в главе 3, повторное подтверждение в разборе главы 7.
-Вердикт: проходит. Два независимых места.
+Unit: "the subject of the key sentence is the reader". Anchor in chapter 3, a second confirmation in the breakdown in chapter 7.
+Verdict: passes. Two independent places.
 </example>
 <example>
-Юнит с якорем «Автор пишет, что структура важнее слов».
-Вердикт: удаление и проверка добытчика. Это пересказ в кавычках, а не цитата. Признак того, что якорь подбирался под формулировку.
+A unit whose anchor reads "The author writes that structure matters more than words".
+Verdict: delete it and check the extractor. That is a retelling in quotation marks, not a quote. A sign that the anchor was picked to fit the formulation.
 </example>
 </examples>
 
@@ -33,91 +33,91 @@
 
 <filter_2>
 
-## Фильтр 2. Отвечает ли юнит на вопрос, которого в источнике не было
+## Filter 2. Does the unit answer a question the source never asked
 
-Механика: придумай задачу из домена пользователя, которой в книге нет. Примени юнит. Дает конкретное указание, фильтр пройден. Только описывает содержание книги, это пересказ.
+The mechanics: invent a task from the user's domain that is not in the book. Apply the unit. It gives a concrete direction, the filter is passed. It only describes the content of the book, it is a retelling.
 
 <examples>
 <example>
-«Подлежащее ключевой фразы, читатель, а не компания.»
-Проходит: на любом незнакомом тексте дает конкретное действие.
+"The subject of the key sentence is the reader, not the company."
+Passes: on any unfamiliar text it gives a concrete action.
 </example>
 <example>
-«Автор считает контекст важным.»
-Отбраковка: ничего не предписывает, сообщает содержание книги.
+"The author considers context important."
+Rejected: it prescribes nothing, it reports the content of the book.
 </example>
 <example>
-«В главе про воронку разбирается кейс телеком-оператора.»
-Отбраковка: карточка справочника. Ровно тот материал, из-за которого скил вырождается в оглавление.
+"The chapter on the funnel works through a telecom operator's case."
+Rejected: an index card. Exactly the material that degrades a skill into a table of contents.
 </example>
 </examples>
 
-Отброшенное по фильтру 2 часто не мусор, а не тот тип. Проверь, не кейс ли это и не термин, прежде чем удалять.
+What filter 2 rejects is often not junk but the wrong type. Check whether it is a case or a term before deleting it.
 
 </filter_2>
 
 <filter_3>
 
-## Фильтр 3. Сформулировал бы это специалист, не читав источник
+## Filter 3. Would a specialist who never read the source state this
 
-Проходит: неочевидный порог, неочевидный порядок, неочевидный критерий, либо противоречие распространенной практике.
+Passes: a non-obvious threshold, a non-obvious order, a non-obvious criterion, or a contradiction of widespread practice.
 
-Отбраковка: «пиши понятно», «уважай читателя», «готовься к встрече», «слушай клиента». Такие юниты не вредны, они хуже: занимают место в контексте и создают ощущение содержательности.
+Rejected: "write clearly", "respect the reader", "prepare for the meeting", "listen to the client". Units like that are not harmless, they are worse than harmless: they take up room in the context and create a sense of substance.
 
 <examples>
 <example>
-«Коротко не равно ясно: резать надо мусор, а не примеры и объяснения.»
-Проходит с переписыванием. Первая половина банальна, вторая нет. Неочевидная часть переносится в `statement`, банальная в `why`.
+"Short does not equal clear: what you cut is the padding, not the examples and explanations."
+Passes with a rewrite. The first half is banal, the second is not. The non-obvious part moves into `statement`, the banal part into `why`.
 </example>
 <example>
-«Работать над словами раньше структуры бессмысленно, отшлифованное предложение выкидывается вместе с абзацем.»
-Проходит: задает неочевидный порядок и объясняет цену нарушения.
+"Working on words before structure is pointless, a polished sentence gets thrown out along with its paragraph."
+Passes: it sets a non-obvious order and explains the cost of breaking it.
 </example>
 <example>
-«Текст должен быть полезен читателю.»
-Отбраковка по фильтру 3. Ни один агент не станет писать бесполезный текст оттого, что правило отсутствует.
+"A text should be useful to the reader."
+Rejected by filter 3. No agent is going to write a useless text because the rule is absent.
 </example>
 </examples>
 
-Фильтр 3, единственный, где легко срезать нужное. При сомнении оставляй и помечай, эвалы покажут.
+Filter 3 is the only one where the right material is easy to cut. When in doubt, keep the unit and flag it, the evals will tell.
 
 </filter_3>
 
 <rejection_log>
 
-## Что делать с отбраковкой
+## What to do with the rejections
 
-Веди `rejected.md`:
+Keep `rejected.md`:
 
 ```
-| id | statement (кратко) | фильтр | причина |
-|----|--------------------|--------|---------|
-| B-014 | начинать с просьбы | 1 | одно косвенное место, вывод читателя |
-| B-031 | уважать читателя   | 3 | общее место |
+| id | statement (short) | filter | reason |
+|----|-------------------|--------|--------|
+| B-014 | open with the request | 1 | one indirect place, derived by the reader |
+| B-031 | respect the reader    | 3 | a commonplace |
 ```
 
-Файл нужен в фазе 4. Провал эвала чаще означает, что нужное правило срезали фильтром 3, чем что его не добыли.
+The file is needed in phase 4. A failed eval more often means the right rule was cut by filter 3 than that it was never extracted.
 
 </rejection_log>
 
 <dedup>
 
-## Как сливать дубли
+## How to merge duplicates
 
-Признак дубля: два юнита дают одно указание разными словами. Оставляй тот, у которого сильнее якорь и точнее авторское название, остальные вливай подтверждениями, увеличивая `confirmations`.
+The sign of a duplicate: two units give one and the same direction in different words. Keep the one with the stronger anchor and the more exact author's name, and fold the rest in as confirmations, raising `confirmations`.
 
-Не сливай юниты, звучащие похоже, но задающие разные условия применения. Разница между ними обычно и есть содержание метода.
+Do not merge units that sound alike but set different conditions of use. The difference between them is usually the content of the method.
 
-Дубли из разных ярусов: оставляй формулировку верхнего яруса, пример можно взять из нижнего с указанием источника. Противоречие ярусов не сливается в компромисс: верхний ярус побеждает, формулировка нижнего уходит в rejected.md с причиной «уступил ярусу выше».
+Duplicates from different tiers: keep the wording of the upper tier, and an example may be taken from the lower one with its source named. A contradiction between tiers is not merged into a compromise: the upper tier wins, and the lower tier's wording goes into rejected.md with the reason "gave way to a higher tier".
 
 <examples>
 <example>
-«Приводи пример к каждому тезису» и «Абстракция без примера не работает».
-Сливаются: одно указание, разные формулировки.
+"Give every point an example" and "An abstraction with no example does not work".
+Merged: one direction, two wordings.
 </example>
 <example>
-«Приводи пример к каждому тезису» и «К местам, где читатель может ошибиться, добавляй антипример».
-Не сливаются: разные условия и разные действия. Слияние уничтожит половину правила.
+"Give every point an example" and "Where the reader can go wrong, add a counterexample".
+Not merged: different conditions and different actions. Merging would destroy half the rule.
 </example>
 </examples>
 
@@ -125,8 +125,8 @@
 
 <reporting>
 
-## Отчет по фазе
+## The phase report
 
-Отдай пользователю: добыто N, отброшено M с разбивкой по фильтрам, слито дублей K, осталось L, плюс три-пять примеров отбраковки. Возражение пользователя здесь стоит дешево, после сборки скила переделка стоит дорого.
+Hand the user: N extracted, M rejected broken down by filter, K duplicates merged, L left, plus three to five rejection examples. An objection from the user costs little here, and after the skill is assembled a rebuild costs a lot.
 
 </reporting>
