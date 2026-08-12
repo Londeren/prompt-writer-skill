@@ -4,7 +4,7 @@
     "name": "Sergey Lebedev",
     "url": "https://github.com/Londeren"
   },
-  "description": "Plugins by Londeren. Currently ships prompt-writer, a methodology skill for writing LLM prompts.",
+  "description": "Plugins by Londeren for Claude Code and claude.ai. One entry per plugin under plugins/.",
   "plugins": [
     {
       "name": "prompt-writer",

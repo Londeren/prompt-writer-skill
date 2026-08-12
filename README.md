@@ -1,60 +1,30 @@
-# Prompt Writer
+# Claude Plugins
 
-A skill for Claude that turns "write me a prompt" into an engineered prompt. The methodology is based on close reading of the Claude system prompts (Opus 4.7, Fable 5, Opus 5) and on how a model actually uses a prompt: not by reading it linearly, but through attention mechanics at every output token.
+Plugins by [Londeren](https://github.com/Londeren) for Claude Code, claude.ai and any other agent that reads skills. The repository is a plugin marketplace: add it once and install whatever you need from it.
 
-## What it does
+## Plugins
 
-When you ask Claude to write or improve a prompt, the skill:
-
-1. Classifies the task into one of five prompt types.
-2. Walks it through that type's template, a structure validated against real system prompts.
-3. Applies 24 master rules (modality registers, decision-type structure, examples, XML tags, data placement).
-4. Runs the result through a draft → audit → final loop: a checklist, diagnostic questions, a rewrite that closes what it found.
-
-## Five prompt types
-
-| Type | For | Key feature |
+| Plugin | What it does | Docs |
 |---|---|---|
-| **A - Character assistant** | A long-lived assistant speaking for a company or a role: a support bot, an internal knowledge assistant, an onboarding bot | Descriptive third person: "The assistant does X", more resistant to manipulation than "you" or "I" |
-| **B - Person imitation** | Imitation of a specific person: a founder's ghost-writer bot, a double for social media posts | Identification framing ("You are [Name]") plus 15-25 real message examples, mandatory |
-| **C - One-shot task** | A one-time linear task: summarization, translation, a specific piece of text | A short imperative prompt, no character, no extra structure |
-| **D - Extraction / transformation** | A reusable prompt following a methodology: extracting insights, generating content from a brand guide, grading | Decision blocks mirroring the structure of the deliverable, input documents up top in `<document>` tags |
-| **E - Agentic task** | A task for an agent that changes the state of a system itself: Claude Code, Cursor, computer-use agents | Formula: initial state + target state, file scope, forbidden actions, stop conditions, a binary Done when |
-
-## Key methodology principles
-
-- **Decision-type structure, not topical.** Blocks of the prompt answer the questions the model asks itself at generation time ("when do I do X", "how do I choose between A and B"), not describe topics ("About the product").
-- **Modality registers.** A deliberate hierarchy of instruction strength: descriptive third person for identity, NEVER/ALWAYS reserved for real hard limits, should/can/avoids/prefers for everything else. No all-caps, no MUST, both overtrigger on current models.
-- **Examples as part of the rule.** 3-5 examples in `<example>` tags for every complex rule; boundary cases matter more than central ones.
-- **Duplication of critical rules.** What is an anti-pattern in code (DRY) is a pattern in a prompt: attention weighs a rule's proximity to its point of application more than emphasis.
-- **Data up top, request at the bottom.** Large input documents go at the start of the prompt, above the instructions: up to a 30% quality gain on long context.
-
-The full set of rules with reasoning lives in [reference/full-rules.md](plugins/prompt-writer/reference/full-rules.md); a detailed breakdown of the six modality registers lives in [reference/modal-registers.md](plugins/prompt-writer/reference/modal-registers.md).
+| **prompt-writer** | Turns "write me a prompt" into an engineered prompt: routes the request into one of five prompt types, applies 24 master rules derived from the Claude system prompts, then audits the draft against a self-check list | [plugins/prompt-writer](plugins/prompt-writer/README.md) |
 
 ## Installation
 
-Every route below installs the same skill.
-
-| Agent | How |
-|---|---|
-| Claude Code | [plugin marketplace](#claude-code-plugin-marketplace), the recommended route |
-| Cursor, Copilot, Codex, Gemini, Cline, Amp, Antigravity and a dozen more | [`npx skills`](#any-agent-npx-skills) |
-| claude.ai in the browser | [marketplace synced from the repository](#claudeai) |
-| A whole team on one repository | [project settings](#a-team-on-one-repository) |
+Every route below installs from this repository. Swap `prompt-writer` for any plugin from the table.
 
 ### Claude Code: plugin marketplace
 
 ```
-/plugin marketplace add Londeren/prompt-writer-skill
+/plugin marketplace add Londeren/claude-plugins
 /plugin install prompt-writer@Londeren
 ```
 
-If the install summary says `Run /reload-plugins to activate.`, run that command. The skill becomes available as `prompt-writer:prompt-writer` and triggers on its own.
+The marketplace registers under the repository owner, `Londeren`, which is why the plugin id ends in `@Londeren`. If the install summary says `Run /reload-plugins to activate.`, run that command.
 
 The same thing without the interactive panel, for scripts and dotfiles:
 
 ```bash
-claude plugin marketplace add Londeren/prompt-writer-skill
+claude plugin marketplace add Londeren/claude-plugins
 claude plugin install prompt-writer@Londeren
 ```
 
@@ -62,24 +32,24 @@ Add `--scope project` to the install to share it with everyone working on the cu
 
 ### Any agent: npx skills
 
-The [skills.sh](https://www.skills.sh) CLI installs into whatever agents it finds:
+The [skills.sh](https://www.skills.sh) CLI installs into whatever agents it finds (Cursor, Copilot, Codex, Gemini, Cline, Amp, Antigravity and a dozen more):
 
 ```bash
-npx skills add Londeren/prompt-writer-skill
+npx skills add Londeren/claude-plugins --skill prompt-writer
 ```
 
-Files land in `.agents/skills/prompt-writer` for the current project, symlinked into each agent's own skills directory. Add `-g` to install for your user instead of the project, and `--copy` if you would rather have real files than symlinks.
+Without `--skill` the CLI lists everything in the repository and asks which skills to install; `-l` lists them without installing. Files land in `.agents/skills/<name>` for the current project, symlinked into each agent's own skills directory. Add `-g` to install for your user instead of the project, and `--copy` if you would rather have real files than symlinks.
 
 ### Claude Code: manual copy
 
-The plugin directory carries its own `plugin.json`, so Claude Code loads it as a skills-directory plugin:
+Each plugin directory carries its own `plugin.json`, so Claude Code loads it as a skills-directory plugin:
 
 ```bash
-git clone https://github.com/Londeren/prompt-writer-skill.git /tmp/prompt-writer-skill
-cp -r /tmp/prompt-writer-skill/plugins/prompt-writer ~/.claude/skills/prompt-writer
+git clone https://github.com/Londeren/claude-plugins.git /tmp/claude-plugins
+cp -r /tmp/claude-plugins/plugins/prompt-writer ~/.claude/skills/prompt-writer
 ```
 
-Use `.claude/skills/prompt-writer/` inside a repository instead of `~/.claude/skills/` to scope it to that project.
+Use `.claude/skills/` inside a repository instead of `~/.claude/skills/` to scope it to that project.
 
 ### A team on one repository
 
@@ -91,7 +61,7 @@ Commit this to the repository's `.claude/settings.json`. Claude Code offers the 
     "Londeren": {
       "source": {
         "source": "github",
-        "repo": "Londeren/prompt-writer-skill"
+        "repo": "Londeren/claude-plugins"
       }
     }
   },
@@ -108,49 +78,25 @@ Commit this to the repository's `.claude/settings.json`. Claude Code offers the 
 3. Choose **Add from a Repository** and paste the repository URL:
 
    ```
-   https://github.com/Londeren/prompt-writer-skill
+   https://github.com/Londeren/claude-plugins
    ```
 
-4. Press **Sync**. The marketplace appears in the list; install **prompt-writer** from it and the skill triggers on its own in any chat.
+4. Press **Sync**. The marketplace appears in the list; install the plugin from it and its skill triggers on its own in any chat.
 
 Enable "Code execution and file creation" in Settings → Capabilities if it is off.
 
-## Usage
-
-The skill activates on its own for requests like:
-
-- "Write a prompt for our product's support bot"
-- "Set up a Claude Project that writes posts in my voice"
-- "Improve this system prompt" + the prompt text
-- "Set up an assistant that answers questions about our docs"
-- "Напиши промпт для..." (the skill triggers across languages)
-
-If the task is described in detail, the skill writes the prompt right away, no extra questions. If it is vague, it asks 2-3 clarifying questions and offers a choice of type.
-
-## Repository structure
+## Repository layout
 
 ```
 .claude-plugin/
-  marketplace.json              - marketplace manifest, points at plugins/prompt-writer
-plugins/prompt-writer/          - the plugin, this is what ships to users
+  marketplace.json              - marketplace manifest, one entry per plugin
+plugins/<name>/                 - a plugin, this is what ships to users
   .claude-plugin/plugin.json    - plugin manifest
-  SKILL.md                      - entry point: routing, master rules, process
-  templates/
-    character-frame.md          - template for Type A
-    identification-frame.md     - template for Type B
-    one-shot-task.md            - template for Type C
-    extraction-prompt.md        - template for Type D
-    agentic-task.md             - template for Type E
-  reference/
-    full-rules.md               - the full rule set with reasoning
-    modal-registers.md          - the six modality registers in detail
-  checklists/
-    self-check.md               - checklist for the audit step
-    input-triage.md             - taxonomy of input-prompt defects
-docs/, CLAUDE.md                - development notes, not part of the plugin
+  SKILL.md                      - entry point, the only file loaded on activation
+  README.md                     - the plugin's own documentation
+docs/                           - specs, plans and development notes, not shipped
+CLAUDE.md                       - instructions for Claude Code working on this repository
 ```
-
-Only `SKILL.md` loads on activation; Claude pulls in templates and reference files as needed (progressive disclosure).
 
 ## License
 

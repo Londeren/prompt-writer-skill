@@ -1,86 +1,63 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Repository-wide guidance for Claude Code. Each plugin's own editing rules live in a separate file under `docs/`, imported below; read the one for a plugin before changing anything inside its directory.
+
+@docs/prompt-writer-editing-rules.md
 
 ## What this is
 
-The Claude skill `prompt-writer` is a methodology for writing prompts for LLMs, based on close reading of the Claude system prompts (Opus 4.7, Fable 5, Opus 5) and on attention mechanics. The repository consists only of markdown: no build, no tests, no dependencies. All content is in English, except the frontmatter `description` in SKILL.md, which mixes English and Russian on purpose: English triggers the skill for English requests, and the Russian trigger phrases are there for cross-language triggering.
+A plugin marketplace for Claude: `.claude-plugin/marketplace.json` at the root, one entry per plugin under `plugins/<name>/`. Markdown only, no build, no tests, no dependencies.
 
-The repository is also a plugin marketplace: `.claude-plugin/marketplace.json` at the root points at `plugins/prompt-writer/`, which is the plugin itself and the only part that ships to users. Every skill path in this file, `SKILL.md`, `reference/`, `templates/`, `checklists/`, is relative to that directory.
+Only what lives inside a `plugins/<name>/` directory ships to users. `docs/`, `tmp/`, this file and the root README never do.
 
-**Project goal:** keep the skill's signal-to-noise high while maintaining the publication channels. Publication itself is live; work on the repository should sharpen what the skill generates rather than enlarge it.
+Plugins in the repository:
 
-Convention: the canonical running example of a hard style rule throughout the skill is the em dash ban ("never uses em dashes"). Meta-documents follow the same style: no em dashes in prose.
+- `plugins/prompt-writer/` - a methodology for writing LLM prompts. Editing rules: [docs/prompt-writer-editing-rules.md](docs/prompt-writer-editing-rules.md).
 
-The `tmp/` directory (in .gitignore) holds local source transcripts of system prompts; specs under `docs/superpowers/specs/` reference them by line number. They are not checked into the repository; when working on specs, get the files from Sergey if they are not present locally.
+## Adding a plugin
 
-## Architecture: progressive disclosure
+1. `plugins/<name>/` with `.claude-plugin/plugin.json`, `SKILL.md`, `README.md`, `LICENSE`.
+2. An entry in the `plugins[]` array of `.claude-plugin/marketplace.json`.
+3. `docs/<name>-editing-rules.md` if the skill needs its own editing rules, imported from this file and listed above.
+4. A row in the plugin table of the root README.
 
-`SKILL.md` is the only file loaded when the skill activates. Everything else is pulled in by the model as needed while it works:
+Do not create the directory before the skill has real content. The skills.sh CLI discovers skills by walking the repository for `SKILL.md` files, not by reading marketplace.json, so a placeholder shows up in the public listing the moment it is pushed.
 
-- **Routing** in SKILL.md classifies a request into one of five prompt types (A character assistant, B person imitation, C one-shot task, D extraction/transformation, E agentic task), each pointing to its template in `templates/`.
-- `reference/full-rules.md` holds the full rule set with reasoning; `reference/modal-registers.md` covers the six modality registers in detail. SKILL.md carries a compressed version of both (Master rules + Quick reference).
-- `checklists/self-check.md` is the checklist for the audit step.
+Editing rules never live inside `plugins/<name>/`. Everything there ships, and the skills.sh route installs into `.agents/skills/<name>/` inside the user's own project, where a stray CLAUDE.md would be loaded as their nested project instructions.
 
-## Intentional duplication of rules
+## No cross-plugin runtime references
 
-The same rules exist at six levels of detail: Master rules and Quick reference in SKILL.md, the full versions in reference/full-rules.md, its summary sections §6.1 (structural template) and §6.2 (checklist), the checklist items in checklists/self-check.md, their embodiment in templates/, and the storefront in README.md (the rule count, the type table, the file tree). This is not an accident: the skill itself teaches that duplicating critical rules in a prompt is a pattern, not an anti-pattern.
+A skill may not read files from a sibling plugin: users install plugins one at a time, and a path like `../other-plugin/reference/rules.md` resolves to nothing on their machine. When two skills need the same methodology, either restate the needed part inside each one, or have one skill recommend the other as a separate step in its own output.
 
-Consequence for editing: when a rule changes or a new one is added, sync every layer, the rule itself in reference, its digest and number in Master rules / Quick reference in SKILL.md, the matching checklist item, the affected templates, and the summary layers, README.md and full-rules §6.1/§6.2. Numbering of the Master rules in SKILL.md runs continuously and is cross-referenced elsewhere ("details in rule 12"); check those references when inserting a rule in the middle.
+## docs/
 
-## Changing the skill
+Flat and shared across plugins. Specs, plans, decisions and evidence live under `docs/superpowers/`; the plugin a document belongs to is named in its filename and in its opening lines, which is what makes a flat directory readable. Historic documents keep the paths and the repository name that were true when they were written; do not retrofit them.
 
-The default answer to any new insight is no. An insight enters only with a strong
-argument: name what a generated prompt loses without it. Interesting is not an
-argument; a named loss is. The criterion is signal versus noise judged against
-the whole skill, not file size.
+## Style
 
-Integration is organic, never append-only. Before integrating anything, re-read
-the whole skill end to end and decide what the new material merges into, what it
-rewrites, what it deletes. Deletion is legitimate on its own: a source can prove
-one of our rules wrong or redundant, with nothing added in return.
+No em dashes in prose, in the skills or in the meta documents.
 
-The skill is edited by its own rules: a skill change is the skill's own "improve
-an existing prompt" scenario applied to itself, self-check audit included. The
-rules are not restated here; they are followed.
+## tmp/
 
-Placement ladder, cheapest slot that closes the loss: backlog → a line inside an
-existing rule → a checklist item → one template → a full-rules subsection → a new
-master rule. A new master rule requires a red-case: a real request where the
-current skill produces the defect the rule fixes.
+In .gitignore, holds local source transcripts of system prompts; specs under `docs/superpowers/specs/` reference them by line number. They are not checked into the repository; when working on those specs, get the files from Sergey if they are not present locally.
 
-Protocol for an insight batch:
-1. An argument table first: insight → loss without it → ladder slot → what gets
-   merged, rewritten, or deleted for it to land organically. Sergey approves
-   rows, not prose.
-2. After integration, a fresh-context subagent reads the entire skill blind and
-   names what it would cut. New material on that list is a failed integration.
-3. Smoke A/B: the same request through the skill before and after; the change
-   must show up in the generated prompt.
-4. Report back: the table with outcomes plus per-file line deltas (observability,
-   not a gate).
+## Publication
 
-Deferred and rejected insights go to docs/insights-backlog.md with source and reason.
+Two distribution channels are live and need no approval: the GitHub plugin marketplace and the skills.sh CLI. The root README owns every install route; do not duplicate the commands elsewhere. A plugin README carries only its own two install commands and links back to the root for the rest.
 
-## Publication status
+Marketplace name: for a GitHub `owner/repo` source, Claude Code registers the marketplace under the repository owner, `Londeren`, not under the `name` field of marketplace.json. A lowercase name in the manifest produced a marketplace the install command could not find; keep the two in sync. The same mechanic means the repository can be renamed without changing any plugin id.
 
-Two distribution channels are live and need no approval: the GitHub plugin marketplace and the skills.sh CLI. README.md owns every install route; do not duplicate the commands here.
-
-Note on the marketplace name: for a GitHub `owner/repo` source, Claude Code registers the marketplace under the repository owner, `Londeren`, not under the `name` field of marketplace.json. A lowercase name in the manifest produced a marketplace the install command could not find. Keep the two in sync.
-
-When editing the skill text, keep it platform neutral: present_files, ask_user_input_v0 and the view tool exist only in claude.ai. The one place that names a tool on purpose is the type question in SKILL.md, which names both AskUserQuestion and ask_user_input_v0. The ask_user_input_v0 mention in templates/agentic-task.md is an example of tool-description writing, not a call, and must survive any search and replace.
+Platform neutrality: `present_files`, `ask_user_input_v0` and the view tool exist only in claude.ai. Skill text stays neutral about the host unless a specific file names a tool on purpose, in which case its plugin CLAUDE.md says so and the mention must survive any search and replace.
 
 ## Checking changes
 
-There are no automated tests. The smoke test is to activate the skill on a real request ("write a prompt for...") and confirm that routing picks the right type, the template loads, and the result passes self-check. For a systematic quality run there is the user's `autoresearch` skill (iterative optimization of the skill against evals).
-
-Manifests and packaging are checked with commands, not by eye:
+There are no automated tests. Manifests and packaging are checked with commands, not by eye:
 
 ```bash
 claude plugin validate .
-claude plugin validate ./plugins/prompt-writer --strict
-claude --plugin-dir ./plugins/prompt-writer -p "..." --max-turns 1
-find plugins/prompt-writer -type f | sort
+claude plugin validate ./plugins/<name> --strict
+claude --plugin-dir ./plugins/<name> -p "..." --max-turns 1
+find plugins -type f | sort
 ```
 
-The last one guards the packaging boundary: nothing from `docs/` or `tmp/` may appear in that listing.
+The last one guards the packaging boundary: nothing from `docs/` or `tmp/` may appear in that listing, and no CLAUDE.md either. Behavioural checks are per plugin and live in that plugin's editing rules.
