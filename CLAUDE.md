@@ -3,6 +3,7 @@
 Repository-wide guidance for Claude Code. Each plugin's own editing rules live in a separate file under `docs/`, imported below; read the one for a plugin before changing anything inside its directory.
 
 @docs/prompt-writer-editing-rules.md
+@docs/book-to-skill-editing-rules.md
 
 ## What this is
 
@@ -13,6 +14,7 @@ Only what lives inside a `plugins/<name>/` directory ships to users. `docs/`, `t
 Plugins in the repository:
 
 - `plugins/prompt-writer/` - a methodology for writing LLM prompts. Editing rules: [docs/prompt-writer-editing-rules.md](docs/prompt-writer-editing-rules.md).
+- `plugins/book-to-skill/` - turns a Markdown knowledge source into a generated Claude skill. Editing rules: [docs/book-to-skill-editing-rules.md](docs/book-to-skill-editing-rules.md).
 
 ## Adding a plugin
 

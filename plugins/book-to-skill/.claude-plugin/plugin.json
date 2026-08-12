@@ -1,0 +1,21 @@
+{
+  "name": "book-to-skill",
+  "displayName": "Book to Skill",
+  "version": "1.0.0",
+  "description": "Turns a Markdown knowledge source (book, manual, course, transcript) into a Claude skill: extracts the transferable method with source anchors, validates every unit against the source, assembles a thin SKILL.md plus reference sheets, and measures the result with evals.",
+  "author": {
+    "name": "Sergey Lebedev",
+    "url": "https://github.com/Londeren"
+  },
+  "homepage": "https://github.com/Londeren/claude-plugins",
+  "repository": "https://github.com/Londeren/claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "skill-generation",
+    "knowledge-extraction",
+    "methodology",
+    "distillation",
+    "playbook",
+    "book"
+  ]
+}

@@ -7,6 +7,7 @@ Plugins by [Londeren](https://github.com/Londeren) for Claude Code, claude.ai an
 | Plugin | What it does | Docs |
 |---|---|---|
 | **prompt-writer** | Turns "write me a prompt" into an engineered prompt: routes the request into one of five prompt types, applies 24 master rules derived from the Claude system prompts, then audits the draft against a self-check list | [plugins/prompt-writer](plugins/prompt-writer/README.md) |
+| **book-to-skill** | Turns a Markdown source (book, manual, course, transcript) into a Claude skill: extracts the transferable method with source anchors, validates it against the source, assembles a skill that works without the source at hand, measures it with evals | [plugins/book-to-skill](plugins/book-to-skill/README.md) |
 
 ## Installation
 

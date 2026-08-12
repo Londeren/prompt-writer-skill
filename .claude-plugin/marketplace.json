@@ -15,6 +15,17 @@
         "system-prompt",
         "writing"
       ]
+    },
+    {
+      "name": "book-to-skill",
+      "source": "./plugins/book-to-skill",
+      "category": "productivity",
+      "tags": [
+        "skill-generation",
+        "knowledge-extraction",
+        "methodology",
+        "distillation"
+      ]
     }
   ]
 }
