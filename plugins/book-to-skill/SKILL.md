@@ -5,7 +5,7 @@ description: Use when the user wants to turn a knowledge source in Markdown (a b
 
 # From a method to a skill
 
-The pipeline turns a Markdown source into an executable methodology. Input: a .md file or a folder of .md files. Output: a skill folder, a thin SKILL.md plus numbered reference sheets in `references/`. The pipeline needs no external skills, scripts, or libraries.
+The pipeline turns a Markdown source into an executable methodology. Input: a .md file or a folder of .md files. Output: a skill folder with a thin SKILL.md, numbered reference sheets in `references/`, and the build record `PROVENANCE.md`. The pipeline needs no external skills, scripts, or libraries.
 
 The distinction that governs everything else: **a reference guide to a book and a skill carrying a method are different artifacts.** A guide answers "what does chapter 7 say". A skill answers "how do I act by this method right now". We build the second.
 
@@ -128,6 +128,7 @@ The generated skill is written in the language of the source and of its audience
 ```
 skill-name/
 ├── SKILL.md
+├── PROVENANCE.md
 └── references/
     ├── 01-<topic>.md
     ├── 02-<topic>.md
@@ -140,7 +141,7 @@ Mandatory SKILL.md blocks in this order, and the order is not rearranged:
 2. **The order of work**, numbered phases of application with links to the sheets.
 3. **Routing**, a table of "user task to sheets to read". Without it the agent loads every sheet and drowns the context.
 4. **Output rules**, the shape in which the agent hands the result over.
-5. **Build provenance**: sources with paths and dates, priority tiers, the build date, the statistics of extracted, rejected, and included.
+5. **Sources**: what the method rests on, each source by a descriptive name: its kind, title, author, and the edition or year when the method depends on it. Several sources, their tiers plus the line that the upper tier wins where formulations diverge. Nothing about the build: file names, paths, export dates, and unit counts go into `PROVENANCE.md` next to SKILL.md, described in the sheet. SKILL.md is loaded on every activation, and a path to a local export helps no one who applies the method.
 
 Material is split across sheets **by user tasks, not by source chapters**. A book's table of contents is optimized for linear reading, a skill for targeted access. The sign of a correct split: a typical request opens one or two sheets, not five.
 
@@ -198,7 +199,7 @@ The assembled skill is a draft. The audit answers the questions by naming concre
 4. Name a typical request from the routing table that opens more than two sheets. Recut what you find.
 5. Name a rule with no example, or with an empty "when not to apply" field. Fill it in from the source, or put in the explicit line that the source carries no example and no caveats. Composing either one yourself is writing on the author's behalf.
 6. Name a unit that cannot be applied without opening the source. Compress what you find: the finished skill replaces searching the source, and the consumer will not have the source at hand.
-7. Check the numbers: the core is 5-8 principles and stands as the first block; at least a third of the candidates was rejected; the provenance block is filled in.
+7. Check the numbers: the core is 5-8 principles and stands as the first block; at least a third of the candidates was rejected; `PROVENANCE.md` is filled in. Name every file name, path, export date, or unit count that got into SKILL.md, and move what you find into `PROVENANCE.md`.
 
 Then rewrite the skill so that every item found is closed. A result where the audit found a problem and the final version did not close it is not delivered.
 

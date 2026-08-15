@@ -73,22 +73,25 @@ unpacking. This is the front-load, the most valuable thing in the skill.>
 <How the agent hands over the result: explain by a rule and not by taste; before →
 after on fragments; the marker [to clarify: ...] instead of invention; tone.>
 
-## Build provenance
+## Sources
 
-<Sources with paths and export dates, priority tiers where there are several
-sources, the build date, the statistics: extracted / rejected / included. A
-disputed unit is re-checked against the source while the local export is alive;
-once the export is gone there is nothing left to revalidate against, and that
-limitation is recorded here honestly.>
-
-## Precedent
-
-<Optional: a link to a real application and where its materials live.>
+<Each source by a descriptive name: its kind, title, author, and the edition or
+year when the method depends on it. Several sources: their tiers, and the line
+that the upper tier wins where formulations diverge. Nothing about the build,
+no file names, paths, export dates, or unit counts: that is `PROVENANCE.md`.>
 ```
 
 Do not rearrange the blocks. The core comes first: the start of the file gets the most attention, and on a partial read that is exactly what the agent sees.
 
 </skill_template>
+
+<build_record>
+
+## What goes into PROVENANCE.md
+
+`PROVENANCE.md` sits next to SKILL.md and is never loaded on activation. It holds everything about the build that the applying agent has no use for: the build date; the source map from phase 0, the tiers and the rules specific to this build; the export used for each source, its file name and export date, so that a disputed unit can be re-checked against it while the export exists; the statistics, extracted, rejected by filter, merged, included, per source when there are several; and what the checks did not cover, validation run without subagents for one.
+
+</build_record>
 
 <splitting>
 
@@ -154,6 +157,7 @@ A description is not chosen by eye. The tuning procedure for triggering is in th
 - Blocks of the form "in chapter 5 the author explains", that is a reference guide, not a skill.
 - Rules carrying neither an example nor the explicit line about its absence in the source.
 - An empty "when not to apply" field instead of an explicit line about the absence of caveats.
+- File names, paths, export dates, or unit counts in SKILL.md: that is the build record, and it lives in `PROVENANCE.md`.
 - Horizontal rules between blocks.
 
 </anti_patterns>
