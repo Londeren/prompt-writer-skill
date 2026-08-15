@@ -26,6 +26,21 @@
         "methodology",
         "distillation"
       ]
+    },
+    {
+      "name": "glavred-skill",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/Londeren/glavred-skill.git"
+      },
+      "description": "Reviews and edits social media posts by the method of Maxim Ilyahov. Reports findings level by level (meaning, delivery, wording, format) and rewrites a post keeping the author's facts and voice. Works in Russian, lives in its own repository.",
+      "category": "productivity",
+      "tags": [
+        "editing",
+        "copywriting",
+        "social-media",
+        "russian"
+      ]
     }
   ]
 }
